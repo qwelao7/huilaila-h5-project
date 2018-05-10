@@ -1,0 +1,470 @@
+<template>
+  <div class="community">
+    <view-box ref="communityBody" body-padding-top="0" :body-padding-bottom="paddingBtm">
+      <div class="picList" v-if="imgList.length > 0">
+        <div class="showPic" v-for="(item, index) in firstPicList">
+          <img class="previewerTop-demo-img" :src="item.src" @click="showTop(index)" alt="">
+        </div>
+        <div v-transfer-dom>
+          <previewer :list="firstPicList" ref="previewerTop" :options="optionsTop"></previewer>
+        </div>
+        <div class="hidPic" v-show="pullDown">
+          <ul>
+            <li class="pic-box" v-for="(item, index) in picList">
+              <img class="previewer-demo-img" :src="item.src" alt="" @click="show(index)">
+            </li>
+          </ul>
+          <div v-transfer-dom>
+            <previewer :list="picList" ref="previewer" :options="options"></previewer>
+          </div>
+        </div>
+        <i :class="{pullUp:pullDown, pullDown:!pullDown}" @click="displayPic"></i>
+      </div>
+      <div v-show="!pullDown">
+        <div class="list-under-swiper">
+          <grid>
+            <grid-item :label="item.name" v-for="item in list" :key="item.id" @on-item-click="onItemClick(item)">
+              <img slot="icon" :src="item.icon">
+            </grid-item>
+          </grid>
+        </div>
+        <div v-if="isEmpty">
+          <div class="community_nav" v-if="buildLive.isLoad">
+            <comCard :buildList1="buildLive"></comCard>
+          </div>
+          <div class="community_nav" v-if="announceInfo.isLoad">
+            <comCard :buildList1="announceInfo"></comCard>
+          </div>
+          <div class="community_nav" v-if="voteInfo.isLoad">
+            <comCard :buildList1="voteInfo"></comCard>
+          </div>
+        </div>
+        <div class="noContent" v-if="!isEmpty">
+          <img src="../assets/images/No-content.png" alt="">
+          <p>什么都没发现，去别处看看吧</p>
+          <!--<span @click="toPublish">去发帖</span>-->
+        </div>
+      </div>
+      <bottomTab v-show="!pullDown" slot="bottom"></bottomTab>
+    </view-box>
+    <x-dialog class="delete-wrapper" v-model="deleteModalShow" :dialog-style="deleteDialogStyle" hide-on-blur>
+      <span class="delete-info vux-1px-b">敬请期待!</span>
+      <div class="operate-wrapper">
+        <span class="text vux-1px-r" @click="deleteModalShow = false">确定</span>
+        <!--<span class="text" @click="goToBind">前往绑定</span>-->
+      </div>
+    </x-dialog>
+  </div>
+</template>
+<script>
+  //  import {Grid, GridItem, Group, Cell} from 'vux'
+  import {Grid, GridItem, ViewBox, XDialog, Previewer, TransferDom} from 'vux'
+  import bannerPic from './community/picList'
+  import comCard from './community/comCard'
+  import bottomTab from '../components/bottomTab'
+  import icon1 from '../assets/images/icon01.png'
+  import icon2 from '../assets/images/icon02.png'
+  import icon3 from '../assets/images/icon03.png'
+  import icon4 from '../assets/images/icon04.png'
+  import icon5 from '../assets/images/icon05.png'
+
+  const list = [
+    {
+      name: '小区信息',
+      value: 'buildInfo',
+      icon: icon1,
+      id: 1
+    },
+    {
+      name: '小区图片',
+      value: 'buildImg',
+      icon: icon2,
+      id: 2
+    },
+    {
+      name: '工程进度',
+      value: 'projectProgress',
+      icon: icon3,
+      id: 3
+    },
+    {
+      name: '小区公约',
+      value: 'treaty',
+      icon: icon4,
+      id: 4
+    }
+//    {
+//      name: '万家灯火',
+//      value: 'lighted',
+//      icon: icon5,
+//      id: 5
+//    }
+  ];
+  export default {
+    name: 'Community',
+    directives: {
+      TransferDom
+    },
+    components: {
+      Previewer,
+      bottomTab,
+      Grid,
+      GridItem,
+      ViewBox,
+      XDialog,
+      bannerPic,
+      comCard
+    },
+    data () {
+      return {
+        isEmpty: true,
+        list: list,
+        picList: [],
+        firstPicList: [],
+        pullDown: false,
+        optionsTop: {
+          getThumbBoundsFn (index) {
+            // find thumbnail element
+            let thumbnail = document.querySelectorAll('.previewerTop-demo-img')[index];
+            // get window scroll Y
+            let pageYScroll = window.pageYOffset || document.documentElement.scrollTop;
+            // optionally get horizontal scroll
+            // get position of element relative to viewport
+            let rect = thumbnail.getBoundingClientRect();
+            // w = width
+            return {x: rect.left, y: rect.top + pageYScroll, w: rect.width}
+            // Good guide on how to get element coordinates:
+            // http://javascript.info/tutorial/coordinates
+          }
+        },
+        options: {
+          getThumbBoundsFn (index) {
+            // find thumbnail element
+            let thumbnail = document.querySelectorAll('.previewer-demo-img')[index];
+            // get window scroll Y
+            let pageYScroll = window.pageYOffset || document.documentElement.scrollTop;
+            // optionally get horizontal scroll
+            // get position of element relative to viewport
+            let rect = thumbnail.getBoundingClientRect();
+            // w = width
+            return {x: rect.left, y: rect.top + pageYScroll, w: rect.width}
+            // Good guide on how to get element coordinates:
+            // http://javascript.info/tutorial/coordinates
+          }
+        },
+        imgList: [],
+        buildLive: {},
+        announceInfo: {},
+        voteInfo: {},
+        priceList: [],
+        deleteModalShow: false,
+        deleteDialogStyle: {
+          maxWidth: '100%',
+          width: '70%',
+          padding: '0.533333rem 0 0 0',
+          borderRadius: '0.533333rem'
+        },
+        paddingBtm: '1.306667rem'
+      }
+    },
+    created () {
+      this.getBuildList();
+    },
+    methods: {
+      getBuildList () {
+        let that = this;
+        that.$vux.loading.show({
+          text: '加载中'
+        });
+        that.$JHttp({
+          method: 'get',
+          headers: {
+            defCommunityId: localStorage.getItem('communityId')
+          },
+          url: window.baseURL + '/index'
+        }).then(res => {
+          if (res.status === 100) {
+            this.$vux.loading.hide();
+            if (!res.data.communityNews && !res.data.communityNotice && !res.data.communityPicList.length && !res.data.voteInfo) {
+              that.isEmpty = false
+            }
+            if (res.data.communityPicList) {
+              that.priceList = res.data.communityPicList;
+              let list = [];
+              that.priceList.forEach(function (v, i) {
+                list.push({src: v});
+              });
+              that.imgList = list;
+              that.getCommunityPicList();
+            }
+            if (res.data.communityNews) {
+              let live = res.data.communityNews;
+              that.buildLive = {
+                isLoad: true,
+                title1: '小区动态',
+                value: 'buildLive',
+                type: 'buildLive',
+                name: live.title,
+                img: live.smallPic,
+                like: live.praisenum,
+                message: live.commentNum,
+                dataInstruction: live.intime,
+                id: live.id,
+                isPraise: live.isPraise,
+                praisenum: live.praisenum,
+                commentNum: live.commentNum
+              };
+            }
+            if (res.data.communityNotice) {
+              let announce = res.data.communityNotice;
+              that.announceInfo = {
+                isLoad: true,
+                title1: '小区公告',
+                type: 'announcement',
+                value: 'announcement',
+                name: announce.title,
+                img: announce.smallPic,
+                like: announce.praisenum,
+                message: announce.commentNum, // endTimeStr
+                dataInstruction: announce.intime,
+                id: announce.id,
+                isPraise: announce.isPraise,
+                praisenum: announce.praisenum,
+                commentNum: announce.commentNum
+              };
+            }
+            if (res.data.voteInfo) {
+              let vote = res.data.voteInfo;
+              that.voteInfo = {
+                isLoad: true,
+                title1: '调查投票',
+                type: 'survey',
+                value: 'survey',
+                name: vote.title,
+                img: vote.icoUrl,
+                like: vote.praisenum,
+                message: vote.commentNum,
+                dataInstruction: vote.endTimeStr,
+                neiId: vote.neiId,
+                id: vote.id,
+                joinUserCnt: vote.joinUserCnt,
+                isPraise: vote.isPraise,
+                praisenum: vote.praisenum,
+                commentNum: vote.commentNum
+              };
+            }
+          } else {
+            that.$vux.loading.hide();
+            that.$vux.toast.show({
+              type: 'cancel',
+              title: res.msg
+            });
+          }
+        }).catch(err => {
+          console.log(err);
+          this.$vux.loading.hide();
+        })
+      },
+      getCommunityPicList () {
+        if (this.imgList.length) {
+          this.firstPicList.push(this.imgList.splice(0, 1)[0]);
+          console.log(this.firstPicList)
+          this.picList = this.imgList
+        }
+      },
+      showTop (index) {
+        this.$refs.previewerTop.show(index);
+      },
+      show (index) {
+        this.$refs.previewer.show(index);
+      },
+      onItemClick (val) {
+        if (val.id === 5) {
+          this.deleteModalShow = true
+        } else {
+          this.$router.push('/' + val.value)
+        }
+      },
+      displayPic () {
+        this.pullDown = !this.pullDown
+        this.$refs.communityBody.scrollTo(top)
+        if (this.pullDown) {
+          this.paddingBtm = '0'
+        }
+      },
+      goToBind () {
+        this.$router.push('/Login')
+      }
+    }
+  }
+</script>
+<style type="text/less" lang="less" scoped>
+  .community{
+    height: 100%;
+    width: 100%;
+    background-color: #f7f7f7;
+    position: relative;
+    .noContent{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 142.5px;
+      margin-bottom: 284.5px;
+      img{
+        width: 150px;
+        height: 150px;
+      }
+      p{
+        margin-top: 10px;
+        color: #aaaaaa;
+        font-size: 15px;
+      }
+    }
+  }
+  .community_banner {
+    width: 100%;
+    position: relative;
+  }
+  .list-under-swiper {
+    background-color: #ffffff;
+    .weui-grids {
+      padding: 14px 0 20px 0;
+      .weui-grid {
+        padding: 0;
+        .weui-grid__label {
+          font-size: 12px;
+        }
+      }
+      .weui-grid:before, .weui-grid:after {
+        border: none;
+      }
+    }
+    .weui-grids:before, .weui-grids:after {
+      border: none;
+    }
+  }
+  .delete-wrapper {
+    .delete-info {
+      color: #333;
+      font-size: 14px;
+      font-weight: bold;
+      display: inline-block;
+      width: 100%;
+      padding-bottom: 20px;
+    }
+    .operate-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 50px;
+      .text {
+        display: inline-block;
+        flex: 1;
+        height: 100%;
+        line-height: 50px;
+        color: #18adfb;
+        font-size: 16px;
+      }
+    }
+  }
+  .picList{
+    position: relative;
+    i{
+      position: absolute;
+      left: 50%;
+      margin-left: -14px;
+      bottom: 5px;
+      display: block;
+      width: 28px;
+      height: 28px;
+      background: url("../assets/images/down_button_buildingimages.png") center center / cover no-repeat;
+      /*box-shadow: 0 5px 5px red;*/
+    }
+    .pullDown {
+      -webkit-animation: sdb04 3s infinite;
+      animation: sdb04 3s infinite;
+    }
+    .pullUp{
+      position: fixed;
+      -webkit-animation: sdb04rotated 3s infinite;
+      animation: sdb04rotated 3s infinite;
+    }
+    @keyframes sdb04 {
+      0% {
+        transform: rotate(0deg) translate(0, 0);
+      }
+      50% {
+        transform: rotate(0deg) translate(0, 5px);
+      }
+      100% {
+        transform: rotate(0deg) translate(0, 0);
+      }
+    }
+    @-webkit-keyframes sdb04 {
+      0% {
+        transform: rotate(0deg) translate(0, 0);
+      }
+      50% {
+        transform: rotate(0deg) translate(0, 5px);
+      }
+      100% {
+        transform: rotate(0deg) translate(0, 0);
+      }
+    }
+    @keyframes sdb04rotated {
+      0% {
+        transform: rotate(180deg) translate(0, 0);
+      }
+      50% {
+        transform: rotate(180deg) translate(0, 5px);
+      }
+      100% {
+        transform: rotate(180deg) translate(0, 0);
+      }
+    }
+    @-webkit-keyframes sdb04rotated {
+      0% {
+        transform: rotate(180deg) translate(0, 0);
+      }
+      50% {
+        transform: rotate(180deg) translate(0, 5px);
+      }
+      100% {
+        transform: rotate(180deg) translate(0, 0);
+      }
+    }
+  }
+  .showPic {
+    width: 100%;
+    height: 217px;
+    img{
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .hidPic {
+    ul{
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+    .pic-box{
+      height: 150px;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .pic-box:nth-child(5n) {
+      width: 100%;
+    }
+    .pic-box:nth-child(10n+1), .pic-box:nth-child(10n+4), .pic-box:nth-child(10n+6), .pic-box:nth-child(10n+9) {
+      width: 40%;
+    }
+    .pic-box:nth-child(10n+2), .pic-box:nth-child(10n+3), .pic-box:nth-child(10n+7), .pic-box:nth-child(10n+8) {
+      width: 60%;
+    }
+  }
+</style>

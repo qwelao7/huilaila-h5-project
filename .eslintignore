@@ -1,0 +1,5 @@
+build/*.js
+config/*.js
+src/assets/json/areaData.js
+src/components/base/JPull/icon/iconfont.js
+src/common/js/map.js
