@@ -38,6 +38,9 @@
               <div class="pub-activity" @click="pub_activity">
                 <img src="../assets/images/publish_activity.png" alt="">
               </div>
+              <div class="activity-album" @click="activity_album">
+                <img src="../assets/images/activity_album.png" alt="">
+              </div>
             </div>
             <div class="closeIcon" @click="publish = false">
               <img src="../assets/images/publish_icon_56link.png" alt="">
@@ -140,7 +143,44 @@
             console.log(e)
           })
         }
+      },
+      activity_album () {
+        this.publish = false;
+        let token = localStorage.getItem('token')
+        if (!token) {
+          this.deleteModalShow = true
+        } else {
+//          this.$router.push('/pub_newThings')
+          let _this = this;
+          _this.$JHttp({
+            method: 'get',
+            url: window.baseURL + '/socialactivity/getCanAddActivity',
+            headers: {
+              defCommunityId: localStorage.getItem('communityId')
+            }
+          }).then(res => {
+            if (res.status === 100) {
+              console.log(res)
+              if (res.data === true) {
+                _this.$router.push('/pub_activity')
+              } else {
+                _this.$vux.toast.show({
+                  type: 'text',
+                  text: '对不起，您没有权限进行此项操作！'
+                })
+              }
+            } else {
+              _this.$vux.toast.show({
+                type: 'cancel',
+                text: res.msg
+              })
+            }
+          }).catch(e => {
+            console.log(e)
+          })
+        }
       }
+
     }
   }
 </script>
@@ -185,13 +225,14 @@
         justify-content: space-between;
         .box{
           display: flex;
+          flex-wrap: wrap;
           align-items: center;
           justify-content: space-around;
-          .pub-newThings, .pub-activity{
-            width: 120px;
+          .pub-newThings, .pub-activity, .activity-album{
+            width: 50%;
             height: 165px;
             img{
-              width: 100%;
+              width: 120px;
               height: 100%;
             }
           }
