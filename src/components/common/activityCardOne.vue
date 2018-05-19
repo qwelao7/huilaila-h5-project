@@ -16,7 +16,8 @@
       </div>
       <div class="imgList">
         <ul>
-          <li class="first-item" v-for="(items, index) in information.container.imgList" v-bind:class="{ onePic: isOne }">
+          <li class="first-item" v-for="(items, index) in information.container.imgList"
+              v-bind:class="{ onePic: isOne }">
             <img class="previewer-demo-img" :src="items.src" alt="" @click="show(index, information)">
             <!--<img class="previewer-demo-img" :src="items.src" alt="" @click="preview(items, information.container.imgList)">-->
           </li>
@@ -91,7 +92,7 @@
         v-model="showMenus"
         show-cancel
         @on-click-menu="clickMenu"
-      @on-click-mask="clickMask"></actionsheet>
+        @on-click-mask="clickMask"></actionsheet>
     </div>
     <div v-transfer-dom>
       <popup v-model="showCommentField" height="100%" style="background-color: #ffffff">
@@ -103,7 +104,8 @@
             <a slot="right" @click="subComment(information)">发送</a>
           </x-header>
           <group>
-            <x-textarea :max="500" ref="textArea" v-model="commentText" class="commentField" :placeholder="placeholder" :show-counter="false" :rows="4" autosize></x-textarea>
+            <x-textarea :max="500" ref="textArea" v-model="commentText" class="commentField" :placeholder="placeholder"
+                        :show-counter="false" :rows="4" autosize></x-textarea>
           </group>
         </div>
       </popup>
@@ -120,7 +122,20 @@
   </div>
 </template>
 <script>
-  import { Previewer, Actionsheet, TransferDom, XInput, Group, Divider, querystring, XDialog, XHeader, Popup, XTextarea } from 'vux'
+  import {
+    Previewer,
+    Actionsheet,
+    TransferDom,
+    XInput,
+    Group,
+    Divider,
+    querystring,
+    XDialog,
+    XHeader,
+    Popup,
+    XTextarea
+  } from 'vux'
+
   export default {
     name: 'activityCard',
     directives: {
@@ -466,7 +481,8 @@
                 value.activity.like = value.activity.like + 1;
                 console.log(value.activity)
               }
-            }).catch(e => {})
+            }).catch(e => {
+            })
           } else {
             let params = {
               neighborId: id
@@ -532,25 +548,25 @@
   }
 </script>
 <style type="text/less" lang="less" scoped>
-  .act-card{
-    .main-banner{
+  .act-card {
+    .main-banner {
       background-color: #ffffff;
       margin-top: 10px;
       padding: 10px 15px 15px;
-      .avatar{
+      .avatar {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        div{
+        div {
           display: flex;
           flex-direction: row;
           /*align-items: center;*/
-          img{
+          img {
             width: 40px;
             height: 40px;
             border-radius: 50%;
           }
-          .name{
+          .name {
             flex: 1;
             margin-left: 10px;
             font-size: 10px;
@@ -558,36 +574,36 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            p:first-child{
+            p:first-child {
               font-size: 15px;
               color: #333333;
             }
           }
-          .endTime{
+          .endTime {
             line-height: 100%;
             font-size: 12px;
             color: #aaaaaa;
           }
         }
-        .endTime{
+        .endTime {
           font-size: 12px;
           color: #aaaaaa;
         }
       }
-      .introduce{
+      .introduce {
         margin-top: 12px;
-        p{
+        p {
           font-size: 15px;
           text-align: left;
           word-wrap: break-word;
         }
       }
-      .imgList{
+      .imgList {
         margin-top: 12px;
-        ul{
+        ul {
           display: flex;
           flex-wrap: wrap;
-          li{
+          li {
             width: 113.5px;
             height: 113.5px;
             margin-bottom: 2px;
@@ -595,44 +611,44 @@
             overflow: hidden;
             display: flex;
             align-items: center;
-            img{
+            img {
               width: 100%;
-              height:50vw;
+              height: 50vw;
             }
           }
-          .onePic{
+          .onePic {
             overflow: hidden;
             display: flex;
             align-items: center;
             width: 100%;
             height: 200px;
-            img{
+            img {
               width: 100%;
               height: auto;
             }
           }
-          li:nth-child(3n+1){
+          li:nth-child(3n+1) {
             margin-left: 0;
           }
         }
       }
-      .attentionList{
+      .attentionList {
         margin-top: 13px;
         padding-bottom: 13px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        ul{
+        ul {
           flex: 0.5;
           display: flex;
           align-items: center;
-          li{
+          li {
             display: flex;
             align-items: center;
             font-size: 12px;
             color: #aaaaaa;
             margin-left: 15px;
-            i{
+            i {
               display: block;
               width: 21px;
               height: 21px;
@@ -641,70 +657,70 @@
               background-position: center;
               background-size: contain;
             }
-            input{
+            input {
               border: none;
               width: 15px;
               font-size: 12px;
               color: #aaaaaa;
             }
           }
-          li:first-child{
+          li:first-child {
             margin-left: 0;
           }
-          li.attention{
-            i{
+          li.attention {
+            i {
               background-image: url("../../assets/images/like_icon_42gray.png");
             }
-            .like{
+            .like {
               background-image: url("../../assets/images/liked_icon_56red.png");
             }
           }
-          li.comment i{
+          li.comment i {
             background-image: url("../../assets/images/comment_icon_42gray.png");
           }
-          li.join i{
+          li.join i {
             background-image: url("../../assets/images/joinus_icon_42gray.png");
           }
-          li.vote i{
+          li.vote i {
             background-image: url("../../assets/images/vote_icon_42gray.png");
           }
         }
-        .tag{
+        .tag {
           font-size: 12px;
           color: #869DC7;
         }
       }
-      .aa{
-        height:0.5px;
+      .aa {
+        height: 0.5px;
         border-top: 0.5px solid #d8d8d8;
         margin-bottom: 15px;
       }
-      .commentList{
+      .commentList {
         /*padding-top: 15px;*/
-        width:100%;
-        ul{
+        width: 100%;
+        ul {
           margin-bottom: 15px;
           li {
             div, p {
               display: inline;
               font-size: 15px;
-              word-break:break-all;
-              word-wrap:break-word
+              word-break: break-all;
+              word-wrap: break-word
             }
-            .user{
+            .user {
               color: #869DC7;
             }
           }
-          li:active{
+          li:active {
             background-color: #e5e5e5;
           }
-          li.showMore{
+          li.showMore {
             display: flex;
             align-items: center;
             justify-content: center;
             margin-top: 15px;
             color: #aaaaaa;
-            i{
+            i {
               display: block;
               width: 11px;
               height: 11px;
@@ -713,10 +729,10 @@
             }
           }
         }
-        .commentInput{
+        .commentInput {
           /*margin-top: 15px;*/
-          width:100%;
-          span{
+          width: 100%;
+          span {
             width: 100%;
             height: 30px;
             line-height: 30px;
@@ -729,7 +745,7 @@
         }
       }
     }
-    .downLoad-icon{
+    .downLoad-icon {
 
     }
     .delete-wrapper {

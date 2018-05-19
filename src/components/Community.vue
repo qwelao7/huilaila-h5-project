@@ -299,33 +299,35 @@
   }
 </script>
 <style type="text/less" lang="less" scoped>
-  .community{
+  .community {
     height: 100%;
     width: 100%;
     background-color: #f7f7f7;
     position: relative;
-    .noContent{
+    .noContent {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       margin-top: 142.5px;
       margin-bottom: 284.5px;
-      img{
+      img {
         width: 150px;
         height: 150px;
       }
-      p{
+      p {
         margin-top: 10px;
         color: #aaaaaa;
         font-size: 15px;
       }
     }
   }
+
   .community_banner {
     width: 100%;
     position: relative;
   }
+
   .list-under-swiper {
     background-color: #ffffff;
     .weui-grids {
@@ -344,6 +346,7 @@
       border: none;
     }
   }
+
   .delete-wrapper {
     .delete-info {
       color: #333;
@@ -368,9 +371,10 @@
       }
     }
   }
-  .picList{
+
+  .picList {
     position: relative;
-    i{
+    i {
       position: absolute;
       left: 50%;
       margin-left: -14px;
@@ -385,7 +389,7 @@
       -webkit-animation: sdb04 3s infinite;
       animation: sdb04 3s infinite;
     }
-    .pullUp{
+    .pullUp {
       position: fixed;
       -webkit-animation: sdb04rotated 3s infinite;
       animation: sdb04rotated 3s infinite;
@@ -435,24 +439,26 @@
       }
     }
   }
+
   .showPic {
     width: 100%;
     height: 217px;
-    img{
+    img {
       width: 100%;
       height: 100%;
     }
   }
+
   .hidPic {
-    ul{
+    ul {
       width: 100%;
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
     }
-    .pic-box{
+    .pic-box {
       height: 150px;
-      img{
+      img {
         width: 100%;
         height: 100%;
       }

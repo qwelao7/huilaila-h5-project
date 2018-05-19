@@ -22,64 +22,102 @@
           <div class="beforeFee borderBtm">
             <group class="optionItem theme">
               <group-title slot="title" v-show="formItem.theme">主题</group-title>
-              <x-input ref="theme" @on-focus="onFocusTheme" required :max="50" class="hasTop" :class="{noTop: formItem.theme}" placeholder="主题" v-model="formItem.theme"></x-input>
+              <x-input ref="theme" @on-focus="onFocusTheme" required :max="50" class="hasTop"
+                       :class="{noTop: formItem.theme}" placeholder="主题" v-model="formItem.theme"></x-input>
             </group>
             <group class="optionItem">
-              <group-title slot="title" v-show="formItem.signStartTime">报名开始时间</group-title>
-              <cell class="hasTop" :class="{noTop: formItem.signStartTime}" :title="formItem.signStartTime || signStart" is-link @click.native="showSignStart"></cell>
+              <group-title slot="title" v-show="formItem.ActivityStartTime">活动开始时间</group-title>
+              <cell class="hasTop" :class="{noTop: formItem.ActivityStartTime}"
+                    :title="formItem.ActivityStartTime || activityStart" is-link
+                    @click.native="showActivityStart"></cell>
             </group>
             <group class="optionItem">
-              <group-title slot="title" v-show="formItem.signEndTime">报名结束时间</group-title>
-              <cell class="hasTop" :class="{noTop: formItem.signEndTime}" :title="formItem.signEndTime || signEnd" is-link @click.native="showSignEnd"></cell>
+              <group-title slot="title" v-show="formItem.ActivityEndTime">活动结束时间</group-title>
+              <cell class="hasTop" :class="{noTop: formItem.ActivityEndTime}"
+                    :title="formItem.ActivityEndTime || activityEnd" is-link @click.native="showActivityEnd"></cell>
             </group>
-            <group class="optionItem">
-              <group-title slot="title" v-show="formItem.limitCounter">报名人数限制（不填默认无限制）</group-title>
-              <x-input ref="limitCount" :max="5" class="hasTop" :class="{noTop: formItem.limitCounter}" type="tel" placeholder="报名人数限制（不填默认无限制）" v-model="formItem.limitCounter" @on-change="onInput"></x-input>
-            </group>
-            <group class="optionItem specialItem" :class="{needDetail: formItem.needSignerDetail}">
-              <x-switch title="需要报名人详细信息：" v-model="formItem.needSignerDetail"></x-switch>
-            </group>
+
           </div>
-            <span class="ps" v-show="formItem.needSignerDetail">注：为是时，报名时参与人需填写详细个人信息</span>
+          <span class="ps" v-show="formItem.needSignerDetail">注：为是时，报名时参与人需填写详细个人信息</span>
           <div class="beforeFee">
             <group class="optionItem specialItem">
               <x-switch title="收取报名费：" v-model="formItem.needFee"></x-switch>
             </group>
             <group class="optionItem fee" v-show="formItem.needFee">
               <group-title slot="title" v-show="formItem.registeryFee">报名费</group-title>
-              <cell class="hasTop" :class="{noTop: formItem.registeryFee}" :title="tips || fee" is-link @click.native="showFeePopup">
+              <cell class="hasTop" :class="{noTop: formItem.registeryFee}" :title="tips || fee" is-link
+                    @click.native="showFeePopup">
                 <!--<span slot="title">{{tips}}</span>-->
               </cell>
             </group>
           </div>
           <span class="ps" v-show="formItem.needFee">注：报名结束后您可提取报名费用，提取后将不可取消活动</span>
           <div class="afterFee">
+            <group class="optionItem">
+              <group-title slot="title" v-show="formItem.ActivityAddress">活动地点</group-title>
+              <x-input ref="address" @on-focus="onFocusAddress" required :max="50" class="hasTop"
+                       :class="{noTop: formItem.ActivityAddress}" placeholder="活动地点" v-model="formItem.ActivityAddress"
+                       @on-change="onChange"></x-input>
+            </group>
+            <group class="optionItem description">
+              <x-textarea :max="500" :show-counter="false" placeholder="描述一下您活动的具体内容，如主题、形式、特别注意事项等..."
+                          v-model="formItem.ActivityDescription" :rows="2" ref="content"
+                          @on-focus="onFocusContent"></x-textarea>
+            </group>
+            <ul class="chooseImg">
+              <li v-for="(imgList, index) in imgList">
+                <img :src="imgList" @click="showDeletePop(index)" alt="">
+              </li>
+              <li class="add" @click="chooseImages" v-show="imgList.length < 9"></li>
+            </ul>
+          </div>
+          <div class="spacing-container"></div>
+          <div class="optionItem extraOptions" @click="onExtra">
+            <group-title slot="title" class="extraText">更多设置</group-title>
+            <x-icon type="ios-arrow-down" class="arrow-down" v-show="extraOptions"></x-icon>
+            <x-icon type="ios-arrow-up" class="arrow-down" v-show="!extraOptions"></x-icon>
+          </div>
+          <div class="afterFee" v-show="!extraOptions">
+            <group class="optionItem">
+              <group-title slot="title" v-show="formItem.signStartTime">报名开始时间</group-title>
+              <cell class="hasTop" :class="{noTop: formItem.signStartTime}" :title="formItem.signStartTime || signStart"
+                    is-link @click.native="showSignStart"></cell>
+            </group>
+            <group class="optionItem">
+              <group-title slot="title" v-show="formItem.signEndTime">报名结束时间</group-title>
+              <cell class="hasTop" :class="{noTop: formItem.signEndTime}" :title="formItem.signEndTime || signEnd"
+                    is-link @click.native="showSignEnd"></cell>
+            </group>
+            <group class="optionItem">
+              <group-title slot="title" v-show="formItem.limitCounter">报名人数限制（不填默认无限制）</group-title>
+              <x-input ref="limitCount" :max="5" class="hasTop" :class="{noTop: formItem.limitCounter}" type="tel"
+                       placeholder="报名人数限制（不填默认无限制）" v-model="formItem.limitCounter" @on-change="onInput"></x-input>
+            </group>
+            <group class="optionItem specialItem" :class="{needDetail: formItem.needSignerDetail}">
+              <x-switch title="需要报名人详细信息：" v-model="formItem.needSignerDetail"></x-switch>
+            </group>
             <group class="optionItem specialItem">
               <x-switch title="仅限本小区业主报名：" v-model="formItem.isLimited"></x-switch>
             </group>
-            <group class="optionItem">
-              <group-title slot="title" v-show="formItem.ActivityStartTime">活动开始时间</group-title>
-              <cell class="hasTop" :class="{noTop: formItem.ActivityStartTime}" :title="formItem.ActivityStartTime || activityStart" is-link @click.native="showActivityStart"></cell>
+          </div>
+          <div class="spacing-container" v-show="!extraOptions"></div>
+          <div class="afterFee extraSheet" v-show="!extraOptions">
+            <group class="optionItem ">
+              <group-title>报名表单设置</group-title>
             </group>
-            <group class="optionItem">
-              <group-title slot="title" v-show="formItem.ActivityEndTime">活动结束时间</group-title>
-              <cell class="hasTop" :class="{noTop: formItem.ActivityEndTime}" :title="formItem.ActivityEndTime || activityEnd" is-link @click.native="showActivityEnd"></cell>
+            <group class="optionItem" v-for="(item,index) in extraInfo">
+              <cell>
+                <span slot="title" class="extraAddTitle">{{item}}</span>
+                <x-icon type="ios-close" class="cell-x-icon" @click="deleteExtra(index)"></x-icon>
+              </cell>
             </group>
-            <group class="optionItem">
-              <group-title slot="title" v-show="formItem.ActivityAddress">活动地点</group-title>
-              <x-input ref="address" @on-focus="onFocusAddress" required :max="50" class="hasTop" :class="{noTop: formItem.ActivityAddress}" placeholder="活动地点" v-model="formItem.ActivityAddress" @on-change="onChange"></x-input>
-            </group>
-            <group class="optionItem description">
-              <x-textarea :max="500" :show-counter="false" placeholder="描述一下您活动的具体内容，如主题、形式、特别注意事项等..." v-model="formItem.ActivityDescription" :rows="2" ref="content" @on-focus="onFocusContent"></x-textarea>
+            <group class="optionItem extraOptionsAdd">
+              <group-title slot="title" class="extraAdd" @click.native="onExtraAdd">+添加字段</group-title>
             </group>
           </div>
+
         </div>
-        <ul class="chooseImg">
-          <li v-for="(imgList, index) in imgList">
-            <img :src="imgList" @click="showDeletePop(index)" alt="">
-          </li>
-          <li class="add" @click="chooseImages" v-show="imgList.length < 9"></li>
-        </ul>
+
       </div>
     </view-box>
     <div v-transfer-dom>
@@ -100,7 +138,8 @@
           <div class="bannerFee">
             <group class="feeNum">
               <group-title slot="title" v-show="feeNumber">金额（元/人）</group-title>
-              <x-input class="hasTop" :class="{noTop: feeNumber}" type="number" placeholder="金额（元/人）" @on-change="inputFee" :is-type="amount" v-model="feeNumber"></x-input>
+              <x-input class="hasTop" :class="{noTop: feeNumber}" type="number" placeholder="金额（元/人）"
+                       @on-change="inputFee" :is-type="amount" v-model="feeNumber"></x-input>
             </group>
             <div class="reFound">
               <!--<span class="title">退款方式：</span>
@@ -131,7 +170,8 @@
       </x-dialog>
     </div>
     <div v-transfer-dom>
-      <x-dialog v-model="isPublish" :dialog-style="{'max-width': '100%', width: '100%', height: '50%', 'background-color': 'transparent'}">
+      <x-dialog v-model="isPublish"
+                :dialog-style="{'max-width': '100%', width: '100%', height: '50%', 'background-color': 'transparent'}">
         <br>
         <div style="display: flex;align-items: center;justify-content: center">
           <p style="font-size:16px;color:#fff;margin-right: 10px">{{pubText}}</p>
@@ -142,10 +182,30 @@
   </div>
 </template>
 <script>
-  import { ViewBox, XHeader, XInput, XButton, XTextarea, Actionsheet, Popup, TransferDom, Group, Cell, GroupTitle, Datetime, XSwitch, Radio, XDialog, Spinner, querystring } from 'vux'
+  import {
+    ViewBox,
+    XHeader,
+    XInput,
+    XButton,
+    XTextarea,
+    Actionsheet,
+    Popup,
+    TransferDom,
+    Group,
+    Cell,
+    GroupTitle,
+    Datetime,
+    XSwitch,
+    Radio,
+    XDialog,
+    Spinner,
+    querystring,
+    ConfirmPlugin
+  } from 'vux'
   import {jlDate} from 'common/js/utils';
   import {File} from '../../common/js/Upload'
   import {JNavigator} from '../../common/js/utils'
+
   export default {
     name: 'pub_activity',
     directives: {
@@ -166,7 +226,8 @@
       Radio,
       Group,
       GroupTitle,
-      Spinner
+      Spinner,
+      ConfirmPlugin
     },
     data () {
       return {
@@ -242,7 +303,9 @@
           borderRadius: '0.533333rem'
         },
         isPublish: false,
-        pubText: '活动发布中'
+        pubText: '活动发布中',
+        extraOptions: true,
+        extraInfo: []
       }
     },
     created () {
@@ -430,10 +493,10 @@
         }
       },
       showActivityStart () {
-        if (!this.formItem.signEndTime) {
+        if (!this.formItem.theme) {
           this.$vux.toast.show({
             type: 'text',
-            text: '请先选择活动报名结束时间'
+            text: '请先添加主题'
           })
         } else {
           let _this = this;
@@ -605,13 +668,13 @@
         }
       },
       onFocusTheme () {
-        if (!this.posters.length) {
-          this.$vux.toast.show({
-            type: 'text',
-            text: '请上传活动海报'
-          });
-          this.$refs.theme.blur()
-        }
+        // if (!this.posters.length) {
+        //   this.$vux.toast.show({
+        //     type: 'text',
+        //     text: '请上传活动海报'
+        //   });
+        //   this.$refs.theme.blur()
+        // }
       },
       onFocusAddress () {
         if (!this.formItem.ActivityEndTime) {
@@ -757,7 +820,8 @@
                           joinType: Number(_this.formItem.needFee),
                           joinMoney: _this.formItem.registeryFee || 0,
                           refundType: Number(_this.formItem.reFundWay),
-                          joinOtherCommunity: Number(_this.formItem.isLimited)
+                          joinOtherCommunity: Number(_this.formItem.isLimited),
+                          extraInfo: _this.extraInfo
                         };
                         console.log(222, params)
                         _this.pubActivity(params)
@@ -789,7 +853,8 @@
               joinType: Number(_this.formItem.needFee),
               joinMoney: _this.formItem.registeryFee || 0,
               refundType: Number(_this.formItem.reFundWay),
-              joinOtherCommunity: Number(_this.formItem.isLimited)
+              joinOtherCommunity: Number(_this.formItem.isLimited),
+              extraInfo: _this.extraInfo
             };
             console.log(222, params)
             _this.pubActivity(params)
@@ -801,10 +866,12 @@
         let _this = this;
         _this.$JHttp({
           method: 'post',
-          url: window.baseURL + '/socialactivity/addActivit?' + querystring.stringify(params),
+          // url: window.baseURL + '/socialactivity/addActivit?' + querystring.stringify(params),
+          url: window.baseURL + '/socialactivity/addActivit',
           headers: {
             defCommunityId: _this.communityId
-          }
+          },
+          data: params
         }).then(res => {
           _this.isPublish = false
           if (res.status === 100) {
@@ -857,45 +924,66 @@
             console.log(err)
           })
         }
+      },
+      onExtra () {
+        this.extraOptions = !this.extraOptions
+      },
+      onExtraAdd () {
+        let _this = this;
+        this.$vux.confirm.prompt('请输入需要增加的字段', {
+          title: '新增字段',
+          onConfirm (msg) {
+            _this.extraInfo.push(msg)
+          }
+        })
+      },
+      deleteExtra (index) {
+        let _this = this;
+        _this.extraInfo.splice(index, 1)
       }
     }
   }
 </script>
 <style>
-  .readyPublish{
-    color: #0DAB60!important;
+  .readyPublish {
+    color: #0DAB60 !important;
   }
-  .vux-spinner{
-    fill: #fff!important;
-    stroke: #fff!important;
+
+  .vux-spinner {
+    fill: #fff !important;
+    stroke: #fff !important;
+  }
+
+  .cell-x-icon {
+    fill: #64a36c
   }
 </style>
 <style type="text/less" lang="less" scoped>
-  .publishActivity{
+  .publishActivity {
     position: relative;
     height: 100%;
-    .pubBanner{
+    .pubBanner {
       height: 100%;
       width: 100%;
       position: relative;
-      .choosePoster{
-        li{
+      .choosePoster {
+        li {
           width: 100%;
           height: 214px;
           overflow: hidden;
           display: flex;
           align-items: center;
-          img{
+          img {
             width: 100%;
             height: 100%;
           }
         }
-        .add{
+        .add {
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          i{
+          i {
             width: 35px;
             height: 35px;
             background-image: url("../../assets/images/plus_70.png");
@@ -904,24 +992,24 @@
             background-size: contain;
             /*<!--background: url("../../assets/images/plus_70.png") center no-repeat / contain;-->*/
           }
-          span{
+          span {
             margin-top: 15px;
             font-size: 15px;
             color: #aaaaaa;
           }
         }
       }
-      .options{
-        .beforeFee, .afterFee{
+      .options {
+        .beforeFee, .afterFee {
           padding: 0 15px;
         }
-        .ps{
+        .ps {
           padding: 15px 15px 25px 15px;
           background-color: #f5f5f5;
           font-size: 12px;
           color: #aaaaaa;
         }
-        .optionItem{
+        .optionItem {
           background-color: #ffffff;
           height: 55px;
           line-height: 55px;
@@ -929,33 +1017,53 @@
           border-bottom: 0.5px solid #D8D8D8;
           font-size: 21px;
         }
-        .fee{
+        .fee {
           border-bottom: none;
         }
-        .theme{
+        .theme {
           border-top: 0.5px solid #D8D8D8;
         }
-        .description{
+        .description {
           border-bottom: none;
         }
-        .specialItem{
+        .specialItem {
           width: 100%;
           display: flex;
           align-items: center;
           /*padding: 18px 0*/
         }
-        .needDetail{
+        .needDetail {
           border-bottom: none;
         }
+        .spacing-container {
+          width: 100%;
+          height: 10px;
+          background-color: #f5f5f5;
+        }
+        .extraOptions, .extraOptionsAdd {
+          text-align: center;
+          padding: 15px 0;
+          .extraText, .extraAdd {
+            font-size: 21px;
+            padding: 0;
+            line-height: 36px;
+          }
+          .arrow-down, .arrow-up {
+            fill: #aaa;
+          }
+        }
+        .extraOptionsAdd {
+          padding-bottom: 0;
+        }
       }
-      .chooseImg{
+      .chooseImg {
         display: flex;
         flex-wrap: wrap;
         /*justify-content: space-between;*/
         align-items: center;
-        padding: 10px 15px;
+        padding: 10px 0;
         padding-bottom: 30px;
-        li{
+        li {
           width: 105px;
           height: 105px;
           margin-left: 15px;
@@ -963,15 +1071,15 @@
           overflow: hidden;
           display: flex;
           align-items: center;
-          img{
+          img {
             width: 100%;
             height: 100%;
           }
         }
-        li:nth-child(3n + 1){
+        li:nth-child(3n + 1) {
           margin-left: 0;
         }
-        .add{
+        .add {
           display: flex;
           align-items: center;
           justify-content: center;
@@ -985,19 +1093,28 @@
         }
       }
     }
-    .hasTop{
+    .hasTop {
       margin-top: 26px;
     }
-    .noTop{
+    .noTop {
       margin-top: 0;
-      .noTop{
+      .noTop {
         margin-top: 0;
-        .vux-label{
-          color: #333333!important;
+        .vux-label {
+          color: #333333 !important;
         }
       }
     }
+
   }
+
+  .extraSheet {
+    .weui-cells__title, .extraAddTitle {
+      color: #333 !important;
+      font-size: 21px;
+    }
+  }
+
   .delete-wrapper {
     .delete-info {
       color: #333;

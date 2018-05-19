@@ -8,7 +8,13 @@
       </x-header>
       <div class="signUpBanner">
         <group class="signUpList">
-          <cell-box link="/joinPeople" class="item" v-show="signInfo.needUserDetail">
+          <cell-box class="item">
+            <div class="address">
+              <i class="icon"></i>
+              <span>{{signInfo.activityAddress}}</span>
+            </div>
+          </cell-box>
+          <cell-box link="/joinPeople" class="item noline" v-show="signInfo.needUserDetail">
             <div class="people">
               <i class="icon"></i>
               <span>{{ApplyInfo.length}}人</span>
@@ -35,12 +41,6 @@
           </cell-box>
           <cell-box class="item noline">
             <div class="address">
-              <i class="icon"></i>
-              <span>{{signInfo.activityAddress}}</span>
-            </div>
-          </cell-box>
-          <cell-box class="item noline">
-            <div class="address">
               <i class="icon_1"></i>
               <span>{{signInfo.startDate}}</span>
             </div>
@@ -52,6 +52,7 @@
             </div>
           </cell-box>
         </group>
+        <div class="spacing-container"></div>
         <group class="options">
           <x-textarea placeholder="如您有什么特别需求可告知我们..." :height="130" :rows="8" :cols="30" :max="500" :show-counter="false" v-model="note" @on-focus="showBtn = false" @on-blur="showBtn = true"></x-textarea>
         </group>
