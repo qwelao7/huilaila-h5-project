@@ -14,31 +14,6 @@
               <span>{{signInfo.activityAddress}}</span>
             </div>
           </cell-box>
-          <cell-box link="/joinPeople" class="item noline" v-show="signInfo.needUserDetail">
-            <div class="people">
-              <i class="icon"></i>
-              <span>{{ApplyInfo.length}}人</span>
-              <!--<span>{{joinPeopleAccount}}人</span>-->
-              <ul>
-                <li v-for="item in showApply">
-                  <div v-if="item.completed">
-                    <img style="width: 100%;height: 100%;" :src="item.joinUserPhoto" alt="" v-show="item.joinUserPhoto">
-                    <img style="width: 100%;height: 100%;" src="../../../assets/images/default_avatar.png" alt="" v-show="!item.joinUserPhoto">
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </cell-box>
-          <cell-box class="item noline" v-show="!signInfo.needUserDetail">
-            <div class="people noDetail">
-              <div>
-                <i class="icon"></i>
-                <!--<span>{{signInfo.applyUserCount}}人</span>-->
-                <span>{{joinPeopleAccount}}人</span>
-              </div>
-              <x-number :min="1" :max="99" :value="1" @on-change="change" v-model="joinPeopleAccount" fillable></x-number>
-            </div>
-          </cell-box>
           <cell-box class="item noline">
             <div class="address">
               <i class="icon_1"></i>
@@ -53,8 +28,42 @@
           </cell-box>
         </group>
         <div class="spacing-container"></div>
+        <group class="signUpList">
+          <cell-box link="/joinPeople" class="item noline" v-show="signInfo.needUserDetail">
+            <div class="people">
+              <i class="icon"></i>
+              <span>{{ApplyInfo.length}}人</span>
+              <!--<span>{{joinPeopleAccount}}人</span>-->
+              <ul>
+                <li v-for="item in showApply">
+                  <div v-if="item.completed">
+                    <img style="width: 100%;height: 100%;" :src="item.joinUserPhoto" alt="" v-show="item.joinUserPhoto">
+                    <img style="width: 100%;height: 100%;" src="../../../assets/images/default_avatar.png" alt=""
+                         v-show="!item.joinUserPhoto">
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </cell-box>
+          <cell-box class="item" v-show="!signInfo.needUserDetail">
+            <div class="people noDetail">
+              <div>
+                <i class="icon"></i>
+                <!--<span>{{signInfo.applyUserCount}}人</span>-->
+                <span>{{joinPeopleAccount}}人</span>
+              </div>
+              <x-number :min="1" :max="99" :value="1" @on-change="change" v-model="joinPeopleAccount"
+                        fillable></x-number>
+            </div>
+          </cell-box>
+          <template v-for="item in extraInfo">
+            <x-input :placeholder="item.question" v-model="item.answer" required></x-input>
+          </template>
+        </group>
         <group class="options">
-          <x-textarea placeholder="如您有什么特别需求可告知我们..." :height="130" :rows="8" :cols="30" :max="500" :show-counter="false" v-model="note" @on-focus="showBtn = false" @on-blur="showBtn = true"></x-textarea>
+          <x-textarea placeholder="如您有什么特别需求可告知我们..." :height="130" :rows="8" :cols="30" :max="500"
+                      :show-counter="false" v-model="note" @on-focus="showBtn = false"
+                      @on-blur="showBtn = true"></x-textarea>
         </group>
       </div>
       <div slot="bottom" v-show="isOriginHei">
@@ -89,25 +98,29 @@
               <radio :options="PaySelection" @on-change="selectPayType" v-model="payType"></radio>
             </group>
           </div>
-          <div class="goPay"><button @click="toPay">确认支付</button></div>
+          <div class="goPay">
+            <button @click="toPay">确认支付</button>
+          </div>
         </div>
       </popup>
     </div>
     <div v-transfer-dom class="payFeePopup">
       <!--<popup v-model="showDetail" class="payPopup" height="100%" :show-mask="false" :popup-style="style">-->
-        <!--<div class="content">-->
-          <!--<div class="content-tit">-->
-            <!--<p class="items">报名费</p>-->
-            <!--<p class="plus">¥<span>{{signInfo.joinMoney}}</span>X<span>{{ApplyInfo.length}}</span></p>-->
-          <!--</div>-->
-        <!--</div>-->
+      <!--<div class="content">-->
+      <!--<div class="content-tit">-->
+      <!--<p class="items">报名费</p>-->
+      <!--<p class="plus">¥<span>{{signInfo.joinMoney}}</span>X<span>{{ApplyInfo.length}}</span></p>-->
+      <!--</div>-->
+      <!--</div>-->
       <!--</popup>-->
       <popup v-model="showDetail" class="payPopup" height="70%" :popup-style="{'background-color': '#f5f5f5'}">
         <div class="content">
           <div class="content-tit">
             <p class="items">报名费</p>
-            <p class="plus" v-show="signInfo.needUserDetail">¥<span>{{signInfo.joinMoney}}</span>×<span>{{ApplyInfo.length}}</span></p>
-            <p class="plus" v-show="!signInfo.needUserDetail">¥<span>{{signInfo.joinMoney}}</span>×<span>{{joinPeopleAccount}}</span></p>
+            <p class="plus" v-show="signInfo.needUserDetail">¥<span>{{signInfo.joinMoney}}</span>×<span>{{ApplyInfo.length}}</span>
+            </p>
+            <p class="plus" v-show="!signInfo.needUserDetail">¥<span>{{signInfo.joinMoney}}</span>×<span>{{joinPeopleAccount}}</span>
+            </p>
           </div>
         </div>
       </popup>
@@ -115,9 +128,23 @@
   </div>
 </template>
 <script>
-  import { XHeader, ViewBox, Group, CellBox, XTextarea, XButton, XInput, XNumber, Popup, Radio, TransferDom, querystring } from 'vux'
+  import {
+    XHeader,
+    ViewBox,
+    Group,
+    CellBox,
+    XTextarea,
+    XButton,
+    XInput,
+    XNumber,
+    Popup,
+    Radio,
+    TransferDom,
+    querystring
+  } from 'vux'
   import wallet from '../../../assets/images/wallet_icon_payway.png'
   import wePay from '../../../assets/images/wechat_icon_payway.png'
+
   export default {
     name: 'signUp',
     directives: {
@@ -137,6 +164,20 @@
     },
     data () {
       return {
+        extraInfo: [
+          {
+            question: '111',
+            answer: ''
+          },
+          {
+            question: '222',
+            answer: ''
+          },
+          {
+            question: '333',
+            answer: ''
+          }
+        ],
         joinPeopleAccount: 0,
         signInfo: {},
         note: '',
@@ -408,7 +449,8 @@
       }
     }
   }
-// 制保留2位小数，不够的补上00即20.00
+
+  // 制保留2位小数，不够的补上00即20.00
   function toDecimal2 (x) {
     var f = parseFloat(x);
     if (isNaN(f)) {
@@ -428,33 +470,38 @@
   }
 </script>
 <style type="text/less" lang="less" scoped>
-  .signUp{
+  .signUp {
     height: 100%;
     background-color: #ffffff;
-    .signUpBanner{
-      .item{
-        div{
+    .signUpBanner {
+      .spacing-container {
+        width: 100%;
+        height: 10px;
+        background-color: #f5f5f5;
+      }
+      .item {
+        div {
           display: flex;
           align-items: center;
-          span{
+          span {
             font-size: 15px;
             color: #333333;
             margin-left: 18px;
           }
-          ul{
+          ul {
             display: flex;
             align-items: center;
-            li:first-child{
+            li:first-child {
               margin-left: 0;
             }
-            li{
+            li {
               border: 4px solid #ffffff;
               margin-left: -9px;
               border-radius: 50%;
-              div{
+              div {
                 width: 26px;
                 height: 26px;
-                img{
+                img {
                   width: 100%;
                   height: 100%;
                   border-radius: 50%;
@@ -463,36 +510,36 @@
             }
           }
         }
-        .people{
-          i{
+        .people {
+          i {
             background-image: url("../../../assets/images/user_icon_32black.png");
           }
-          span{
+          span {
             margin-left: 15px;
           }
         }
-        .address .icon{
+        .address .icon {
           background-image: url("../../../assets/images/address_icon_32black.png");
         }
-        .address .icon_1{
+        .address .icon_1 {
           background-image: url("../../../assets/images/time_icon_32black.png");
         }
-        .address .icon_2{
+        .address .icon_2 {
           background-image: url("../../../assets/images/fee_icon_32black.png");
         }
-        .address{
+        .address {
           flex: 1;
-          height:21px;
+          height: 21px;
           line-height: 21px;
           display: flex;
           align-items: center;
         }
-        .address span{
+        .address span {
           vertical-align: middle;
           flex: 1;
           font-size: 15px;
         }
-        .icon{
+        .icon {
           vertical-align: middle;
           width: 16px;
           height: 16px;
@@ -500,7 +547,7 @@
           background-repeat: no-repeat;
           background-position: center;
         }
-        .icon_1{
+        .icon_1 {
           vertical-align: middle;
           width: 16px;
           height: 16px;
@@ -508,7 +555,7 @@
           background-repeat: no-repeat;
           background-position: center;
         }
-        .icon_2{
+        .icon_2 {
           vertical-align: middle;
           width: 16px;
           height: 16px;
@@ -517,78 +564,78 @@
           background-position: center;
         }
       }
-      .options{
-        .weui-cells:before{
+      .options {
+        .weui-cells:before {
           border: none;
         }
-        span{
+        span {
           font-size: 21px;
           font-weight: bold;
         }
-        .choose{
+        .choose {
           color: #aaaaaa;
         }
-        .arrow{
+        .arrow {
           width: .35rem;
           height: .35rem;
           background: url("../../../assets/images/arrow_icon_grey32.png") center no-repeat / contain;
         }
       }
     }
-    .submitArea{
+    .submitArea {
       /*flex: 1;*/
       padding: 20px 15px;
       display: flex;
       flex-direction: column;
-      .linkTo{
+      .linkTo {
         font-size: 12px;
         display: flex;
         flex-direction: row;
-        a{
+        a {
           color: #0DAB60;
           text-decoration: underline;
         }
       }
-      .weui-btn_primary{
+      .weui-btn_primary {
         margin: 20px auto;
         height: 44px;
-        line-height:44px;
+        line-height: 44px;
         background-color: #0DAB60;
       }
     }
-    .wholePage{
+    .wholePage {
       background-color: #f7f7fa;
     }
-    .signUp_bottom{
-      width:100%;
+    .signUp_bottom {
+      width: 100%;
       position: fixed;
-      bottom:0;
-      left:0;
-      .refund_time{
-        width:100%;
-        height:40px;
-        line-height:40px;
+      bottom: 0;
+      left: 0;
+      .refund_time {
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
         padding-left: 15px;
         background: #f7f7f7;
         color: #869dc7;
       }
-      .signUp_next{
-        width:100%;
-        height:50px;
+      .signUp_next {
+        width: 100%;
+        height: 50px;
         line-height: 50px;
-        .activity_pic{
-          width:50%;
-          height:100%;
+        .activity_pic {
+          width: 50%;
+          height: 100%;
           float: left;
-          border-top:solid 0.5px #D8D8D8;
-          .all{
+          border-top: solid 0.5px #D8D8D8;
+          .all {
             color: #333;
             font-size: 12px;
             margin-left: 15px;
             display: inline-block;
           }
-          .price{
-            span{
+          .price {
+            span {
               display: inline-block;
             }
             font-size: 18px;
@@ -596,9 +643,9 @@
             color: #0DAB60;
             display: inline-block;
           }
-          i{
-            width:24px;
-            height:24px;
+          i {
+            width: 24px;
+            height: 24px;
             display: block;
             background: url("../../../assets/images/arrow_close_greysmall.png") no-repeat;
             background-position: center;
@@ -607,9 +654,9 @@
             margin-top: 13px;
             margin-right: 10px;
           }
-          .activity_i{
-            width:24px;
-            height:24px;
+          .activity_i {
+            width: 24px;
+            height: 24px;
             display: block;
             background: url("../../../assets/images/arrow_open_greysmall.png") no-repeat;
             background-position: center;
@@ -619,28 +666,28 @@
             margin-right: 10px;
           }
         }
-        .activity_next{
+        .activity_next {
           float: left;
-          width:50%;
+          width: 50%;
           background: #0DAB60;
           color: #ffffff;
-          height:100%;
-          line-height:50px;
+          height: 100%;
+          line-height: 50px;
           font-size: 18px;
           text-align: center;
         }
       }
     }
-    .signUp_up{
-      width:100%;
-      height:50px;
+    .signUp_up {
+      width: 100%;
+      height: 50px;
       background: #0DAB60;
       color: #ffffff;
       font-size: 18px;
       text-align: center;
       line-height: 50px;
       position: fixed;
-      bottom:0;
+      bottom: 0;
       left: 0;
     }
   }

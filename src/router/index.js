@@ -122,6 +122,16 @@ export default new Router({
       component: resolve => require(['@/components/home/activity/signUpPeople'], resolve)
     },
     {
+      path: '/cordinatorActive/:id',
+      name: '开启活动协办',
+      component: resolve => require(['@/components/home/activity/cordinatorActive'], resolve)
+    },
+    {
+      path: '/cordinatorList/:id',
+      name: '活动协办人',
+      component: resolve => require(['@/components/home/activity/cordinatorList'], resolve)
+    },
+    {
       path: '/signUpDetail',
       name: '活动签到',
       component: resolve => require(['@/components/home/activity/signUpDetail'], resolve)

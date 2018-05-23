@@ -15,9 +15,11 @@
               <p v-if="detailObj.activityType === 1" class="officialTitle">{{detailObj.activityName}}</p>
               <div class="avatar">
                 <div class="headTit">
-                  <img v-if="detailObj.activityType === 0" :src="userInfo.headPicName" alt="" @click="toPersonPage_(detailObj)">
+                  <img v-if="detailObj.activityType === 0" :src="userInfo.headPicName" alt=""
+                       @click="toPersonPage_(detailObj)">
                   <div class="name" @click="toPersonPage_(detailObj)">
-                    <p class="nickName" v-if="detailObj.activityType === 0"><span>{{userInfo.nickname}}</span><i></i></p>
+                    <p class="nickName" v-if="detailObj.activityType === 0"><span>{{userInfo.nickname}}</span><i></i>
+                    </p>
                     <p>{{detailObj.intime}}</p>
                   </div>
                 </div>
@@ -71,6 +73,20 @@
                   </div>
                 </cell-box>
               </group>
+              <group>
+                <cell-box is-link class="accountList" @click.native="toCordinator(detailObj)">
+                  <div>
+                    <span>活动协办人</span>
+                  </div>
+                </cell-box>
+              </group>
+              <group>
+                <cell-box is-link class="accountList" @click.native="">
+                  <div>
+                    <span>活动结算</span>
+                  </div>
+                </cell-box>
+              </group>
               <group class="commentCell" v-show="commentList.length > 0">
                 <cell-box class="commentTotal">
                   <span>共{{commentList.length}}条评论</span>
@@ -107,13 +123,17 @@
         </j-pull>
       </div>
       <div class="bottomLikeTab">
-        <div class="joinTab" @click="goToSignUp(detailObj)" v-show="!isMyActivity">
-          <i></i>
-          <span>报名</span>
-        </div>
         <div class="commentTab" @click="addComment(detailObj)">
           <i></i>
           <span>评论</span>
+        </div>
+        <div class="albumTab" @click="" v-show="">
+          <i></i>
+          <span>活动相册</span>
+        </div>
+        <div class="joinTab" @click="goToSignUp(detailObj)" v-show="!isMyActivity">
+          <i></i>
+          <span>报名</span>
         </div>
       </div>
     </view-box>
@@ -154,6 +174,7 @@
         </div>
       </x-dialog>
     </div>
+
   </div>
 </template>
 <script>
@@ -239,6 +260,7 @@
         commentText: '',
         menuOpt: {},
         showMenuOpt: false,
+        showCordinatorOpt: false,
         messageId: '',
         msgIndex: '',
         curTopic: {},
@@ -707,6 +729,9 @@
             }
           })
         }
+      },
+      toCordinator (val) {
+        this.$router.push('/cordinatorActive/' + val.activityId)
       }
     }
   }
@@ -718,7 +743,7 @@
     .detailBanner {
       background-color: #ffffff;
       padding: 0 15px;
-      .officialTitle{
+      .officialTitle {
         padding-top: 10px;
         font-size: 24px;
         font-weight: 700;
@@ -810,18 +835,18 @@
               overflow: hidden;
               display: flex;
               align-items: center;
-              img{
+              img {
                 width: 100%;
-                height:50vw;
+                height: 50vw;
               }
             }
-            .onePic{
+            .onePic {
               overflow: hidden;
               display: flex;
               align-items: center;
               width: 100%;
               height: 200px;
-              img{
+              img {
                 width: 100%;
                 height: auto;
               }
@@ -865,11 +890,24 @@
               margin-left: -9px;
               border-radius: 50%;
               img {
-                width:100%;
-                height:100%;
+                width: 100%;
+                height: 100%;
                 border-radius: 50%;
               }
             }
+          }
+        }
+      }
+      .accountList {
+        padding: 10px 0 10px 0;
+        margin: 0 0 0 15px;
+        border-bottom: 0.5px solid #d8d8d8;
+        div {
+          display: flex;
+          align-items: center;
+          span {
+            font-size: 15px;
+            color: #333;
           }
         }
       }
@@ -999,7 +1037,6 @@
         }
       }
       .joinTab {
-        border-right: 0.5px solid #D8D8D8;
         i {
           background-image: url("../../../assets/images/enroll_icon_56black.png");
         }
@@ -1008,8 +1045,14 @@
         }
       }
       .commentTab {
+        border-right: 0.5px solid #D8D8D8;
         i {
           background-image: url("../../../assets/images/comment_icon_56black.png");
+        }
+      }
+      .albumTab {
+        i {
+          background-image: url("../../../assets/images/album_tab.png");
         }
       }
     }
