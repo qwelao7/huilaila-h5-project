@@ -211,6 +211,9 @@
         } else if (value.topicType === 4) {
           type = 7;
           id = value.neighborId
+        } else if (value.topicType === 11) {
+          type = 11;
+          id = value.neighborId
         }
         if (!_this.commentText.trim()) {
           _this.$vux.toast.show({
@@ -366,6 +369,9 @@
             id = value.userId;
             this.$router.push('/personPage/' + id)
           }
+        } else if (value.topicType === 11) {
+          id = value.userId;
+          this.$router.push('/personPage/' + id)
         }
       },
       show (index, value) {
@@ -436,6 +442,9 @@
           case 8:
             this.$router.push('/newThingsDetail/' + val.neighborId);
             break;
+          case 11:
+            this.$router.push('/albumDetail/' + val.neighborId);
+            break;
         }
       },
       addPraise (value) {
@@ -447,7 +456,7 @@
           if (value.topicType === 6) {
             type = 0;
             id = value.neighborId;
-          } else if (value.type === 2) {
+          } else if (value.topicType === 2) {
             type = 4;
             if (value.isPrivate) {
               id = value.neighborId
@@ -459,6 +468,9 @@
             id = value.neighborId;
           } else if (value.topicType === 4) {
             type = 6;
+            id = value.neighborId;
+          } else if (value.topicType === 11) {
+            type = 11;
             id = value.neighborId;
           }
           this.isLike = value.activity.isLike;

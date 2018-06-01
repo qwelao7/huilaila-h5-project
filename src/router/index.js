@@ -197,6 +197,21 @@ export default new Router({
       component: resolve => require(['@/components/publish/pub_activity'], resolve)
     },
     {
+      path: '/pub_album',
+      name: '发布活动相册',
+      component: resolve => require(['@/components/publish/pub_album'], resolve)
+    },
+    {
+      path: '/albumList/:activityId',
+      name: '活动相册',
+      component: resolve => require(['@/components/home/album/albumList'], resolve)
+    },
+    {
+      path: '/albumDetail/:neighborId',
+      name: '活动相册',
+      component: resolve => require(['@/components/home/album/albumDetail'], resolve)
+    },
+    {
       path: '/personPage/:userId',
       name: '个人主页',
       component: resolve => require(['@/components/home/personPage/personPage'], resolve)

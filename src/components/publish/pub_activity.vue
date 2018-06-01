@@ -200,7 +200,8 @@
     XDialog,
     Spinner,
     querystring,
-    ConfirmPlugin
+    ConfirmPlugin,
+    DatetimePlugin
   } from 'vux'
   import {jlDate} from 'common/js/utils';
   import {File} from '../../common/js/Upload'
@@ -227,7 +228,8 @@
       Group,
       GroupTitle,
       Spinner,
-      ConfirmPlugin
+      ConfirmPlugin,
+      DatetimePlugin
     },
     data () {
       return {
@@ -313,6 +315,7 @@
       this.communityId = localStorage.getItem('communityId');
 //      console.log(3333, Number(true))
       this.validate()
+      this.formItem.signStartTime = jlDate.Dateformat(new Date(), 'YYYY-MM-DD HH:mm')
     },
     methods: {
       choosePoster () {
@@ -361,69 +364,62 @@
       },
       showSignStart () {
         let _this = this;
-        if (!_this.formItem.theme.trim()) {
-          _this.$vux.toast.show({
-            type: 'text',
-            text: '请输入主题'
-          });
-        } else {
-          _this.$vux.datetime.show({
-            cancelText: '取消',
-            clearText: '清除',
-            confirmText: '确定',
-            format: 'YYYY-MM-DD HH:mm',
-            value: _this.formItem.signStartTime,
-            startDate: _this.signStartMin,
-            endDate: _this.signStartMax,
+        _this.$vux.datetime.show({
+          cancelText: '取消',
+          clearText: '清除',
+          confirmText: '确定',
+          format: 'YYYY-MM-DD HH:mm',
+          value: _this.formItem.signStartTime,
+          startDate: _this.signStartMin,
+          endDate: _this.signStartMax,
 //          minHour: _this.signStartHour,
-            yearRow: '{value}年',
-            monthRow: '{value}月',
-            dayRow: '{value}日',
-            hourRow: '{value}时',
-            minuteRow: '{value}分',
-            onConfirm (val) {
-              // 修改验证
-              let timeVal = val.replace(/-/g, '/');
-              if (!_this.formItem.signEndTime) {
-                if (new Date().getTime() >= new Date(timeVal).getTime()) {
-                  _this.$vux.toast.show({
-                    type: 'text',
-                    text: '报名时间不得早于当前时间'
-                  })
-                } else {
-                  _this.formItem.signStartTime = val;
-                  let time = _this.formItem.signStartTime.replace(new RegExp('-', 'gm'), '/');
-                  _this.signEndMin = jlDate.Dateformat(jlDate.addMinutes(new Date(time), 1), 'YYYY-MM-DD HH:mm');
-                  _this.signEndMax = jlDate.Dateformat(jlDate.addDays(new Date(time), 180), 'YYYY-MM-DD HH:mm');
-                }
+          yearRow: '{value}年',
+          monthRow: '{value}月',
+          dayRow: '{value}日',
+          hourRow: '{value}时',
+          minuteRow: '{value}分',
+          onConfirm (val) {
+            // 修改验证
+            // let timeVal = val.replace(/-/g, '/');
+            if (!_this.formItem.signEndTime) {
+              // if (new Date().getTime() >= new Date(timeVal).getTime()) {
+              //   _this.$vux.toast.show({
+              //     type: 'text',
+              //     text: '报名时间不得早于当前时间'
+              //   })
+              // } else {
+              _this.formItem.signStartTime = val;
+              let time = _this.formItem.signStartTime.replace(new RegExp('-', 'gm'), '/');
+              _this.signEndMin = jlDate.Dateformat(jlDate.addMinutes(new Date(time), 1), 'YYYY-MM-DD HH:mm');
+              _this.signEndMax = jlDate.Dateformat(jlDate.addDays(new Date(time), 180), 'YYYY-MM-DD HH:mm');
+              // }
+            } else {
+              let time = val.replace(/-/g, '/');
+              let time1 = _this.formItem.signEndTime.replace(/-/g, '/');
+              if (new Date(time1).getTime() <= new Date(time).getTime()) {
+                _this.$vux.toast.show({
+                  type: 'text',
+                  text: '报名开始时间必须小于报名结束时间'
+                })
               } else {
-                let time = val.replace(/-/g, '/');
-                let time1 = _this.formItem.signEndTime.replace(/-/g, '/');
-                if (new Date(time1).getTime() <= new Date(time).getTime()) {
-                  _this.$vux.toast.show({
-                    type: 'text',
-                    text: '报名开始时间必须小于报名结束时间'
-                  })
-                } else {
-                  if (new Date().getTime() >= new Date(timeVal).getTime()) {
-                    _this.$vux.toast.show({
-                      type: 'text',
-                      text: '报名时间不得早于当前时间'
-                    })
-                  } else {
-                    _this.formItem.signStartTime = val;
-                    let time = _this.formItem.signStartTime.replace(new RegExp('-', 'gm'), '/');
-                    _this.signEndMin = jlDate.Dateformat(jlDate.addMinutes(new Date(time), 1), 'YYYY-MM-DD HH:mm');
-                    _this.signEndMax = jlDate.Dateformat(jlDate.addDays(new Date(time), 180), 'YYYY-MM-DD HH:mm');
-                  }
-                }
+                // if (new Date().getTime() >= new Date(timeVal).getTime()) {
+                //   _this.$vux.toast.show({
+                //     type: 'text',
+                //     text: '报名时间不得早于当前时间'
+                //   })
+                // } else {
+                _this.formItem.signStartTime = val;
+                let time = _this.formItem.signStartTime.replace(new RegExp('-', 'gm'), '/');
+                _this.signEndMin = jlDate.Dateformat(jlDate.addMinutes(new Date(time), 1), 'YYYY-MM-DD HH:mm');
+                _this.signEndMax = jlDate.Dateformat(jlDate.addDays(new Date(time), 180), 'YYYY-MM-DD HH:mm');
+                // }
               }
-            },
-            onClear () {
-              _this.formItem.signStartTime = ''
             }
-          })
-        }
+          },
+          onClear () {
+            _this.formItem.signStartTime = ''
+          }
+        })
       },
       showSignEnd () {
         if (!this.formItem.signStartTime) {
@@ -525,6 +521,9 @@
               } else {
                 if (!_this.formItem.ActivityEndTime) {
                   _this.formItem.ActivityStartTime = val;
+                  if (!_this.formItem.signEndTime) {
+                    _this.formItem.signEndTime = val;
+                  }
                   let time = _this.formItem.ActivityStartTime.replace(new RegExp('-', 'gm'), '/');
                   _this.activityEndMin = jlDate.Dateformat(jlDate.addMinutes(new Date(time), 1), 'YYYY-MM-DD HH:mm');
                   _this.activityEndMax = jlDate.Dateformat(jlDate.addDays(new Date(time), 180), 'YYYY-MM-DD HH:mm');
@@ -535,6 +534,14 @@
                       type: 'text',
                       text: '活动开始时间不得大于活动结束时间'
                     })
+                  } else {
+                    _this.formItem.ActivityStartTime = val;
+                    if (!_this.formItem.signEndTime) {
+                      _this.formItem.signEndTime = val;
+                    }
+                    let time = _this.formItem.ActivityStartTime.replace(new RegExp('-', 'gm'), '/');
+                    _this.activityEndMin = jlDate.Dateformat(jlDate.addMinutes(new Date(time), 1), 'YYYY-MM-DD HH:mm');
+                    _this.activityEndMax = jlDate.Dateformat(jlDate.addDays(new Date(time), 180), 'YYYY-MM-DD HH:mm');
                   }
                 }
               }
@@ -668,13 +675,13 @@
         }
       },
       onFocusTheme () {
-        // if (!this.posters.length) {
-        //   this.$vux.toast.show({
-        //     type: 'text',
-        //     text: '请上传活动海报'
-        //   });
-        //   this.$refs.theme.blur()
-        // }
+        if (!this.posters.length) {
+          this.$vux.toast.show({
+            type: 'text',
+            text: '请上传活动海报'
+          });
+          this.$refs.theme.blur()
+        }
       },
       onFocusAddress () {
         if (!this.formItem.ActivityEndTime) {
@@ -728,15 +735,15 @@
             let signEnd = _this.formItem.signEndTime.replace(/-/g, '/');
             let signStartTime = new Date(signStart).getTime()
             let signEndTime = new Date(signEnd).getTime()
-            let now = new Date().getTime()
-            if (signStartTime <= now) {
-              _this.isPublish = false
-              _this.$vux.toast.show({
-                type: 'text',
-                text: '报名时间不得早于当前时间'
-              });
-              return
-            }
+            // let now = new Date().getTime()
+            // if (signStartTime <= now) {
+            //   _this.isPublish = false
+            //   _this.$vux.toast.show({
+            //     type: 'text',
+            //     text: '报名时间不得早于当前时间'
+            //   });
+            //   return
+            // }
             if (signEndTime <= signStartTime) {
               _this.isPublish = false
               _this.$vux.toast.show({
@@ -821,7 +828,7 @@
                           joinMoney: _this.formItem.registeryFee || 0,
                           refundType: Number(_this.formItem.reFundWay),
                           joinOtherCommunity: Number(_this.formItem.isLimited),
-                          extraInfo: _this.extraInfo
+                          formColumns: _this.extraInfo
                         };
                         console.log(222, params)
                         _this.pubActivity(params)
@@ -854,7 +861,7 @@
               joinMoney: _this.formItem.registeryFee || 0,
               refundType: Number(_this.formItem.reFundWay),
               joinOtherCommunity: Number(_this.formItem.isLimited),
-              extraInfo: _this.extraInfo
+              formColumns: _this.extraInfo
             };
             console.log(222, params)
             _this.pubActivity(params)

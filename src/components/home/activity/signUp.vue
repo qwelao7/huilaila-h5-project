@@ -56,8 +56,8 @@
                         fillable></x-number>
             </div>
           </cell-box>
-          <template v-for="item in extraInfo">
-            <x-input :placeholder="item.question" v-model="item.answer" required></x-input>
+          <template v-for="item in extraInfo" v-if="extraInfo.length>0">
+            <x-input :placeholder="item.columnName" v-model="item.columnValue" required></x-input>
           </template>
         </group>
         <group class="options">
@@ -164,20 +164,7 @@
     },
     data () {
       return {
-        extraInfo: [
-          {
-            question: '111',
-            answer: ''
-          },
-          {
-            question: '222',
-            answer: ''
-          },
-          {
-            question: '333',
-            answer: ''
-          }
-        ],
+        extraInfo: [],
         joinPeopleAccount: 0,
         signInfo: {},
         note: '',
@@ -272,6 +259,8 @@
 //              _this.payMoney = toDecimal2(_this.signInfo.joinMoney * _this.ApplyInfo.length)
 //            }
             _this.showApply = _this.ApplyInfo;
+            _this.extraInfo = res.data.formColumnList
+            console.log(_this.extraInfo)
             if (_this.showApply.length >= 6) {
               _this.showApply = _this.showApply.slice(0, 6);
             }
@@ -291,7 +280,9 @@
             this.ApplyInfo.forEach(res => {
               arr.push(res.userId)
             })
-            this.joinUserIds = arr.join(',')
+            this.joinUserIds = arr
+            this.joinPeopleAccount = this.ApplyInfo.length
+            this.signInfo.applyUserCount = this.ApplyInfo.length
           } else {
             this.$vux.toast.show({
               type: 'text',
@@ -315,11 +306,16 @@
           })
           return
         }
+        let columnTemp = []
+        this.extraInfo.forEach(res => {
+          columnTemp.push(res.columnId + ':' + res.columnValue)
+        })
         let params = {
           activityId: this.signInfo.activityId,
           joinUserCount: this.joinPeopleAccount,
           joinUserIds: this.joinUserIds,
-          note: this.note
+          note: this.note,
+          formColumnsList: columnTemp
         }
         console.log(111, params)
         this.$vux.loading.show({

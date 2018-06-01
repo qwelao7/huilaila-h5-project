@@ -59,22 +59,22 @@
             </div>
             <div class="commentList no-margin-top">
               <group>
-                <cell-box :is-link="showRightArrow" class="joinList" @click.native="toPraiseList(detailObj)"
-                          v-show="applyUserInfo.applyUserCount">
+                <cell-box is-link class="joinList" @click.native="toPraiseList(detailObj)">
                   <div>
-                    <span>共{{applyUserInfo.applyUserCount}}人参与</span>
+                    <span>共{{detailObj.applyUserCount}}人参与</span>
                     <ul>
-                      <li v-for="item in applyUserInfo.userList" v-show="showApplyUserAvatar">
+                      <li v-for="item in applyUserInfo">
                         <!--<img :src="item.joinUserPhoto" alt="">-->
-                        <img :src="item.joinUserPhoto" alt="" v-if="item.joinUserPhoto">
-                        <img src="../../../assets/images/default_avatar.png" alt="" v-if="!item.joinUserPhoto">
+                        <img :src="item" alt="" v-if="item">
+                        <img src="../../../assets/images/default_avatar.png" alt="" v-if="!item">
                       </li>
                     </ul>
                   </div>
                 </cell-box>
               </group>
               <group>
-                <cell-box is-link class="accountList" @click.native="toCordinator(detailObj)">
+                <cell-box is-link class="accountList" @click.native="toCordinator(detailObj)"
+                          v-if="detailObj.userRole===1||detailObj.needHelp===1">
                   <div>
                     <span>活动协办人</span>
                   </div>
@@ -127,11 +127,11 @@
           <i></i>
           <span>评论</span>
         </div>
-        <div class="albumTab" @click="" v-show="">
+        <div class="albumTab" @click="goToAlbum" v-show="detailObj.activityStatus>3">
           <i></i>
           <span>活动相册</span>
         </div>
-        <div class="joinTab" @click="goToSignUp(detailObj)" v-show="!isMyActivity">
+        <div class="joinTab" @click="goToSignUp(detailObj)" v-show="!isMyActivity&&detailObj.activityStatus<=3">
           <i></i>
           <span>报名</span>
         </div>
@@ -277,7 +277,7 @@
     created () {
       this.getActivityData();
       this.getCommentList();
-      this.getApplyList();
+      // this.getApplyList();
       this.getCurrentUser()
     },
     methods: {
@@ -316,8 +316,10 @@
           if (res.status === 100) {
             this.$vux.loading.hide();
             _this.detailObj = res.data;
+            console.log(_this.detailObj)
             _this.imgList = _this.getImgList(this.detailObj.picList);
             _this.userInfo = _this.detailObj.userInfo;
+            _this.applyUserInfo = _this.detailObj.applyUserAvatarList
             if (_this.imgList) {
               let length = _this.imgList.length;
               if (length === 1) {
@@ -327,9 +329,9 @@
               }
             }
 //            let userId = localStorage.getItem('userId');
-            if (_this.detailObj.ownerSelf === 1) {
-              _this.isMyActivity = true
-              _this.headerRight.showMore = true
+            if (_this.detailObj.userRole === 1) {
+              // _this.isMyActivity = true
+              // _this.headerRight.showMore = true
 //              this.showApplyUserAvatar = false
             }
             let link = window.location.href + '?out=1';
@@ -379,38 +381,34 @@
           console.log(e)
         })
       },
-      getApplyList () {
-        let activityId = this.$route.params;
-        let _this = this;
-        this.$JHttp({
-          method: 'get',
-          url: window.baseURL + '/socialactivity/getApplyUserList?' + querystring.stringify(activityId)
-        }).then(res => {
-          if (res.status === 100) {
-            _this.applyUserInfo = res.data;
-            if (!_this.applyUserInfo.myself) {
-              if (_this.applyUserInfo.needUserDetail === 0) {
-                _this.showApplyUserAvatar = false;
-                _this.showRightArrow = false;
-                _this.clickAble = false
-              }
-            } else {
-              if (_this.applyUserInfo.needUserDetail === 0) {
-                _this.showApplyUserAvatar = false;
-              }
-            }
-            _this.applyUserInfo.userList = _this.applyUserInfo.userList.splice(0, 6)
-          }
-        }).catch(e => {
-          console.log(e)
-        })
-      },
+      // getApplyList () {
+      //   let activityId = this.$route.params;
+      //   let _this = this;
+      //   this.$JHttp({
+      //     method: 'get',
+      //     url: window.baseURL + '/socialactivity/getApplyUserList?' + querystring.stringify(activityId)
+      //   }).then(res => {
+      //     if (res.status === 100) {
+      //       _this.applyUserInfo = res.data;
+      //       if (!_this.applyUserInfo.myself) {
+      //         if (_this.applyUserInfo.needUserDetail === 0) {
+      //           _this.showApplyUserAvatar = false;
+      //           _this.showRightArrow = false;
+      //           _this.clickAble = false
+      //         }
+      //       } else {
+      //         if (_this.applyUserInfo.needUserDetail === 0) {
+      //           _this.showApplyUserAvatar = false;
+      //         }
+      //       }
+      //       _this.applyUserInfo.userList = _this.applyUserInfo.userList.splice(0, 6)
+      //     }
+      //   }).catch(e => {
+      //     console.log(e)
+      //   })
+      // },
       getCurrentUser () {
         let _this = this;
-        let userId = {
-          userId: localStorage.getItem('userId')
-        }
-        console.log(userId)
         _this.$JHttp({
           methods: 'get',
           url: window.baseURL + '/home/getUserInfoAndAsset',
@@ -731,7 +729,15 @@
         }
       },
       toCordinator (val) {
-        this.$router.push('/cordinatorActive/' + val.activityId)
+        let _this = this
+        if (_this.detailObj.userRole === 1 && _this.detailObj.needHelp === 0) {
+          this.$router.push('/cordinatorActive/' + val.activityId)
+        } else {
+          this.$router.push('/cordinatorList/' + val.activityId)
+        }
+      },
+      goToAlbum () {
+        this.$router.push('/cordinatorList/' + this.$route.params.activityId)
       }
     }
   }
@@ -1037,6 +1043,7 @@
         }
       }
       .joinTab {
+        border-left: 0.5px solid #D8D8D8;
         i {
           background-image: url("../../../assets/images/enroll_icon_56black.png");
         }
@@ -1045,12 +1052,12 @@
         }
       }
       .commentTab {
-        border-right: 0.5px solid #D8D8D8;
         i {
           background-image: url("../../../assets/images/comment_icon_56black.png");
         }
       }
       .albumTab {
+        border-left: 0.5px solid #D8D8D8;
         i {
           background-image: url("../../../assets/images/album_tab.png");
         }

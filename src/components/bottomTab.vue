@@ -28,7 +28,8 @@
       </tabbar-item>
     </tabbar>
     <div v-transfer-dom class="publishes">
-      <x-dialog v-model="publish" hide-on-blur :dialog-style="{'max-width': '750px', width: '100%', height: '100%', 'background': 'none'}">
+      <x-dialog v-model="publish" hide-on-blur
+                :dialog-style="{'max-width': '750px', width: '100%', height: '100%', 'background': 'none'}">
         <div class="pub-banner">
           <div class="pub">
             <div class="box">
@@ -59,7 +60,8 @@
   </div>
 </template>
 <script>
-  import { Tabbar, TabbarItem, XDialog, TransferDomDirective as TransferDom } from 'vux'
+  import {Tabbar, TabbarItem, XDialog, TransferDomDirective as TransferDom} from 'vux'
+
   export default {
     directives: {
       TransferDom
@@ -150,34 +152,34 @@
         if (!token) {
           this.deleteModalShow = true
         } else {
-//          this.$router.push('/pub_newThings')
-          let _this = this;
-          _this.$JHttp({
-            method: 'get',
-            url: window.baseURL + '/socialactivity/getCanAddActivity',
-            headers: {
-              defCommunityId: localStorage.getItem('communityId')
-            }
-          }).then(res => {
-            if (res.status === 100) {
-              console.log(res)
-              if (res.data === true) {
-                _this.$router.push('/pub_activity')
-              } else {
-                _this.$vux.toast.show({
-                  type: 'text',
-                  text: '对不起，您没有权限进行此项操作！'
-                })
-              }
-            } else {
-              _this.$vux.toast.show({
-                type: 'cancel',
-                text: res.msg
-              })
-            }
-          }).catch(e => {
-            console.log(e)
-          })
+          this.$router.push('/pub_album')
+//           let _this = this;
+          // _this.$JHttp({
+          //   method: 'get',
+          //   url: window.baseURL + '/socialactivity/getCanAddActivity',
+          //   headers: {
+          //     defCommunityId: localStorage.getItem('communityId')
+          //   }
+          // }).then(res => {
+          //   if (res.status === 100) {
+          //     console.log(res)
+          //     if (res.data === true) {
+          //       _this.$router.push('/pub_album')
+          //     } else {
+          //       _this.$vux.toast.show({
+          //         type: 'text',
+          //         text: '对不起，您没有权限进行此项操作！'
+          //       })
+          //     }
+          //   } else {
+          //     _this.$vux.toast.show({
+          //       type: 'cancel',
+          //       text: res.msg
+          //     })
+          //   }
+          // }).catch(e => {
+          //   console.log(e)
+          // })
         }
       }
 
@@ -186,26 +188,28 @@
 </script>
 <style type="text/less" lang="less">
   @import '~vux/src/styles/close';
-  .bottomTab{
-    .weui-tabbar{
+
+  .bottomTab {
+    .weui-tabbar {
       max-width: 750px;
     }
-    .publish{
-      .weui-tabbar__icon{
+    .publish {
+      .weui-tabbar__icon {
         width: 42px;
         height: 42px;
       }
     }
   }
-  .publishes{
-    .weui-mask{
+
+  .publishes {
+    .weui-mask {
       max-width: 750px;
       width: 100%;
       height: 100%;
       margin: 0 auto;
       background: none;
     }
-    .pub-banner{
+    .pub-banner {
       width: 100%;
       height: 100%;
       /*padding-bottom: 8px;*/
@@ -217,40 +221,41 @@
       background: url("../../static/blurbg.jpg") no-repeat;
       background-position: center;
       background-size: cover;
-      .pub{
+      .pub {
         height: 70%;
         width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        .box{
+        .box {
           display: flex;
           flex-wrap: wrap;
           align-items: center;
           justify-content: space-around;
-          .pub-newThings, .pub-activity, .activity-album{
+          .pub-newThings, .pub-activity, .activity-album {
             width: 50%;
             height: 165px;
-            img{
+            img {
               width: 120px;
               height: 100%;
             }
           }
         }
       }
-      .closeIcon{
+      .closeIcon {
         height: 42px;
         display: flex;
         align-items: center;
         justify-content: center;
         margin-bottom: 10px;
-        img{
+        img {
           width: 42px;
           height: 100%;
         }
       }
     }
   }
+
   .delete-wrapper {
     .delete-info {
       color: #333;
