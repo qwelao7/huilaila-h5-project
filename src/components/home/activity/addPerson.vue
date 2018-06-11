@@ -42,6 +42,9 @@
         <x-button type="primary" :show-loading="false" style="background-color: #0DAB60" @click.native="submit">保存</x-button>
       </group>
     </div>
+    <!--引入一次datetime，一遍防止直接调用时间插件出现bug start -->
+    <datetime style="display: none"></datetime>
+    <!--引入一次datetime，一遍防止直接调用时间插件出现bug end -->
     <div v-transfer-dom>
       <popup v-model="relationPopup" height="100%" style="background-color: #ffffff;">
         <div class="commonHeader identity">

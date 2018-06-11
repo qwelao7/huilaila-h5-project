@@ -190,6 +190,7 @@
         if (length === 1) {
           this.isOne = true
         }
+        console.log('图片列表', this.information)
       },
       onFocus () {
         if (!this.token) {

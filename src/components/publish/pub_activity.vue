@@ -115,7 +115,9 @@
               <group-title slot="title" class="extraAdd" @click.native="onExtraAdd">+添加字段</group-title>
             </group>
           </div>
-
+          <!--引入一次datetime，一遍防止直接调用时间插件出现bug start -->
+          <datetime style="display: none"></datetime>
+          <!--引入一次datetime，一遍防止直接调用时间插件出现bug end -->
         </div>
 
       </div>
@@ -251,8 +253,8 @@
         signStartMax: jlDate.Dateformat(jlDate.addDays(new Date(), 180).getTime(), 'YYYY-MM-DD'),
         signEndMin: '',
         signEndMax: '',
-        activityStartMin: '',
-        activityStartMax: '',
+        activityStartMin: jlDate.Dateformat(jlDate.addDays(new Date(), 0), 'YYYY-MM-DD'),
+        activityStartMax: jlDate.Dateformat(jlDate.addDays(new Date(), 180), 'YYYY-MM-DD'),
         activityEndMin: '',
         activityEndMax: '',
         formItem: {
@@ -315,7 +317,7 @@
       this.communityId = localStorage.getItem('communityId');
 //      console.log(3333, Number(true))
       this.validate()
-      this.formItem.signStartTime = jlDate.Dateformat(new Date(), 'YYYY-MM-DD HH:mm')
+      this.formItem.signStartTime = jlDate.Dateformat(jlDate.addMinutes(new Date(), 5), 'YYYY-MM-DD HH:mm')
     },
     methods: {
       choosePoster () {
@@ -496,6 +498,7 @@
           })
         } else {
           let _this = this;
+          console.log(_this.activityStartMin)
           _this.$vux.datetime.show({
             cancelText: '取消',
             clearText: '清除',
@@ -512,39 +515,35 @@
             minuteRow: '{value}分',
             onConfirm (val) {
               let time = val.replace(/-/g, '/');
-              let time1 = _this.formItem.signEndTime.replace(/-/g, '/');
-              if (new Date(time).getTime() <= new Date(time1).getTime()) {
-                _this.$vux.toast.show({
-                  type: 'text',
-                  text: '活动开始时间需大于报名结束时间'
-                })
+              // let time1 = _this.formItem.signEndTime.replace(/-/g, '/');
+              // if (new Date(time).getTime() <= new Date(time1).getTime()) {
+              //   _this.$vux.toast.show({
+              //     type: 'text',
+              //     text: '活动开始时间需大于报名结束时间'
+              //   })
+              // } else {
+              if (!_this.formItem.ActivityEndTime) {
+                _this.formItem.ActivityStartTime = val;
+                _this.formItem.signEndTime = val;
+                let time = _this.formItem.ActivityStartTime.replace(new RegExp('-', 'gm'), '/');
+                _this.activityEndMin = jlDate.Dateformat(jlDate.addMinutes(new Date(time), 1), 'YYYY-MM-DD HH:mm');
+                _this.activityEndMax = jlDate.Dateformat(jlDate.addDays(new Date(time), 180), 'YYYY-MM-DD HH:mm');
               } else {
-                if (!_this.formItem.ActivityEndTime) {
+                let endTime = _this.formItem.ActivityEndTime.replace(new RegExp('-', 'gm'), '/');
+                if (new Date(time).getTime() >= new Date(endTime).getTime()) {
+                  _this.$vux.toast.show({
+                    type: 'text',
+                    text: '活动开始时间不得大于活动结束时间'
+                  })
+                } else {
                   _this.formItem.ActivityStartTime = val;
-                  if (!_this.formItem.signEndTime) {
-                    _this.formItem.signEndTime = val;
-                  }
+                  _this.formItem.signEndTime = val;
                   let time = _this.formItem.ActivityStartTime.replace(new RegExp('-', 'gm'), '/');
                   _this.activityEndMin = jlDate.Dateformat(jlDate.addMinutes(new Date(time), 1), 'YYYY-MM-DD HH:mm');
                   _this.activityEndMax = jlDate.Dateformat(jlDate.addDays(new Date(time), 180), 'YYYY-MM-DD HH:mm');
-                } else {
-                  let endTime = _this.formItem.ActivityEndTime.replace(new RegExp('-', 'gm'), '/');
-                  if (new Date(time).getTime() >= new Date(endTime).getTime()) {
-                    _this.$vux.toast.show({
-                      type: 'text',
-                      text: '活动开始时间不得大于活动结束时间'
-                    })
-                  } else {
-                    _this.formItem.ActivityStartTime = val;
-                    if (!_this.formItem.signEndTime) {
-                      _this.formItem.signEndTime = val;
-                    }
-                    let time = _this.formItem.ActivityStartTime.replace(new RegExp('-', 'gm'), '/');
-                    _this.activityEndMin = jlDate.Dateformat(jlDate.addMinutes(new Date(time), 1), 'YYYY-MM-DD HH:mm');
-                    _this.activityEndMax = jlDate.Dateformat(jlDate.addDays(new Date(time), 180), 'YYYY-MM-DD HH:mm');
-                  }
                 }
               }
+              // }
             },
             onClear () {
               _this.formItem.ActivityStartTime = ''
@@ -585,6 +584,7 @@
               } else {
                 _this.formItem.ActivityEndTime = val;
               }
+              console.log(_this.formItem.ActivityEndTime)
             },
             onClear () {
               _this.formItem.ActivityEndTime = ''
@@ -873,12 +873,10 @@
         let _this = this;
         _this.$JHttp({
           method: 'post',
-          // url: window.baseURL + '/socialactivity/addActivit?' + querystring.stringify(params),
-          url: window.baseURL + '/socialactivity/addActivit',
+          url: window.baseURL + '/socialactivity/addActivit?' + querystring.stringify(params),
           headers: {
             defCommunityId: _this.communityId
-          },
-          data: params
+          }
         }).then(res => {
           _this.isPublish = false
           if (res.status === 100) {

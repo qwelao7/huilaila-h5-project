@@ -29,7 +29,6 @@
                     {{item.applyUserName}}
                     <span class="num">({{item.applyUserCount}}人)</span>
                   </p>
-                  <div class="note">22345345345345</div>
                 </div>
               </div>
               <div class="phone">
@@ -37,9 +36,10 @@
               </div>
             </div>
             <div class="apply-extra"
-                 v-if="item.columnList.length>0 && applyUserListInformation.needUserDetail"
-                 v-for="column in item.columnList">
-              <p>{{column.columnName}}:{{column.columnValue}}</p>
+                 v-if="item.columnList.length>0 && applyUserListInformation.needUserDetail">
+              <template v-for="column in item.columnList">
+                <p>{{column.columnName}}:{{column.columnValue}}</p>
+              </template>
             </div>
             <template v-if="item.joinUserList.length>0" v-for="itm in item.joinUserList">
               <div class="signUpPeople_informaton apply-user">

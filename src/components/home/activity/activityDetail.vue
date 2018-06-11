@@ -81,7 +81,8 @@
                 </cell-box>
               </group>
               <group>
-                <cell-box is-link class="accountList" @click.native="">
+                <cell-box is-link class="accountList" @click.native="goToBalance"
+                          v-if="detailObj.isBalanced===1||detailObj.userRole===1">
                   <div>
                     <span>活动结算</span>
                   </div>
@@ -737,7 +738,15 @@
         }
       },
       goToAlbum () {
-        this.$router.push('/cordinatorList/' + this.$route.params.activityId)
+        this.$router.push('/albumList/' + this.$route.params.activityId)
+      },
+      goToBalance () {
+        let _this = this
+        if (_this.detailObj.isBalanced === 0 && _this.detailObj.userRole === 1) {
+          _this.$router.push('/activityBalance/' + _this.$route.params.activityId)
+        } else {
+          _this.$router.push('/balanceList/' + _this.$route.params.activityId)
+        }
       }
     }
   }

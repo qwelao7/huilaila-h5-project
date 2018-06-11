@@ -490,6 +490,21 @@ export default new Router({
       path: '/payResult',
       name: 'payResult',
       component: resolve => require(['@/components/payResult'], resolve)
+    },
+    {
+      path: '/activityBalance/:activityId',
+      name: '/activityBalance',
+      component: resolve => require(['@/components/home/activity/activityBalance'], resolve)
+    },
+    {
+      path: '/activityRefund/:activityId',
+      name: '/activityRefund',
+      component: resolve => require(['@/components/home/activity/activityRefund'], resolve)
+    },
+    {
+      path: '/balanceList/:activityId',
+      name: '/balanceList',
+      component: resolve => require(['@/components/home/activity/balanceList'], resolve)
     }
   ]
 })
