@@ -41,7 +41,7 @@
           </div>
         </template>
       </div>
-      <template v-if="!isHost">
+      <template v-if="!isHost&&activityStatus<5">
         <x-button v-if="!signUpOpt" class="signUpBtn" text="立即报名" @click.native="signUp"></x-button>
         <x-button v-if="signUpOpt" class="cancelSignUpBtn" @click.native="cancelSignUp" text="取消报名"></x-button>
         <div class="signUpAttention">
@@ -80,7 +80,8 @@
         signUpOpt: false,
         vList: [],
         signUpSuccess: false,
-        cancelSignUpSuccess: false
+        cancelSignUpSuccess: false,
+        activityStatus: 0
       }
     },
     created () {
@@ -94,10 +95,11 @@
         let _this = this;
         _this.$JHttp({
           method: 'get',
-          url: window.baseURL + '/hll/activity/helpUserList?activityId=' + _this.$route.params.id
+          url: window.baseURL + '/socialactivity/helpUserList?activityId=' + _this.$route.params.id
         }).then(res => {
           if (res.status === 100) {
             this.$vux.loading.hide();
+            _this.activityStatus = res.data.activityStatus
             if (res.data.isCreater === 1) {
               _this.isHost = true
             } else {
@@ -109,6 +111,11 @@
               }
             }
             _this.vList = res.data.listVList
+          } else {
+            _this.$vux.toast.show({
+              type: 'cancel',
+              text: res.msg
+            });
           }
         }).catch(err => {
           console.log(err);
@@ -118,7 +125,7 @@
         let _this = this
         _this.$JHttp({
           method: 'get',
-          url: window.baseURL + '/hll/activity/passHelpUser?activityId=' + _this.$route.params.id + '&applyId=' + _this.vList[val].id
+          url: window.baseURL + '/socialactivity/passHelpUser?activityId=' + _this.$route.params.id + '&applyId=' + _this.vList[val].id
         }).then(res => {
           if (res.status === 100) {
             _this.vList[val].status = '2'
@@ -141,7 +148,7 @@
         let _this = this
         _this.$JHttp({
           method: 'get',
-          url: window.baseURL + '/hll/activity/notPassHelpUser?activityId=' + _this.$route.params.id + '&applyId=' + _this.vList[val].id
+          url: window.baseURL + '/socialactivity/notPassHelpUser?activityId=' + _this.$route.params.id + '&applyId=' + _this.vList[val].id
         }).then(res => {
           if (res.status === 100) {
             _this.vList[val].status = '1'
@@ -167,7 +174,7 @@
         let _this = this
         _this.$JHttp({
           method: 'get',
-          url: window.baseURL + '/hll/activity/applyHelpUser?activityId=' + _this.$route.params.id
+          url: window.baseURL + '/socialactivity/applyHelpUser?activityId=' + _this.$route.params.id
         }).then(res => {
           if (res.status === 100) {
             _this.signUpSuccess = true;
@@ -186,7 +193,7 @@
         let _this = this
         _this.$JHttp({
           method: 'get',
-          url: window.baseURL + '/hll/activity/cancelHelpUser?activityId=' + _this.$route.params.id
+          url: window.baseURL + '/socialactivity/cancelHelpUser?activityId=' + _this.$route.params.id
         }).then(res => {
           if (res.status === 100) {
             _this.cancelSignUpSuccess = true

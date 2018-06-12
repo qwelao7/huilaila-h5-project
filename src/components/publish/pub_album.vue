@@ -93,7 +93,7 @@
         let _this = this
         _this.$JHttp({
           method: 'get',
-          url: window.baseURL + '/hll/activity/top/10',
+          url: window.baseURL + '/socialactivity/top/10',
           headers: {
             defCommunityId: localStorage.getItem('communityId')
           }
@@ -186,7 +186,7 @@
                         };
                         // 保存图片到业务方
                         _this_.$JHttp({
-                          url: window.baseURL + '/hll/activity/album/add?' + querystring.stringify(postData),
+                          url: window.baseURL + '/socialactivity/album/add?' + querystring.stringify(postData),
                           method: 'post',
                           headers: {
                             defCommunityId: _this_.communityId
@@ -233,7 +233,7 @@
             };
             _this_.$JHttp({
               method: 'post',
-              url: window.baseURL + '/hll/activity/album/add?' + querystring.stringify(params),
+              url: window.baseURL + '/socialactivity/album/add?' + querystring.stringify(params),
               headers: {
                 defCommunityId: _this_.communityId
               }

@@ -78,7 +78,7 @@
         let _this = this
         _this.$JHttp({
           method: 'get',
-          url: window.baseURL + '/hll/activity/openHelpUser?activityId=' + this.$route.params.id
+          url: window.baseURL + '/socialactivity/openHelpUser?activityId=' + this.$route.params.id
         }).then(res => {
           if (res.status === 100) {
             this.openConfirm = true;

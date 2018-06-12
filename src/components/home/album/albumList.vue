@@ -88,7 +88,7 @@
         };
         _this.$JHttp({
           method: 'get',
-          url: window.baseURL + '/hll/activity/album/list?' + querystring.stringify(params),
+          url: window.baseURL + '/socialactivity/album/list?' + querystring.stringify(params),
           headers: {
             defCommunityId: localStorage.getItem('communityId')
           }

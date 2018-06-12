@@ -593,6 +593,11 @@
               this.commentText = '';
               this.messageId = '';
               this.showCommentField = false
+            } else {
+              this.$vux.toast.show({
+                type: 'cancel',
+                text: res.msg
+              });
             }
           }).catch(e => {
             console.log(e)
