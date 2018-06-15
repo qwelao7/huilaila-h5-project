@@ -13,7 +13,8 @@ const state = {
     roomInfo: {},
     role: {}
   },
-  assetId: ''
+  assetId: '',
+  isOnlyWorld: true
 };
 const mutations = {
   updateUserInfo (state, openInfo) {
@@ -34,6 +35,9 @@ const mutations = {
   },
   updateAssetId (state, assetId) {
     state.assetId = assetId;
+  },
+  updateIsOnlyWorld (state, isOnlyWorld) {
+    state.isOnlyWorld = isOnlyWorld;
   }
 };
 

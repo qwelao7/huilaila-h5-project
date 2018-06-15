@@ -496,6 +496,9 @@ function gerHeader () {
   let token = localStorage.getItem('token');
   let communityId = localStorage.getItem('communityId');
   let roomId = localStorage.getItem('roomId') || '';
+  let latitude = localStorage.getItem('latitude');
+  let longitude = localStorage.getItem('longitude');
+  let areaCode = localStorage.getItem('areaCode');
   let companyCode = window.commonConfig.companyCode; // 物业公司区别码
   let mobileType = '';
   if (isAndroid()) {
@@ -506,10 +509,14 @@ function gerHeader () {
   let header = {
     headers: {
       companyCode: companyCode,
+      appVersion: window.commonConfig.appVersion,
       token: token,
-      // defCommunityId: communityId,
+      defCommunityId: communityId,
       // defRoomId: roomId,
-      mobileType: mobileType
+      mobileType: mobileType,
+      defLatitude: latitude,
+      defLongitude: longitude,
+      defAreaCode: areaCode
     },
     timeout: 20000
   };
