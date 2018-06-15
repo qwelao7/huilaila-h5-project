@@ -122,6 +122,8 @@ function initialAxios () {
 
 function getUserInfoByOpenId (jAxios, openId) {
   jAxios({
+
+
     method: 'get',
     url: window.baseURL + '/openid/' + openId + '/info'
   }).then(res => {
