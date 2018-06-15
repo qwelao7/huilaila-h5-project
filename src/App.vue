@@ -1,9 +1,6 @@
 <template>
   <div id="app">
-    <keep-alive>
-      <router-view v-if="$route.meta.keepAlive"></router-view>
-    </keep-alive>
-    <router-view v-if="!$route.meta.keepAlive"></router-view>
+    <router-view></router-view>
     <!--<div>
       <bottomTab></bottomTab>
     </div>-->
@@ -12,7 +9,7 @@
 
 <script>
   import bottomTab from './components/bottomTab'
-  //  import api from '@/fetch/api'
+//  import api from '@/fetch/api'
   export default {
     name: 'app',
     components: {
@@ -81,11 +78,8 @@
     height: 100%;
     font-size: 100%;
     /*margin-top: 60px;*/
-    /*解决滑动卡顿的情况*/
-    -webkit-overflow-scrolling: touch;
     line-height: 1.5;
     background-color: #ffffff;
     font-family: 'pingfang_scregular';
-    a,img,button,input,textarea,div{-webkit-tap-highlight-color:rgba(255,255,255,0);}
   }
 </style>

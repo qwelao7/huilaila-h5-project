@@ -41,7 +41,7 @@
           </div>
         </template>
       </div>
-      <template v-if="!isHost&&activityStatus<5">
+      <template v-if="!isHost">
         <x-button v-if="!signUpOpt" class="signUpBtn" text="立即报名" @click.native="signUp"></x-button>
         <x-button v-if="signUpOpt" class="cancelSignUpBtn" @click.native="cancelSignUp" text="取消报名"></x-button>
         <div class="signUpAttention">
@@ -80,8 +80,7 @@
         signUpOpt: false,
         vList: [],
         signUpSuccess: false,
-        cancelSignUpSuccess: false,
-        activityStatus: 0
+        cancelSignUpSuccess: false
       }
     },
     created () {
@@ -99,7 +98,6 @@
         }).then(res => {
           if (res.status === 100) {
             this.$vux.loading.hide();
-            _this.activityStatus = res.data.activityStatus
             if (res.data.isCreater === 1) {
               _this.isHost = true
             } else {
@@ -111,11 +109,6 @@
               }
             }
             _this.vList = res.data.listVList
-          } else {
-            _this.$vux.toast.show({
-              type: 'cancel',
-              text: res.msg
-            });
           }
         }).catch(err => {
           console.log(err);

@@ -4,7 +4,6 @@ import store from './vuex/store'
 import router from './router';
 // import api from '@/fetch/api'
 import Axios from 'axios';
-import qs from 'querystring';
 import {ToastPlugin, WechatPlugin, AlertPlugin, ConfirmPlugin, LoadingPlugin, ConfigPlugin, DatetimePlugin} from 'vux';
 import {JAjax, JURL, jlDate} from 'common/js/utils';
 import VueClipboard from 'vue-clipboard2';
@@ -12,8 +11,9 @@ import './common/js/map'
 // import Vconsole from 'vconsole';
  /* eslint-disable no-new */
 // new Vconsole();
-Vue.prototype.$qs = qs;
+
 Vue.config.productionTip = false;
+
 /* eslint-disable no-unused-vars */
 // import vConsole from 'vConsole'
 
@@ -34,8 +34,6 @@ Vue.use(ConfigPlugin, {
 
 window.store = store;
 router.beforeEach((to, from, next) => {
-  /* 路由发生变化修改页面title */
-  document.title = to.meta.title || '回来啦'
   let isOut = JURL.getHashParam('out') || JURL.getSearchParam('out');
   // 外部链接,无需进入小区选择页
   if (isOut === '1') {
@@ -71,24 +69,6 @@ router.beforeEach((to, from, next) => {
 // });
 // Vue.use(Axios);
 // Vue.prototype.$Axios = Axios
-/* 注入app端的参数到本地 */
-let tokenURL = JURL.getSearchParam('token') || JURL.getHashParam('token');
-if (tokenURL) {
-  localStorage.setItem('token', tokenURL);
-}
-let isApp = JURL.getSearchParam('isApp') || JURL.getHashParam('isApp');
-if (isApp) {
-  localStorage.setItem('isApp', isApp);
-}
-let communityId = JURL.getSearchParam('defCommunity') || JURL.getHashParam('defCommunity');
-if (communityId) {
-  localStorage.setItem('communityId', communityId);
-}
-let userId = JURL.getSearchParam('userId') || JURL.getHashParam('userId');
-if (userId) {
-  localStorage.setItem('userId', userId);
-}
-/* 注入app端的参数到本地 */
 // 注入code到localStorage
 let code = JURL.getSearchParam('code') || JURL.getHashParam('code');
 if (code) {
@@ -97,7 +77,6 @@ if (code) {
 function initialAxios () {
   let header = JAjax.getHeader();
   // 将头做成公共配置
-  Axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
   let jAxios = Axios.create(header);
 
   /* 首次进入公众号更新token */
@@ -111,11 +90,6 @@ function initialAxios () {
 // let commonParam = JAjax.generateCommonParam();
 // http请求拦截器
   jAxios.interceptors.request.use(config => {
-    let url = config.url;
-    // 老接口去除自定义头
-    if (url.indexOf('!') !== -1) {
-      config.headers = undefined;
-    }
     return config
   }, function (error) {
     return Promise.reject(error)
@@ -206,6 +180,7 @@ function updateTokenByCode (jAxios, code) {
     method: 'get',
     url: window.baseURL + '/openid/info/code?code=' + code
   }).then(res => {
+    // console.log(99999, res)
     if (res.data.status === 100) {
       let data = res.data.data;
       let subscribe = data.subscribe;
@@ -239,32 +214,6 @@ initialAxios();
 export {
   initialAxios
 }
-
-function updateHeaderByCurrentAsset () {
-  Vue.prototype.$JHttp({
-    method: 'get',
-    url: window.baseURL + '/home/getUserInfoAndAsset'
-  }).then(res => {
-    if (res.status === 100) {
-      let data = res.data;
-      let ownerAsset = data.ownerAsset;
-      let communityId = localStorage.getItem('communityId');
-      // 有房产了,设置默认房产下的经纬度及areaCode作为头
-      if (!communityId && ownerAsset) {
-        let longitude = ownerAsset.longitude;
-        let latitude = ownerAsset.latitude;
-        let areaCode = ownerAsset.areaCode;
-        localStorage.setItem('longitude', longitude);
-        localStorage.setItem('latitude', latitude);
-        localStorage.setItem('areaCode', areaCode);
-        initialAxios();
-      }
-    }
-  }).catch(e => {
-    console.error(e);
-  })
-}
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
