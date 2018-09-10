@@ -1,0 +1,1462 @@
+/* -- 二级页面头部样式 -- */
+.commonHeader .vux-header {
+  background-color: #ffffff;
+  border-bottom: 0.5px solid #D8D8D8;
+}
+.commonHeader .vux-header .vux-header-title {
+  color: #333333;
+}
+.commonHeader .vux-header .vux-header-left .left-arrow:before {
+  border-color: #333333;
+}
+.commonHeader .vux-header .vux-header-right .right-btn {
+  color: #333;
+  font-size: 15px;
+}
+.vux-tab-bar-inner {
+  border-radius: 10px;
+}
+.vux-tab .vux-tab-item {
+  background-size: 100% 0.03333rem!important;
+}
+/* -- 公共组件样式 -- */
+.commentList .weui-cells {
+  margin-top: 10px;
+}
+.commentList .commentCell .weui-cells {
+  margin-top: 0;
+}
+/* -- 共用样式 -- */
+.no-margin-top .weui-cells {
+  margin-top: 0;
+}
+.no-margin-top .weui-cells:before,
+.no-margin-top .weui-cells:after {
+  border: none;
+}
+.commentList .weui-cell_access.vux-cell-box:after,
+.signUp .weui-cell_access.vux-cell-box:after,
+.personInfo .weui-cell_access.vux-cell-box:after,
+.my .weui-cell_access.vux-cell-box:after,
+.activityDetail .weui-cell_access.vux-cell-box:after,
+.receivingAdd .weui-cell_access.vux-cell-box:after,
+.comAdd .weui-cell_access.vux-cell-box:after {
+  width: 10px;
+  height: 10px;
+  border-width: 1px 1px 0 0;
+  margin-top: -5px;
+  border-color: #aaaaaa;
+}
+/* -- 推荐 -- */
+.recommend .weui-grid__icon,
+.community .weui-grid__icon {
+  width: 44px;
+  height: 44px;
+}
+.recommend .weui-grid__label,
+.community .weui-grid__label {
+  font-size: 12px;
+}
+.commentInput .weui-cell {
+  padding: 2.5px 5px;
+  border: 0.5px solid #d8d8d8;
+  border-radius: 5px;
+}
+/* -- 发布帖子 -- */
+.publish .vux-header .vux-header-right a {
+  color: #0DAB60;
+  font-size: 15px;
+}
+.publish .weui-textarea {
+  font-size: 18px;
+  color: #333333;
+}
+.publish textarea::-webkit-input-placeholder {
+  /* WebKit browsers*/
+  color: #aaa;
+  font-size: 18px;
+}
+.publish textarea:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18*/
+  color: #aaa;
+  font-size: 18px;
+}
+.publish textarea::-moz-placeholder {
+  /* Mozilla Firefox 19+*/
+  color: #aaa;
+  font-size: 18px;
+}
+.publish textarea:-ms-input-placeholder {
+  /* Internet Explorer 10+*/
+  color: #aaa;
+  font-size: 18px;
+}
+.publishActivity .hasTop {
+  margin-top: 26px;
+}
+.publishActivity .noTop {
+  margin-top: 0;
+}
+.publishActivity .noTop .vux-label {
+  color: #333333!important;
+}
+.publishActivity .vux-label {
+  color: #aaaaaa;
+}
+.publishActivity .vux-header .vux-header-right a {
+  color: #aaaaaa;
+  font-size: 15px;
+}
+.publishActivity .weui-cells:before,
+.publishActivity .weui-cells:after {
+  border: none;
+}
+.publishActivity .weui-cell_access .weui-cell__ft:after,
+.publishActivity .weui-cell_access.vux-cell-box:after {
+  width: 10px;
+  height: 10px;
+  border-width: 1px 1px 0 0;
+  margin-top: -5px;
+  border-color: #aaaaaa;
+}
+.publishActivity .weui-cells:before {
+  border: 0;
+}
+.publishActivity .weui-cells__title {
+  margin: 0;
+  font-size: 15px;
+  color: #aaaaaa;
+  padding-left: 0;
+  padding-bottom: 5px;
+  height: 21px;
+  line-height: 21px;
+}
+.publishActivity .weui-cell__ft {
+  text-align: left;
+  color: #aaaaaa;
+}
+.publishActivity .vux-cell-value {
+  color: #333333;
+  font-size: 21px;
+  font-weight: 700;
+}
+.publishActivity .weui-cell {
+  padding: 0;
+  font-size: 21px;
+}
+.publishActivity .weui-input {
+  font-size: 21px;
+  color: #333333;
+  font-weight: 400;
+}
+.publishActivity .weui-textarea {
+  font-size: 18px;
+  color: #333333;
+}
+.publishActivity .vux-cell-placeholder {
+  font-size: 21px;
+  color: #aaaaaa;
+  font-weight: 500;
+}
+.publishActivity input::-webkit-input-placeholder {
+  /* WebKit browsers*/
+  color: #aaa;
+  font-size: 21px;
+}
+.publishActivity input:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18*/
+  color: #aaa;
+  font-size: 21px;
+}
+.publishActivity input::-moz-placeholder {
+  /* Mozilla Firefox 19+*/
+  color: #aaa;
+  font-size: 21px;
+}
+.publishActivity input:-ms-input-placeholder {
+  /* Internet Explorer 10+*/
+  color: #aaa;
+  font-size: 21px;
+}
+.publishActivity textarea::-webkit-input-placeholder {
+  /* WebKit browsers*/
+  color: #aaa;
+  font-size: 18px;
+}
+.publishActivity textarea:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18*/
+  color: #aaa;
+  font-size: 18px;
+}
+.publishActivity textarea::-moz-placeholder {
+  /* Mozilla Firefox 19+*/
+  color: #aaa;
+  font-size: 18px;
+}
+.publishActivity textarea:-ms-input-placeholder {
+  /* Internet Explorer 10+*/
+  color: #aaa;
+  font-size: 18px;
+}
+.publishActivity .specialItem .vux-x-switch.weui-cell_switch {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.publishActivity .specialItem .weui-cells {
+  width: 100%;
+  margin-top: 0;
+}
+.publishActivity .description .weui-cells {
+  margin-top: 0;
+}
+.registeryFee .weui-cells__title {
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+  color: #aaaaaa;
+}
+.registeryFee .weui-cell {
+  padding: 0;
+}
+.registeryFee .weui-input {
+  font-size: 21px;
+  color: #333333;
+  font-weight: 400;
+}
+.registeryFee .weui-cells:before,
+.registeryFee .weui-cells:after {
+  border: none;
+}
+.registeryFee input::-webkit-input-placeholder {
+  /* WebKit browsers*/
+  color: #aaa;
+  font-size: 21px;
+}
+.registeryFee .weui-cell:before {
+  border: none;
+}
+.registeryFee .reFound .weui-cells__title {
+  color: #333333;
+  padding: 12px 0;
+}
+.registeryFee .reFound .weui-cell {
+  padding: 15px 0;
+  border-top: 0.5px solid #D8D8D8;
+}
+.registeryFee .reFound .weui-cells_radio .weui-check:checked + .weui-icon-checked:before {
+  content: none;
+}
+.registeryFee .reFound .weui-icon-checked {
+  width: 22px;
+  height: 22px;
+  background: url("../../assets/images/checked_icon_green.png") no-repeat center / contain;
+}
+.registeryFee .weui-btn:after {
+  border: none;
+}
+/* -- 个人主页 -- */
+.personPage .vux-header .vux-header-left .left-arrow,
+.QRcode .vux-header .vux-header-left .left-arrow,
+.integral_exchange .vux-header .vux-header-left .left-arrow {
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+}
+.personPage .vux-header .vux-header-left .left-arrow:before,
+.QRcode .vux-header .vux-header-left .left-arrow:before,
+.integral_exchange .vux-header .vux-header-left .left-arrow:before {
+  left: 10px;
+}
+/* -- 社群 -- */
+.vux-x-dialog-absolute .weui-dialog {
+  position: fixed;
+}
+.popupBanner .title {
+  font-size: 18px;
+  color: #333333;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 9px;
+}
+.popupBanner ul {
+  padding: 0 19px;
+  padding-bottom: 15px;
+}
+.popupBanner ul li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 10px;
+}
+.popupBanner ul li input {
+  border: none;
+}
+.popupBanner ul li .copy {
+  margin-left: 10px;
+  background: #F5F5F5;
+  border: 1px solid #979797;
+  padding: 2px 5px;
+  border-radius: 4px;
+  color: #333333;
+  font-size: 12px;
+}
+.popupBanner ul li .isCopied {
+  color: #aaaaaa;
+}
+.popupBanner ul li span {
+  text-align: left;
+  font-size: 15px;
+  color: #aaaaaa;
+}
+.popupBanner ul li .num {
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.popupBanner ul .illustrate {
+  align-items: flex-start;
+}
+.popupBanner ul li:first-child {
+  margin-top: 0;
+}
+.popupBanner .btn {
+  border-top: 1px solid #e5e5e5;
+  height: 50px;
+  font-size: 18px;
+  color: #0DAB60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* -- 新鲜事 --*/
+.newThingsDetail .vux-header .vux-header-right,
+.vote .vux-header .vux-header-right,
+.activityDetail .vux-header .vux-header-right {
+  top: 10px;
+}
+.newThingsDetail .vux-header .vux-header-right .vux-header-more:after,
+.vote .vux-header .vux-header-right .vux-header-more:after,
+.activityDetail .vux-header .vux-header-right .vux-header-more:after {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 28px;
+  background-image: url("../images/dotdotdot_icon_56black.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+/* -- 举报 -- */
+.onReport .weui-cells {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.onReport .weui-cell {
+  width: 40%;
+  text-align: left;
+  font-size: 15px;
+}
+.onReport .weui-cell:before {
+  border-top: none;
+}
+.onReport .weui-btn_primary {
+  margin-top: 40px;
+  background-color: #0DAB60;
+}
+/* -- 活动详情 -- */
+.activityDetail .banner.weui-cell_access.vux-cell-box:after,
+.voteDetail .banner.weui-cell_access.vux-cell-box:after {
+  border-color: #ffffff;
+  width: 10px;
+  height: 10px;
+  border-width: 1px 1px 0 0;
+  margin-top: -5px;
+}
+.banner .weui-cells,
+.signUp .weui-cells {
+  margin-top: 0;
+}
+.banner .weui-cell,
+.signUp .weui-cell {
+  padding: 12px 15px;
+}
+.banner .signUpList .weui-cells:before,
+.signUp .signUpList .weui-cells:before,
+.banner .options .weui-cells:before,
+.signUp .options .weui-cells:before {
+  border: none;
+}
+.banner .noDetail,
+.signUp .noDetail {
+  flex: 1;
+  justify-content: space-between;
+}
+.banner .noDetail .weui-cell,
+.signUp .noDetail .weui-cell {
+  padding: 0;
+}
+.banner .noDetail .vux-number-selector-plus,
+.signUp .noDetail .vux-number-selector-plus {
+  margin-right: 0;
+}
+.banner .noDetail .vux-number-input,
+.signUp .noDetail .vux-number-input {
+  font-size: 15px;
+}
+.banner .noDetail .vux-number-selector.vux-number-disabled svg,
+.signUp .noDetail .vux-number-selector.vux-number-disabled svg {
+  fill: #ccc;
+}
+.banner .noDetail .vux-number-selector svg,
+.signUp .noDetail .vux-number-selector svg {
+  fill: #0DAB60;
+}
+.banner .signUpList .noline.weui-cell:before,
+.signUp .signUpList .noline.weui-cell:before {
+  border: none;
+}
+.banner .options .weui-cells__title,
+.signUp .options .weui-cells__title {
+  color: #aaaaaa;
+  font-size: 15px;
+}
+.banner .options .weui-textarea,
+.signUp .options .weui-textarea {
+  font-size: 18px;
+  color: #333333;
+}
+.banner .options textarea::-webkit-input-placeholder,
+.signUp .options textarea::-webkit-input-placeholder {
+  /* WebKit browsers*/
+  color: #aaa;
+  font-size: 18px;
+}
+.banner .options textarea:-moz-placeholder,
+.signUp .options textarea:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18*/
+  color: #aaa;
+  font-size: 18px;
+}
+.banner .options textarea::-moz-placeholder,
+.signUp .options textarea::-moz-placeholder {
+  /* Mozilla Firefox 19+*/
+  color: #aaa;
+  font-size: 18px;
+}
+.banner .options textarea:-ms-input-placeholder,
+.signUp .options textarea:-ms-input-placeholder {
+  /* Internet Explorer 10+*/
+  color: #aaa;
+  font-size: 18px;
+}
+.banner .options .weui-cells:after,
+.signUp .options .weui-cells:after {
+  border-bottom: none;
+}
+.banner .options.chooses .weui-cells__title,
+.signUp .options.chooses .weui-cells__title {
+  color: transparent;
+}
+/* -- 添加参与人 -- */
+.addPerson .weui-cell_access.vux-cell-box:after,
+.addPerson .weui-cell_access .weui-cell__ft:after {
+  width: 10px;
+  height: 10px;
+  border-width: 1px 1px 0 0;
+  margin-top: -5px;
+  border-color: #aaaaaa;
+  right: 8.5px;
+}
+.addPerson .avatar .weui-cell {
+  padding: 10px 0;
+}
+.addPerson .avatar .weui-cells {
+  margin-top: 0;
+}
+.addPerson .avatar .weui-cell__ft {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.addPerson .sexOption .weui-cell__ft {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.addPerson .birthday .vux-cell-value {
+  text-align: left;
+  font-size: 21px;
+  color: #333333;
+}
+.addPerson .vux-label {
+  font-size: 21px;
+  color: #aaaaaa;
+}
+.addPerson .weui-cells:before,
+.addPerson .weui-cells:after {
+  border: none;
+}
+.addPerson .weui-cell {
+  padding: 0 0 15px 0;
+}
+.addPerson .weui-cells__title {
+  padding: 0;
+}
+.addPerson .weui-input {
+  font-size: 21px;
+  color: #333333;
+  font-weight: 400;
+}
+.addPerson input::-webkit-input-placeholder {
+  /* WebKit browsers*/
+  color: #aaa;
+  font-size: 21px;
+}
+.addPerson input:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18*/
+  color: #aaa;
+  font-size: 21px;
+}
+.addPerson input::-moz-placeholder {
+  /* Mozilla Firefox 19+*/
+  color: #aaa;
+  font-size: 21px;
+}
+.addPerson input:-ms-input-placeholder {
+  /* Internet Explorer 10+*/
+  color: #aaa;
+  font-size: 21px;
+}
+.addPerson .hasTop {
+  margin-top: 26px;
+}
+.addPerson .noTop {
+  margin-top: 0;
+}
+.addPerson .noTop .vux-label {
+  color: #333333!important;
+}
+/* -- 投票选项 -- */
+.voteSelect .weui-cells {
+  border: 0.5px solid #D8D8D8;
+  background-color: #f8f8f8;
+}
+.voteSelect .weui-cells .choose {
+  background-color: rgba(13, 171, 96, 0.2);
+}
+.voteSelect .weui-cell:before {
+  left: 0;
+}
+/* -- 我家 -- */
+.my .vux-header-title-area {
+  margin: 0 80px;
+}
+.my .vux-header .vux-header-right {
+  top: 10px;
+}
+.my .infoList .weui-cell {
+  padding: 17px 15px;
+}
+/* -- 账户资料 -- */
+.personInfo .tag .weui-cells,
+.personInfo .payPsd .weui-cells {
+  margin-top: 10px;
+}
+.personInfo .tag .weui-cells:before,
+.personInfo .tag .weui-cells:after {
+  border: none;
+}
+.personInfo .normal .weui-label {
+  font-size: 14px;
+}
+.personInfo .normal .vux-cell-value {
+  color: #333333;
+  font-size: 14px;
+  margin-right: 10px;
+}
+.personInfo .normal .weui-cell_access .weui-cell__ft:after {
+  width: 10px;
+  height: 10px;
+  border-width: 1px 1px 0 0;
+  margin-top: -5px;
+  border-color: #aaaaaa;
+}
+.personInfo .vux-cell-placeholder {
+  color: #aaaaaa;
+}
+/* -- 我的地址 -- */
+.modifyAddress .weui-cells:before {
+  border-top: none;
+}
+.modifyAddress .lastGroup .weui-cells:after {
+  border-bottom: none;
+}
+.chooseCommunity .search .weui-search-bar,
+.chooseCommunity .search .weui-search-bar__form {
+  background-color: #ffffff;
+}
+.chooseCommunity .search .weui-search-bar {
+  padding: 15px 10px;
+  padding-bottom: 0;
+}
+.chooseCommunity .search .weui-search-bar:before,
+.chooseCommunity .search .weui-search-bar:after {
+  border: none;
+}
+.chooseCommunity .search .weui-search-bar__label {
+  border-radius: 100px;
+  background: #f2f2f2;
+  text-align: left;
+  padding-left: 10px;
+}
+.chooseCommunity .search .weui-search-bar__label .weui-icon-search {
+  margin-right: 0;
+}
+.chooseCommunity .search .weui-search-bar__form:after {
+  border-radius: 100px;
+  border: none;
+  background: #f2f2f2;
+}
+.chooseCommunity .weui-cells:before,
+.chooseCommunity .weui-cells:after {
+  border: none;
+}
+.chooseCommunity .weui-cell {
+  padding: 10px 0;
+}
+.chooseCommunity .weui-cell:before {
+  left: 0;
+}
+.chooseCommunity .weui-cells.vux-search_show {
+  padding-left: 15px;
+  padding-right: 15px;
+  font-size: 14px;
+}
+.verifiedName .weui-cells:before,
+.nickName .weui-cells:before,
+.qqNum .weui-cells:before,
+.password .weui-cells:before {
+  border-top: none;
+}
+.verifiedName .weui-input,
+.nickName .weui-input,
+.qqNum .weui-input,
+.password .weui-input {
+  font-size: 21px;
+  color: #333333;
+}
+.signDetail .userTitle span {
+  font-size: 15px;
+}
+.signDetail .vux-label {
+  font-size: 18px;
+  color: #333333;
+}
+.signDetail .weui-cell_access .weui-cell__ft:after {
+  width: 10px;
+  height: 10px;
+  border-width: 1px 1px 0 0;
+  margin-top: -5px;
+  border-color: #aaaaaa;
+}
+.signDetail .joinPeople .weui-cells {
+  margin-top: 0;
+}
+.QRcode {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  height: 100%;
+  position: relative;
+}
+.QRcode .banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /*padding-bottom: .53rem;*/
+}
+.QRcode .banner .head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -0.4rem;
+}
+.QRcode .banner .head p {
+  color: #ffffff;
+  font-size: 15px;
+}
+.QRcode .banner .head p:first-child {
+  font-size: 21px;
+  font-weight: bold;
+}
+.QRcode .banner .qrCard {
+  width: 315px;
+  /*height: 8.64rem;*/
+  background-color: #ffffff;
+  border-radius: 10px;
+  margin-top: 20px;
+  /*padding: .25rem 0 .4rem 0;*/
+}
+.QRcode .banner .qrCard .name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /*padding-bottom: .34rem;*/
+  padding: 12.5px 15px;
+  border-bottom: 1px dashed #aaaaaa;
+  font-size: 15px;
+}
+.QRcode .banner .qrCard .name span:first-child {
+  font-size: 18px;
+}
+.QRcode .banner .qrCard .qrPic {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /*padding: .4rem .3rem .5rem .3rem;*/
+  margin-top: 20px;
+  padding-bottom: 25px;
+  border-bottom: 1px dashed #aaaaaa;
+  position: relative;
+}
+.QRcode .banner .qrCard .qrPic span {
+  margin-bottom: 15px;
+}
+.QRcode .banner .qrCard .qrPic img {
+  width: 150px;
+  height: 150px;
+}
+.QRcode .banner .qrCard .qrPic .hasSign {
+  position: absolute;
+  right: -20px;
+  top: -25px;
+  width: 80px;
+  height: 80px;
+}
+.QRcode .banner .qrCard ul {
+  padding: 15px 15px 20px 15px;
+}
+.QRcode .banner .qrCard ul li {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-top: 13px;
+  font-size: 12px;
+}
+.QRcode .banner .qrCard ul li span:last-child {
+  flex: 1;
+  margin-left: 2px;
+  word-break: break-all;
+  white-space: normal;
+}
+.QRcode .banner .qrCard ul li:first-child {
+  margin-top: 0;
+}
+.changeBanner .weui-cells {
+  margin-top: 0;
+}
+.changeBanner .weui-cells:before {
+  border: none;
+}
+.bind .weui-dialog {
+  max-width: 100%;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+.bind .verFiled {
+  padding: 20px 19px 0 19px;
+}
+.bind .verFiled p {
+  font-size: 18px;
+  margin-bottom: 17.5px;
+}
+.bind .verFiled button {
+  color: #0DAB60;
+  background-color: #ffffff;
+  border: 1px solid #0DAB60;
+}
+.bind .verFiled .disableBtn {
+  color: #aaaaaa;
+  background-color: #ffffff;
+  border: 0.5px solid #D8D8D8;
+}
+.bind .verFiled .weui-cell {
+  padding: 14.5px 0;
+}
+.bind .verFiled .weui-btn:after,
+.bind .verFiled .weui-cell:before {
+  border: none;
+}
+.bind .btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #e5e5e5;
+}
+.bind .btn span {
+  flex: 0.5;
+  text-align: center;
+  height: 20px;
+  line-height: 50px;
+  font-size: 18px;
+}
+.bind .btn span:last-child {
+  color: #0DAB60;
+  border-left: 1px solid #e5e5e5;
+}
+/* 新增收货地址 */
+.addressSelect .weui-cells {
+  margin-top: 10px;
+}
+.addressSelect .weui-cells__title {
+  margin-top: 0;
+}
+.addressSelect .weui-cells:before {
+  border-top: none;
+}
+.addressSelect .weui-cell_access .weui-cell__ft:after {
+  width: 10px;
+  height: 10px;
+  border-width: 1px 1px 0 0;
+  margin-top: -5px;
+  border-color: #aaaaaa;
+}
+.addressSelect .weui-cell__ft {
+  color: #333333;
+  font-size: 21px;
+}
+.addressSelect .vux-label {
+  color: #aaaaaa;
+  font-size: 21px;
+}
+.addressOption .weui-cells {
+  margin-top: 15px;
+}
+.addressOption .weui-cells__title {
+  margin-top: 0;
+}
+.addressOption .weui-cells:before {
+  border-top: none;
+}
+.addressOption .weui-cell_access .weui-cell__ft:after {
+  width: 10px;
+  height: 10px;
+  border-width: 1px 1px 0 0;
+  margin-top: -5px;
+  border-color: #aaaaaa;
+}
+.addressOption .weui-cell__ft {
+  color: #333333;
+  font-size: 21px;
+}
+.addressOption .vux-label {
+  color: #aaaaaa;
+  font-size: 21px;
+}
+.myAddress .weui-cell_access {
+  padding-right: 30px !important;
+}
+.commentPopup .vux-header {
+  background-color: #ffffff;
+  border-bottom: 0.5px solid #D8D8D8;
+}
+.commentPopup .vux-header .vux-header-right a,
+.commentPopup .vux-header .vux-header-left a {
+  font-size: 15px;
+  color: #0DAB60;
+}
+.commentPopup .weui-cells {
+  margin-top: 15px;
+}
+.commentPopup .weui-cells:before,
+.commentPopup .weui-cells:after {
+  border: none;
+}
+.commentPopup .weui-textarea {
+  font-size: 14px;
+  color: #333333;
+}
+.commentPopup .replyName {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+.commentPopup .replyName span {
+  color: #869DC7;
+}
+.feePopup .vux-header {
+  background-color: #ffffff;
+  border-bottom: 0.5px solid #D8D8D8;
+}
+.feePopup .vux-header .vux-header-title {
+  color: #333333;
+  font-size: 18px;
+}
+.feePopup .vux-header .vux-header-left .left-arrow:before {
+  border-color: #333333;
+}
+.feePopup .weui-cells:before,
+.feePopup .weui-cells:after {
+  border: none;
+}
+.feePopup .weui-cell {
+  padding: 0;
+  font-size: 21px;
+}
+.feePopup .weui-input {
+  font-size: 21px;
+  color: #333333;
+  font-weight: 400;
+}
+.feePopup .vux-cell-placeholder {
+  font-size: 21px;
+  color: #aaaaaa;
+  font-weight: 500;
+}
+.feePopup .weui-cells__title {
+  margin: 0;
+  font-size: 15px;
+  color: #aaaaaa;
+  padding-left: 0;
+  padding-bottom: 5px;
+  height: 21px;
+  line-height: 21px;
+}
+.feePopup .feeNum {
+  background-color: #ffffff;
+  height: 55px;
+  line-height: 55px;
+  padding: 15px;
+  font-size: 21px;
+}
+.feePopup .feeNum .hasTop {
+  margin-top: 26px;
+}
+.feePopup .feeNum .noTop {
+  margin-top: 0;
+}
+.feePopup .reFound {
+  background-color: #ffffff;
+  margin-top: 10px;
+  padding: 0 15px;
+}
+.feePopup .reFound .title {
+  padding: 12px 0;
+  font-size: 15px;
+}
+.feePopup .reFound .radioSelect li {
+  position: relative;
+  border-top: 0.5px solid #D8D8D8;
+}
+.feePopup .reFound .radioSelect li span {
+  font-size: 18px;
+  padding: 15px 0;
+  text-align: center;
+}
+.feePopup .reFound .radioSelect li i {
+  position: absolute;
+  right: 2px;
+  top: 18px;
+  width: 22px;
+  height: 22px;
+  display: block;
+  background: url("../../assets/images/unchecked_icon_grey.png") no-repeat center / cover;
+}
+.feePopup .reFound .radioSelect li .checked {
+  background: url("../../assets/images/checked_icon_green.png") no-repeat center / contain;
+}
+.feePopup .reFound .weui-cells__title {
+  font-size: 15px;
+  color: #333333;
+  padding: 15px 0;
+}
+.feePopup .reFound .weui-cell {
+  padding: 15px 0;
+  font-size: 18px;
+  display: flex;
+  text-align: center;
+  border-top: 0.5px solid #D8D8D8;
+}
+.feePopup .reFound .weui-cells_radio .weui-cell__ft {
+  width: 28px;
+  height: 22px;
+  background: url("../../assets/images/unchecked_icon_grey.png") no-repeat;
+  background-size: contain;
+  background-position: center;
+  vertical-align: middle;
+}
+.feePopup .reFound .weui-cell:before {
+  border: none;
+}
+.feePopup .reFound [class^="weui-icon-"] {
+  display: block;
+}
+.feePopup .reFound .weui-cells_radio .weui-check:checked + .weui-icon-checked:before {
+  color: transparent;
+  margin-left: 0;
+  width: 22px;
+  height: 22px;
+  background: url("../../assets/images/checked_icon_green.png") no-repeat;
+  background-size: contain;
+  background-position: left;
+}
+.feePopup .confirm {
+  padding: 0 15px;
+  margin-top: 20px;
+}
+.feePopup .confirm button {
+  background-color: #0DAB60;
+  height: 44px;
+  font-size: 18px;
+}
+.integralCheckstand .vux-header .vux-header-title {
+  color: #ffffff;
+}
+.verifiedName .weui-cells:before,
+.verifiedName .weui-cells:after {
+  border: 0;
+}
+.verifiedName .weui-cells__title {
+  margin: 0;
+  font-size: 15px;
+  color: #aaaaaa;
+  padding-left: 0;
+  padding-bottom: 5px;
+  height: 21px;
+  line-height: 21px;
+}
+.verifiedName .weui-cell__ft {
+  text-align: left;
+  color: #aaaaaa;
+}
+.verifiedName .vux-cell-value {
+  color: #333333;
+  font-size: 21px;
+  font-weight: 700;
+}
+.verifiedName .weui-cell {
+  padding: 0;
+  font-size: 21px;
+}
+.verifiedName .weui-input {
+  font-size: 21px;
+  color: #333333;
+  font-weight: 400;
+}
+.verifiedName .vux-cell-placeholder {
+  font-size: 21px;
+  color: #aaaaaa;
+  font-weight: 500;
+}
+.addNewCommunityAddress .submit .weui-cells:after {
+  border: none;
+}
+.payPopup .wholePage {
+  background-color: #F5F5F5;
+}
+.payPopup .total {
+  background-color: #ffffff;
+  position: relative;
+  height: 114px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.payPopup .total i {
+  width: 16px;
+  height: 15px;
+  position: absolute;
+  right: 13.5px;
+  top: 13.5px;
+  background-image: url("../../assets/images/delete_icon_gray.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+.payPopup .total p {
+  font-size: 12px;
+  color: #333333;
+}
+.payPopup .total p.money {
+  font-size: 15px;
+  color: #0DAB60;
+}
+.payPopup .total p.money span {
+  display: inline-block;
+  font-size: 27px;
+}
+.payPopup .reFound .weui-cell {
+  text-align: left;
+}
+.payPopup .reFound .weui-cell .weui-cell__bd p {
+  display: flex;
+  align-items: center;
+}
+.payPopup .reFound .weui-cell .weui-cell__bd p .vux-radio-icon {
+  width: 33px;
+  height: 33px;
+  margin-right: 10px;
+}
+.payPopup .reFound .weui-cell .weui-cell__bd p span {
+  font-size: 15px;
+  color: #333333;
+}
+.payPopup .goPay {
+  margin-top: 20px;
+}
+.payPopup .goPay button {
+  width: 100%;
+  height: 50px;
+  font-size: 18px;
+  color: #ffffff;
+  background-color: #0DAB60;
+  border: none;
+}
+.payPopup .content {
+  background-color: #f5f5f5;
+  height: 70%;
+}
+.payPopup .content .content-tit {
+  background-color: #ffffff;
+  padding: 0 15px;
+}
+.payPopup .content span {
+  display: inline-block;
+}
+.payPopup .content p {
+  height: 55px;
+  line-height: 55px;
+  font-size: 15px;
+}
+.payPopup .content .items {
+  color: #333333;
+  border-bottom: 0.5px solid #D8D8D8;
+}
+.payPopup .content .plus {
+  color: #0DAB60;
+  text-align: right;
+}
+/*服务*/
+.service .businessApp .weui-grids .weui-grid {
+  padding: 0;
+  padding-top: 14px;
+}
+.service .businessApp .weui-grids .weui-grid .weui-grid__label {
+  font-size: 12px;
+}
+.service .businessApp .weui-grid__icon {
+  width: 44px;
+  height: 44px;
+}
+.service .businessApp .weui-grid__label {
+  font-size: 12px;
+}
+.service .businessApp .weui-grid:after {
+  border: none;
+}
+.service .hotAndNew .vux-tab {
+  height: 30px;
+}
+.service .hotAndNew .vux-tab .vux-tab-item {
+  line-height: 30px;
+  font-size: 15px;
+  border: none!important;
+  background: none;
+  background-color: #F2F2F2;
+}
+.serviceRating .inputArea .weui-cells:after,
+.commodityRating .inputArea .weui-cells:after {
+  border-bottom: none;
+}
+/*红包*/
+.redBagPopup {
+  height: 100%;
+  background-color: #f5f5f5;
+}
+.redBagPopup .vux-x-switch.weui-cell_switch {
+  padding: 12px 15px;
+}
+.redBagPopup .vux-no-group-title {
+  margin-top: 10px;
+}
+.redBagPopup .weui-switch:checked {
+  border-color: #FF6648;
+  background-color: #FF6648;
+}
+.redBagPopup .redBagList {
+  margin-top: 10.5px;
+  background-color: #ffffff;
+  padding: 0 15px;
+}
+.redBagPopup .redBagList li {
+  padding: 15px 0;
+  border-bottom: 0.5px solid #D8D8D8;
+}
+.redBagPopup .redBagList li .align-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.redBagPopup .redBagList li .align-right span {
+  font-size: 12px;
+  margin-right: 15px;
+}
+.redBagPopup .redBagList li .align-right i {
+  width: 22px;
+  height: 22px;
+  background: url("../../assets/images/unchecked_icon_grey.png") no-repeat;
+  background-size: cover;
+}
+.redBagPopup .redBagList li .align-right .isChecked {
+  width: 22px;
+  height: 22px;
+  background: url("../../assets/images/checked_icon_orange.png") no-repeat;
+  background-size: cover;
+}
+.redBagPopup .redBagList li .content {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+.redBagPopup .redBagList li .content span {
+  font-size: 12px;
+  color: #aaaaaa;
+}
+.redBagPopup .redBagList li .content .type {
+  text-align: center;
+}
+.redBagPopup .redBagList li .content .type .money {
+  font-size: 24px;
+  color: #FF6648;
+}
+.redBagPopup .redBagList li .content .name span:first-child {
+  margin-top: 0;
+}
+.redBagPopup .redBagList li .content .name span {
+  margin-top: 11px;
+}
+/*留言*/
+.msgPopup {
+  height: 100%;
+  background-color: #ffffff;
+}
+.msgPopup .vux-header .vux-header-right a {
+  font-size: 18px;
+  color: #333333;
+}
+.msgPopup .weui-cells:before,
+.msgPopup .weui-cells:after {
+  border: none;
+}
+.msgPopup .weui-cell {
+  padding: 20px 18px;
+}
+.msgPopup .weui-cells {
+  margin-top: 0;
+}
+.msgPopup .weui-textarea {
+  font-size: 15px;
+}
+.confirmOrders .reFound {
+  background-color: #ffffff;
+  margin-top: 10px;
+  padding: 0 15px;
+}
+.confirmOrders .reFound .weui-cells__title {
+  font-size: 15px;
+  color: #333333;
+  padding: 12px 0;
+  margin: 0;
+}
+.confirmOrders .reFound .weui-cell {
+  padding: 12px 0;
+  font-size: 18px;
+  display: flex;
+  text-align: center;
+  border-top: 0.5px solid #D8D8D8;
+}
+.confirmOrders .reFound .weui-cells_radio .weui-cell__ft {
+  width: 28px;
+  height: 22px;
+  background: url("../../assets/images/unchecked_icon_grey.png") no-repeat;
+  background-size: contain;
+  background-position: center;
+  vertical-align: middle;
+}
+.confirmOrders .reFound .weui-cell:before,
+.confirmOrders .reFound .weui-cells:after {
+  border: none;
+}
+.confirmOrders .reFound .weui-cells:before {
+  border-top: 0.5px solid #D8D8D8;
+}
+.confirmOrders .reFound [class^="weui-icon-"] {
+  display: block;
+}
+.confirmOrders .reFound .weui-cells_radio .weui-check:checked + .weui-icon-checked:before {
+  color: transparent;
+  margin-left: 0;
+  width: 22px;
+  height: 22px;
+  background: url("../../assets/images/checked_icon_orange.png") no-repeat;
+  background-size: contain;
+  background-position: left;
+}
+.confirmOrders .weui-cell_access .weui-cell__ft:after {
+  width: 8px;
+  height: 8px;
+  border-width: 1.2px 1.2px 0 0;
+  margin-top: -5px;
+  border-color: #b2b2b2;
+}
+.confirmOrders .weui-cell {
+  padding: 0;
+}
+.confirmOrders .vux-cell-value {
+  color: #aaaaaa;
+  font-size: 15px;
+}
+.product-detail .vux-header .vux-header-left .left-arrow {
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+}
+.product-detail .vux-header .vux-header-left .left-arrow:before {
+  left: 10px;
+}
+.sku-popup-container .vux-number-selector svg {
+  fill: #666;
+}
+.sku-popup-container .vux-number-input {
+  color: #333;
+  font-size: 15px;
+}
+.sku-popup-container .weui-cell {
+  font-size: 15px;
+  color: #aaa;
+}
+.sku-popup-container .weui-cells:after {
+  border-bottom: 0 solid #fff;
+}
+.sku-popup-container .weui-cells:before {
+  border-top: 0 solid #fff;
+}
+.shopping-cart-wrapper .weui-icon-success {
+  color: #FF6648;
+}
+.shopping-cart-wrapper .weui-icon-success:before {
+  color: #FF6648 !important;
+}
+.shopping-cart-wrapper .vux-number-selector svg {
+  fill: #666;
+}
+.shopping-cart-wrapper .vux-number-input {
+  color: #333;
+  font-size: 15px;
+}
+.shopping-cart-wrapper .product-wrapper .product-list-wrapper .product-count-wrapper .weui-cell {
+  padding: 0;
+}
+/*支付确认*/
+.confirm .confirmPayResult li {
+  border-bottom: 1px solid #D8D8D8;
+}
+.confirm .confirmPayResult .confirm_1 {
+  padding: 15px 0;
+}
+.confirm .confirmPayResult .confirm_ok {
+  color: #fc6679;
+  padding: 10px 0;
+}
+.confirm .confirmPayResult .confirm_repay {
+  color: #aaaaaa;
+  padding: 10px 0;
+  border: none;
+}
+.pay-later-wrapper .weui-dialog {
+  max-width: 100%;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+.pay-later-wrapper .title {
+  font-size: 20px;
+  font-weight: 400;
+  padding-top: 5px;
+}
+.pay-later-wrapper .pay-later-text {
+  font-size: 15px;
+  padding: 5px 15px;
+}
+.pay-later-wrapper .btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #e5e5e5;
+}
+.pay-later-wrapper .btn span {
+  flex: 0.5;
+  text-align: center;
+  line-height: 50px;
+  font-size: 18px;
+}
+.pay-later-wrapper .btn span:last-child {
+  color: #0DAB60;
+  border-left: 1px solid #e5e5e5;
+}
+.pay-password-wrapper .weui-dialog {
+  max-width: 100%;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+.pay-password-wrapper .title-wrapper {
+  font-size: 15px;
+  font-weight: 600;
+  padding-top: 20px;
+  padding-bottom: 15px;
+}
+.pay-password-wrapper .btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #e5e5e5;
+}
+.pay-password-wrapper .btn span {
+  flex: 0.5;
+  text-align: center;
+  line-height: 50px;
+  font-size: 15px;
+}
+.pay-password-wrapper .btn span:last-child {
+  color: #0DAB60;
+  border-left: 1px solid #e5e5e5;
+}
+.pay-password-wrapper .btn .cancel {
+  color: #aaa;
+}
+.not-auth-wrapper .weui-dialog {
+  max-width: 100%;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+.not-auth-wrapper .not-auth-text {
+  font-size: 18px;
+  font-weight: 600;
+  padding: 20px 15px 15px 15px;
+}
+.not-auth-wrapper .btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #e5e5e5;
+}
+.not-auth-wrapper .btn span {
+  flex: 1;
+  text-align: center;
+  line-height: 50px;
+  font-size: 18px;
+  color: #0DAB60;
+}
+.not-auth-wrapper .btn .cancel {
+  color: #aaa;
+}

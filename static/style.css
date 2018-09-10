@@ -1,0 +1,65 @@
+body,html{
+    width: 100%;
+    height:100%;
+    margin:0;
+}
+ul,li,dl,dd,dt{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+a{
+    text-decoration: none;
+}
+#app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    width: 100%;
+    height:100%;
+}
+.bottom_tab{
+    position: fixed;
+    left:0;
+    bottom: 0;
+    width:100%;
+    height:45px;
+    background: #f1f1f1;
+    line-height:45px;
+}
+.tab_ul{
+    width: 100%;
+    height:100%;
+}
+.tab_li{
+    width:25%;
+    height:100%;
+    text-align: center;
+    float: left;
+}
+.active{
+    background: #9e9e9e;
+    color: #f00;
+}
+.Hactive{
+    background: #9e9e9e;
+    color: #f00;
+}
+.Myhome{
+    width: 100%;
+    height:100%;
+}
+.home_banner{
+    width:100%;
+    height:39%;
+    background: url("../src/assets/demo/aa.png");
+    background-size: cover;
+}
+nav.home .home,
+nav.service .service,
+nav.circle .circle,
+nav.my .my{
+    background-color:#f00;
+}
+
