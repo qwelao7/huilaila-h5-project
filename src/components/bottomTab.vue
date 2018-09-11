@@ -39,9 +39,9 @@
               <div class="pub-activity" @click="pub_activity">
                 <img src="../assets/images/publish_activity.png" alt="">
               </div>
-              <!--<div class="activity-album" @click="activity_album">-->
-                <!--<img src="../assets/images/activity_album.png" alt="">-->
-              <!--</div>-->
+              <div class="activity-album" @click="activity_album">
+                <img src="../assets/images/activity_album.png" alt="">
+              </div>
             </div>
             <div class="closeIcon" @click="publish = false">
               <img src="../assets/images/publish_icon_56link.png" alt="">

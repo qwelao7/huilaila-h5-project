@@ -46,7 +46,7 @@
   import {Base64} from 'js-base64';
 
   export default {
-    name: 'pub_newThings',
+    name: 'pub_album',
     directives: {
       TransferDom
     },
@@ -170,6 +170,7 @@
           let len = localIds.length;
           /* 传了图片 */
           if (len) {
+            let blobs = [];
             localIds.forEach(function (localId, index) {
               _this_.$wechat.getLocalImgData({
                 localId: localId, // 图片的localID
@@ -179,58 +180,46 @@
                     localData = 'data:image/jgp;base64,' + localData;
                   }
                   let file = File.dataURItoBlob(localData);
-                  _this_.uploadData.append('files', file.blob, file.fileName); // blob对象,自己手动加上文件名
+                  // _this_.uploadData.append('files', file.blob, file.fileName); // blob对象,自己手动加上文件名
+                  blobs.push(file);
                   // 合成完最后一个,开始上传
                   if (index === len - 1) {
-                    _this_.$JHttp.post(window.uploadURL + '/upload', _this_.uploadData, {
-                      headers: {
-                        'Content-Type': 'multipart/form-data'
-                      }
-                    }).then(res => {
-                      if (res.status === 100) {
-                        let postData = {
-                          topicContent: content,
-                          topicType: 11, // 新鲜事
-                          imageUrls: JSON.stringify(res.data),
-                          activityId: _this_.activityPickerId
-                        };
-                        // 保存图片到业务方
-                        _this_.$JHttp({
-                          url: window.baseURL + '/socialactivity/album/add?' + querystring.stringify(postData),
-                          method: 'post',
-                          headers: {
-                            defCommunityId: _this_.communityId
-                          }
-                        }).then(res => {
-                          if (res.status === 100) {
-                            // 开始保存逻辑
-                            _this_.$vux.loading.hide();
-                            _this_.$vux.toast.show({
-                              type: 'success',
-                              text: '发布成功'
-                            });
-                            setTimeout(function () {
-                              _this_.content = '';
-                              _this_.$router.go(-1);
-                            }, 2000)
-                          } else {
-                            _this_.$vux.toast.show({
-                              type: 'cancel',
-                              text: res.msg
-                            });
-                          }
-                        }).catch(error => {
-                          console.error(error);
-                        });
-                      } else {
-                        _this_.$vux.toast.show({
-                          type: 'cancel',
-                          text: res.msg
-                        });
-                      }
-                    }).catch(error => {
-                      console.error(error);
-                    });
+                    _this_.uploadBlob(blobs, 'album', undefined, undefined, function (resList) {
+                      let postData = {
+                        topicContent: content,
+                        topicType: 11, // 活动相册
+                        imageUrls: JSON.stringify(resList),
+                        activityId: _this_.activityPickerId
+                      };
+                      // 保存图片到业务方
+                      _this_.$JHttp({
+                        url: window.baseURL + '/socialactivity/album/add?' + querystring.stringify(postData),
+                        method: 'post',
+                        headers: {
+                          defCommunityId: _this_.communityId
+                        }
+                      }).then(res => {
+                        if (res.status === 100) {
+                          // 开始保存逻辑
+                          _this_.$vux.loading.hide();
+                          _this_.$vux.toast.show({
+                            type: 'success',
+                            text: '发布成功'
+                          });
+                          setTimeout(function () {
+                            _this_.content = '';
+                            _this_.$router.go(-1);
+                          }, 2000)
+                        } else {
+                          _this_.$vux.toast.show({
+                            type: 'cancel',
+                            text: res.msg
+                          });
+                        }
+                      }).catch(error => {
+                        console.error(error);
+                      });
+                    })
                   }
                 }
               });
