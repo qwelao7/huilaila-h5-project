@@ -256,7 +256,7 @@
                   blobs.push(file);
                   // 合成完最后一个,开始上传
                   if (index === len - 1) {
-                    _this_.uploadBlob(blobs, 'album', undefined, undefined, function (resList) {
+                    _this_.uploadBlob(blobs, 'activityBalance', undefined, undefined, function (resList) {
                       let postData = {
                         imageUrls: JSON.stringify(resList),
                         activityId: _this_.$route.params.activityId,
