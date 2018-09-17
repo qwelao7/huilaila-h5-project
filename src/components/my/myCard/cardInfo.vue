@@ -15,18 +15,18 @@
           </div>
         </div>
       </div>
-      <div class="btn-group" style="">
-        <button class="btn">充 值</button>
-        <!--<button class="btn">开 通</button>-->
-      </div>
+      <!--<div class="btn-group">-->
+        <!--<button class="btn">充 值</button>-->
+        <!--<button class="btn" @click="activeCard">开 通</button>-->
+      <!--</div>-->
       <group class='detail' label-width="4em" title="会员卡详情" title-color="#333">
         <cell align-items="flex-start" value-align="left" class="detail-info">
-            <span slot="title" class="detail-title">发行方</span>
-            <span class="detail-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam autem consequatur dolores ea et illo incidunt, iste, nesciunt obcaecati odit pariatur quasi, rem repudiandae sed suscipit totam ullam voluptate voluptates.</span>
+          <span slot="title" class="detail-title">发行方</span>
+          <span class="detail-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam autem consequatur dolores ea et illo incidunt, iste, nesciunt obcaecati odit pariatur quasi, rem repudiandae sed suscipit totam ullam voluptate voluptates.</span>
         </cell>
         <cell align-items="flex-start" value-align="left" class="detail-info">
-            <span slot="title" class="detail-title">发行方</span>
-            <span class="detail-desc">宝华桃李春风</span>
+          <span slot="title" class="detail-title">发行方</span>
+          <span class="detail-desc">宝华桃李春风</span>
         </cell>
       </group>
 
@@ -86,6 +86,16 @@
           console.log(e)
         });
       }
+      // activeCard () {
+      //   this.$vux.confirm.show({
+      //     // 组件除show外的属性
+      //     content: '确认开通',
+      //     showCancelButton: false,
+      //     onConfirm () {
+      //       console.log(111)
+      //     }
+      //   })
+      // }
     }
   }
 </script>
@@ -132,16 +142,16 @@
         border-radius: 1px;
       }
     }
-    .detail{
-      :after{
+    .detail {
+      :after {
         border: 1px solid #fff;
       }
-      .detail-info{
-        .detail-title{
+      .detail-info {
+        .detail-title {
           color: #ababab;
           font-size: 13px;
         }
-        .detail-desc{
+        .detail-desc {
           color: #333;
           font-size: 13px;
           text-align: left;
@@ -154,22 +164,22 @@
       height: 10px;
       background-color: #f5f5f5;
     }
-    .store-list{
-      .store-title{
+    .store-list {
+      .store-title {
         color: #333;
         font-size: 13px;
       }
-      .store-addr{
+      .store-addr {
         color: #ababab;
         font-size: 11px;
         margin-top: 4px;
       }
-      .store-desc{
+      .store-desc {
         color: #ababab;
         font-size: 10px;
         display: inline;
       }
-      .store-discount{
+      .store-discount {
         color: #333;
         font-size: 13px;
         display: inline;
