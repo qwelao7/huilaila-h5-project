@@ -40,6 +40,9 @@
         </div>
         <div class="infoList no-margin-top">
           <group>
+            <cell-box is-link @click.native="goMyCard">
+              <span>我的会员卡</span>
+            </cell-box>
             <cell-box is-link @click.native="goMyOrder">
               <span class="myServeice">
                 <span>我的服务</span>
@@ -214,6 +217,9 @@
       },
       goMyBill () {
         this.$router.push('/myBill');
+      },
+      goMyCard () {
+        this.$router.push('/myCard');
       },
       getBalance () {
         let _this_ = this;

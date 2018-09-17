@@ -1072,6 +1072,21 @@ export default new Router({
       path: '/commiteeAchievementDetail/:id', // 业委会成果详情
       name: '/commiteeAchievementDetail',
       component: resolve => require(['@/components/community/commiteeAchievement/commiteeAchievementDetail'], resolve)
+    },
+    {
+      path: '/myCard', // 我的会员卡
+      name: '/myCard',
+      component: resolve => require(['@/components/my/myCard/myCard'], resolve)
+    },
+    {
+      path: '/myCard/newCard', // 未开通会员卡
+      name: '/newCard',
+      component: resolve => require(['@/components/my/myCard/newCard'], resolve)
+    },
+    {
+      path: '/myCard/cardInfo/:id', // 未开通会员卡
+      name: '/cardInfo',
+      component: resolve => require(['@/components/my/myCard/cardInfo'], resolve)
     }
   ]
 })
