@@ -178,7 +178,7 @@
             _this_.$set(_this_.account, 'hasPassword', hasPassword);
             let balance = parseFloat(money);
             _this_.$set(_this_.account, 'balance', balance);
-            // 余额不足时,置灰余额支付并选中支付宝
+            // 余额不足时,置灰余额支付并选中微信支付
             if (_this_.account.balance < _this_.orderDetail.totalMoney.money) {
               _this_.$set(_this_.payWayList[0], 'selected', false); // 去除余额支付的选中状态
               if (_this_.payWayList.length > 1) {

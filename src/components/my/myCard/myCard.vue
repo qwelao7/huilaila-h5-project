@@ -24,13 +24,6 @@
       <div class="add-item" @click="addCard">
         <img src="../../../assets/images/add_card.png" alt="">
       </div>
-
-
-      <div class="placeholder-warpper" v-if="showPlaceholder && list.length === 0">
-        <img src="../../../assets/images/No-content.png">
-        <p>什么都没发现，去别处看看吧</p>
-      </div>
-
     </view-box>
 
   </div>

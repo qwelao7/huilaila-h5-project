@@ -19,18 +19,33 @@
         <!--<button class="btn">充 值</button>-->
         <!--<button class="btn" @click="activeCard">开 通</button>-->
       <!--</div>-->
+
+      <!--会员卡详情-->
       <group class='detail' label-width="4em" title="会员卡详情" title-color="#333">
         <cell align-items="flex-start" value-align="left" class="detail-info">
-          <span slot="title" class="detail-title">发行方</span>
+          <span slot="title" class="detail-title">特权说明</span>
           <span class="detail-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam autem consequatur dolores ea et illo incidunt, iste, nesciunt obcaecati odit pariatur quasi, rem repudiandae sed suscipit totam ullam voluptate voluptates.</span>
         </cell>
         <cell align-items="flex-start" value-align="left" class="detail-info">
           <span slot="title" class="detail-title">发行方</span>
           <span class="detail-desc">宝华桃李春风</span>
         </cell>
+        <cell align-items="flex-start" value-align="left" class="detail-info">
+          <span slot="title" class="detail-title">客服电话</span>
+          <span class="detail-desc">021-12345678</span>
+        </cell>
+        <cell align-items="flex-start" value-align="left" class="detail-info">
+          <span slot="title" class="detail-title">有效期</span>
+          <span class="detail-desc">2018-10-30</span>
+        </cell>
+        <cell align-items="flex-start" value-align="left" class="detail-info">
+          <span slot="title" class="detail-title">获取方式</span>
+          <span class="detail-desc">购买</span>
+        </cell>
       </group>
 
       <div class="spacing-container"></div>
+      <!--适用门店-->
       <group class="store-list" title="适用门店" title-color="#333">
         <cell>
           <div slot="title">
@@ -165,6 +180,7 @@
       background-color: #f5f5f5;
     }
     .store-list {
+      margin-bottom: 20px;
       .store-title {
         color: #333;
         font-size: 13px;
