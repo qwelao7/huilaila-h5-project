@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=640,initial-scale=0.5, minimum-scale=0.5, maximum-scale=0.5" />
+    <title>欢迎下载智慧管理APP</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            zoom: 1;
+            outline: none;
+        }
+
+        html, img {
+            border: 0 none;
+        }
+
+        html {
+            overflow-y: scroll;
+            overflow-x: none;
+            background-color: #f8f8f8;
+        }
+
+        body {
+            background-color: #f8f8f8;
+            font-size: 12px;
+            line-height: 1.5;
+            color: #404040;
+            font-family: "微软雅黑",sans-serif;
+            height: 100%;
+            width: 100%;
+        }
+
+        img {
+            vertical-align: middle;
+        }
+
+        a {
+            TEXT-DECORATION: none;
+        }
+
+        p, div, td {
+            word-wrap: break-word;
+        }
+
+        .wrap {
+            width: 640px;
+            margin: 0 auto;
+        }
+
+        .headbody {
+            margin:50px auto;
+            width:260px;
+            text-align:center;
+        }
+
+        .lc_btn {
+            margin: 35px 0 50px;
+            text-align: center;
+        }
+
+        .lc_btn a {
+            border: 2px solid #425a72;
+            border-radius: 100px;
+            height: 78px;
+            width: 448px;
+            font-size: 32px;
+            color: #425a72;
+            display: inline-block;
+            line-height:78px;
+        }
+
+        .wrap_pc_box div {
+            margin: 200px auto 50px;
+            width:300px;
+            text-align:center;
+        }
+        .headbody img{border-radius: 10px;}
+        .lc_text {
+            width: 640px;
+            margin: 10px auto;
+            border-top: 1px solid #d9d9d9;
+            padding: 50px 0;
+            font-size: 24px;
+            color: #666;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+    <script>
+        if (top.location!= self.location)
+        {
+            top.location=self.location;
+        }
+    </script>
+</head>
+<body>
+<div class="wrap">
+    <div class="headbody">
+        <img src="./img/wg_icon.png?v1.0"/>
+    </div>
+    <div class="lc_btn">
+        <a id="btn_down" href="javascript:;" onclick="downloadAPP();">下载智慧管理APP1.3</a>
+    </div>
+</div>
+<div class="wrap_pc_box" style="display:none">
+    <div>
+        <img src="img/wg_qrcode.png?v1.0" />
+        <br/>
+        扫描二维码下载智慧管理APP1.3
+    </div>
+</div>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        var ua= navigator.userAgent.toLowerCase();
+        if (!ua.match(/android|iphone|ipad|ipod|micromessenger/i)) {
+            $(".wrap").hide();
+            $(".wrap_pc_box").show();
+        }
+        else
+        {
+            if (getUrlParam()) {
+                $("#btn_down").html("立即更新");
+            }
+        }
+    });
+    function downloadAPP(){
+        var ua = navigator.userAgent.toLowerCase();
+        if (ua.match(/android/i)) {
+            if (ua.match(/micromessenger/i)) {
+                showBox1();
+            }
+            else {
+                $("#btn_down").attr("href", "https://app.huilaila.net/df/ButlerForDongfang.apk?1.0");
+            }
+        }
+        else if (ua.match(/iphone|ipad|ipod/i)) {
+            if (ua.match(/micromessenger/i)) {
+                showBox();
+            }
+            else {
+                location.href = 'itms-services://?action=download-manifest&url=https://app.huilaila.net/df/ButlerForDongFang.plist?1.0';
+            }
+        }
+    }
+    function showBox() {
+        alert("请点击右上角按钮选择“在Safari中打开”下载！"); return false;
+    }
+    function showBox1() {
+        alert("请点击右上角按钮选择“在浏览器中打开”下载！"); return false;
+    }
+    function getUrlParam() {
+        //匹配目标参数
+        var r = window.location.search.substr(1);
+        if (r == "u")
+        { return true; }
+        return false;
+    }
+</script>
+</body>
+</html>

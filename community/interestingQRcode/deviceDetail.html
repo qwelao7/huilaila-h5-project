@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>设备详情</title>
+    <style>
+        html, body {
+        	width: 100%;
+        	height: 100%;
+        	margin: 0;
+        	padding: 0;
+        }
+        .infoItem {
+            display: flex;
+            display: -webkit-flex; 
+        }
+        .label {
+            display: inline-block;
+            flex: 0 0 2.6rem;
+            -webkit-flex: 0 0 2.6rem;
+        }
+        .ellipsis {
+        	overflow: hidden; 
+			text-overflow: ellipsis;
+			display: -webkit-box; 
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 2; 
+        }
+        .header {
+        	display: flex;
+            display: -webkit-flex; 
+        	height: 3.733rem;
+        	margin: 0 0.4rem;
+        	align-items: center;
+            border-bottom: 1px solid #D8D8D8;
+        }
+        .header .header-left {
+
+        }
+        .header .header-left img {
+        	display: block;
+			width: 2.667rem;
+			height: 2.667rem;
+        }
+        .header .header-right {
+        	display: flex;
+            display: -webkit-flex; 
+        	flex-direction: column;
+            -webkit-flex-direction: column;
+        	padding-left:0.4rem;
+        	font-size:0.4rem;
+			color: #333333;
+			line-height: 0.667rem;
+        }
+        .header .header-right .header-right-name {
+        	width: 6.133rem;
+        	font-size: 0.56rem;
+    		margin-bottom: 0.533rem;
+        }
+        .header .header-right .header-left-status {
+            display: inline-block;
+            color: #FFFFFF;
+            width: 1.867rem;
+            height: 0.587rem;
+            line-height: 0.587rem;
+            border-radius: 1.333rem;
+            font-size: 0.32rem;
+            text-align: center;
+            margin-top: 0.4rem;
+        }
+        .header .header-right .header-left-status.green {
+            background-color: #00C66C;
+        }
+        .header .header-right .header-left-status.gray {
+            background-color: #aaaaaa;
+        }
+        .header .header-right .header-left-status.red {
+            background-color: #ff6648;
+        }
+        .content {
+        	margin: 0 0.4rem;
+        	padding-bottom: 1.333rem;
+        }
+        .content .deviceAge {
+            padding: 0.4rem 0;
+            font-size: 0.48rem;
+            color: #333333;
+            line-height: 0.8rem;
+        }
+        .content .manager {
+        	display: flex;
+            display: -webkit-flex; 
+        	justify-content: space-between;
+            -webkit-justify-content: space-between;
+        	align-items: center;
+            -webkit-align-items: center;
+        	height: 1.067rem;
+            padding-bottom: 0.533rem;
+        	/*border-bottom: 1px dashed #AAAAAA;*/
+            font-size: 0.32rem;
+            color: #aaaaaa;
+        }
+        .manager img {
+        	width: 1.067rem;
+        	height: 1.067rem;
+        	background-size: 100% 100%;
+        	background-repeat: no-repeat;
+            border-radius: 50%;
+        }
+        .managerInfo {
+        	flex: 1;
+            -webkit-flex: 1;
+        	display: flex;
+            display: -webkit-flex; 
+        	flex-direction: column;
+            -webkit-flex-direction: column;
+            padding-left: 0.4rem;
+        }
+        .managerInfo .name {
+        	font-size: 0.4rem;
+        	line-height: 0.56rem;
+        	color: #333333;
+        	padding-bottom: 0.067rem;
+        }
+        .phoneIcon {
+        	width: 0.587rem;
+        	height: 0.587rem;
+        	background-size: 100% 100%;
+        	background-repeat: no-repeat;
+        	background-image: url('img/call_icon_green@2x.png')
+        }
+        .content .deviceInfo {
+            padding: 0.4rem 0;
+            font-size: 0.48rem;
+            color: #333333;
+            line-height: 0.8rem;
+            border-top: 1px dashed #AAAAAA;
+            border-bottom: 1px dashed #AAAAAA;
+        }
+        .content .Info {
+            padding: 0.533rem 0;
+            font-size: 0.48rem;
+            color: #333333;
+            line-height: 0.8rem;
+        }
+        .content .tips {
+            border-top: 1px solid #D8D8D8;
+        }
+        .content .tips-title {
+            display: flex;
+            display: -webkit-flex; 
+            align-items: center;
+            padding: 0.4rem 0;
+        }
+        .content .tips .tips-icon {
+            flex: 0 0 0.427rem;
+            -webkit-flex: 0 0 0.427rem;
+            /*width: 0.427rem;*/
+            height: 0.427rem;
+            margin-right: 0.267rem;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-image: url('img/warn_tag_red@2x.png')
+        }
+        .content .tips .tips-text {
+            font-size: 0.4rem;
+            color: #AAAAAA;
+        }
+        .content .tips-item {
+            font-size: 0.4rem;
+            line-height: 0.533rem;
+            color: #333333;
+            padding-left: 0.693rem;
+            padding-bottom: 0.533rem;
+        }
+        .footer {
+		    position: fixed;
+		    bottom: 0;
+		    left: 0;
+		    text-align: center;
+		    font-size: 0.48rem;
+		    color: #ffffff;
+		    background-color: #00C66C;
+		    width: 100%;
+		    height: 1.333rem;
+		    line-height: 1.333rem;
+		}
+        [v-cloak] {
+          display: none;
+        }
+    </style>
+</head>
+<body>
+	<div id="app" v-cloak>
+	    <div class="header">
+	    	<div class="header-left">
+	    		<img :src="deviceImg">
+	    	</div>
+	    	<div class="header-right">
+	    		<span class="header-right-name ellipsis"><b v-text="deviceName"></b></span>
+                <span class="header-left-status" :class="{ 'gray': deviceStatusIndex === 0, 'green': deviceStatusIndex === 1, 'red': deviceStatusIndex === 2 || deviceStatusIndex === 3 }" v-text="deviceStatus"></span>
+	    	</div>
+	    </div>
+	    <div class="content">
+            <div class="deviceAge"><span>设备年龄：{{deviceAge}}</span></div>
+	    	<div class="manager">
+	    		<img :src="chargerImg">
+	    		<div class="managerInfo">
+	    			<span class="name"><b>{{chargerName}}</b></span>
+	    			<span>{{managerDesc}}</span>
+	    		</div>
+                <a class='phoneIcon' v-if="chargerMobile" :href="chargerMobile"></a>
+	    	</div>
+            <div class="deviceInfo">
+                <div class="infoItem"><span class="label">品牌：</span><span>{{brand}}</span></div>
+                <div class="infoItem"><span class="label">分类：</span><span>{{categoryName}}</span></div>
+                <div class="infoItem"><span class="label">安装时间：</span><span>{{installDate}}</span></div>
+                <div class="infoItem"><span class="label">安装地址：</span><span>{{installAddress}}</span></div>
+                <div class="infoItem"><span class="label">年检时间：</span><span>{{annualCheckDate}}</span></div>
+            </div>
+            <div class="Info">
+                <div class="infoItem"><span class="label">巡检频次：</span><span>{{patrolPeriod}}</span></div>
+                <div class="infoItem"><span class="label">维保频次：</span><span>{{maintPeriod}}</span></div>
+                <div class="infoItem"><span class="label">技术参数：</span><span>{{otherParams}}</span></div>
+            </div>
+            <div class="tips" v-if="showTips">
+                <div class="tips-title">
+                    <span class="tips-icon"></span>
+                    <span class="tips-text">如出现以下情况，可能设备出故障了，请您及时报事反馈，我们会第一时间进行处理</span>
+                </div>
+                <div class="tips-item">
+                    <div v-for="(item,index) in patrolKeys"><b v-text="index + 1"></b><b>、</b><b v-text="item"></b></div>
+                </div>
+            </div>
+	    </div>
+	    <div class="footer" @click="submit">设备异常，我要报事</div>
+	</div>
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/config.js"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/JBridge.js"></script>
+<script src="../js/vue.min.js"></script>
+ <script>
+ 	var html = document.documentElement;
+ 	window.rem = html.getBoundingClientRect().width / 10;
+ 	html.style.fontSize = window.rem + 'px';
+
+    var qrCode = getRouterParam('qrCode');
+    var token = getRouterParam('token');
+    var companyCode = getRouterParam('companyCode');
+    var mobileType = getRouterParam('mobileType');
+    var defCommunityId = getRouterParam('defCommunityId');
+    var defRoomId = getRouterParam('defRoomId');
+    var deviceID = getRouterParam('deviceID');
+
+ 	new Vue({
+ 		el: '#app',
+ 		data: {
+ 			deviceImg: '',
+            deviceStatus_: ['停用', '在用', '已报废', '删除'],
+ 			deviceStatus: '',
+            deviceStatusIndex: '',
+ 			deviceName: '',
+ 			chargerImg: 'img/headportrait@3x.png',
+ 			chargerName: '',
+            deviceAge: '',
+ 			managerDesc: '设备负责人',
+ 			chargerMobile: '',
+            brand: '',
+            categoryName: '',
+            installDate: '',
+            installAddress: '',
+            annualCheckDate: '',
+            maintPeriod_: ['', '周', '半月', '月', '季度', '半年', '年'],
+            maintPeriod: '',
+            patrolPeriod_: ['日', '周', '半月', '月', '季度'],
+            patrolPeriod: '', // 巡检频次
+            otherParams: '',
+            patrolKeys: [],
+            showTips: true
+ 		},
+ 		created: function(){
+ 			this.getData();
+ 		},
+ 		methods: {
+            handleImg: function () {
+                var imgstr = [];
+                $(".header-left img").each(function (i) {
+                    imgstr.push($(this).attr("src"));
+                    $(this).click(function () {
+                        location = "image://?url=" + imgstr + "&currentIndex=" + i;
+                    })
+                });
+            },
+ 			getData: function(){
+                var self = this;
+ 				$.ajax({
+ 					type: 'get',
+ 					url: _NewHome + '/device/detail',
+ 					headers: {
+ 						token: token,
+ 						companyCode: companyCode,
+ 						defCommunityId: defCommunityId,
+ 						defRoomId: defRoomId,
+ 						mobileType: mobileType
+ 					},
+ 					data: { deviceId: deviceID },
+ 					dataType: 'json',
+ 					success: function (d) {
+ 						if (d.status == '100') {
+                            self.deviceImg = d.data.deviceImg;
+                            self.deviceStatusIndex = d.data.deviceStatus;
+                            self.deviceStatus = self.deviceStatus_[d.data.deviceStatus];
+                            self.deviceName = d.data.deviceName || '暂无';
+                            self.deviceAge = d.data.deviceAge || '暂无';
+                            // self.chargerImg = d.data.chargerImg;
+                            self.chargerName = d.data.chargerName || '暂无';
+                            if (d.data.chargerMobile) {
+                              self.chargerMobile = 'tel:' + d.data.chargerMobile;
+                            }
+                            self.brand = d.data.brand || '暂无';
+                            self.categoryName = d.data.categoryName || '暂无';
+                            self.installDate = d.data.installDate || '暂无';
+                            self.installAddress = d.data.installAddress || '暂无';
+                            self.annualCheckDate = d.data.annualCheckDate || '暂无';
+                            self.maintPeriod = d.data.maintPeriod == -1 ? '暂无' : ('每' + self.maintPeriod_[d.data.maintPeriod] + '一次');
+                            self.patrolPeriod = d.data.patrolPeriod == -1 ? '暂无' : ('每' + self.patrolPeriod_[d.data.patrolPeriod] + '一次');
+                            self.otherParams = d.data.otherParams || '暂无';
+                            if (d.data.patrolKeys.length == 0) {
+                                self.showTips = false;
+                            } else {
+                              self.patrolKeys = d.data.patrolKeys;
+                            }
+                            setTimeout(function () {
+                                self.handleImg();
+                            }, 250);
+ 						} else {
+ 							alert(d.msg);
+ 						}
+ 					}
+ 				});
+ 			},
+ 			submit: function () {
+                if (window.WebViewJavascriptBridge) {
+                    var obj = {
+                        subCode: 101,
+                        orderNumber: 2,
+                        orderName: '小区报修',
+                        content: this.deviceName + '，' + this.installAddress + '；'
+                    };
+                    window.WebViewJavascriptBridge.callHandler('_app_addReport', obj);
+                }
+ 			}
+ 		}
+ 	});
+ </script>
+</html>

@@ -1,0 +1,74 @@
+﻿<div class="step">
+    <ul class="ui-row" style="padding:0 25px;">
+        <li class="ui-col ui-col-30 active">注意<br />
+            事项</li>
+        <li class="ui-col ui-col-30 active">信息<br />
+            核实</li>
+        <li class="ui-col ui-col-30">意见<br />
+            咨询</li>
+        <li class="ui-col ui-col-10">参与<br />
+            抽奖</li>
+    </ul>
+    <ul class="ui-row" style="padding-top:5px;padding-left:25px;padding-right:25px">
+        <li class="ui-col ui-col-30">
+            <div style="display: inline; width: 100%;"><span class="img">
+                <img src="./img/satis/step_done.png" style="width: 90%" /></span><div class="line"><div class="ac"></div></div>
+            </div>
+        </li>
+        <li class="ui-col ui-col-30">
+             <div style="display: inline; width: 100%"><span class="img">
+                <img src="./img/satis/step_ing.png" style="width: 90%" /></span><div class="line"><div></div></div>
+            </div>
+        </li>
+        <li class="ui-col ui-col-30">
+             <div style="display: inline; width: 100%"><span class="img">
+                <img src="./img/satis/step_start.png" style="width: 90%" /></span><div class="line"><div></div></div>
+            </div>
+        </li>
+        <li class="ui-col ui-col-10">
+             <span style="width:75%" class="img">
+                <img src="./img/satis/step_start.png" style="width: 90%" /></span>
+          
+        </li>
+    </ul>
+</div>
+<ul class="ui-list ui-list-text ui-border-tb">
+    <li class="ui-border-t">
+       <span class="infoleft">真实姓名</span>
+      <span data-bind="if:result.realnameExamine==1"> <span class="infoRight" data-bind="text:result.userName"></span></span>
+        
+        <span data-bind="if:result.realnameExamine==0">  <span class="infoRight" > <input type="text" placeholder="请输入真实姓名" autocapitalize="off" data-bind="attr:{value:result.userName}" /></span></span>
+    </li>
+    <li class="ui-border-t">
+       <span class="infoleft">园区</span>
+       <span class="infoRight" data-bind="text:result.communityName"></span>
+    </li>
+    <li class="ui-border-t">
+        <span class="infoleft">房号</span>
+        <span class="infoRight" data-bind="text:result.address"></span>
+    </li>
+    <li class="ui-border-t">
+      <span class="infoleft">昵称</span>
+      <span class="infoRight" data-bind="text:result.nickname"></span>
+    </li>
+    <li class="ui-border-t">
+       <span class="infoleft">联系电话</span>
+       <span class="infoRight" data-bind="text:result.mobileNum"></span>
+    </li>
+    <li class="ui-border-t">
+        <span class="infoleft">身份识别</span>
+        <span class="infoRight" data-bind="text:userType" ></span>
+    </li>
+</ul>
+
+<div style="padding:15px 15px;font-size:10px;color:#aaaaaa">
+    <p>说明：</p>
+    <p>1、请准确填写您的真实姓名，以便日后与您联系！</p>
+    <p>2、如您非本房号业主/业主家属/物业使用人，请勿进行满意率调查，一经核实，将取消您的调查成绩及中奖资格！</p>
+</div>
+
+<div style="padding: 10px 15px">
+    <button id="btnSub" class="ui-btn-lg ui-btn-primary" >
+        确定
+    </button>
+</div>

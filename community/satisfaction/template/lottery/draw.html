@@ -1,0 +1,347 @@
+﻿<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        background-color: #c42d3c;
+        font-size: auto;
+    }
+    .wrap{
+      background-image:url("././img/satis/newdrawbg.png") ;
+     background-repeat:no-repeat;
+     background-size:100%;
+     /*-moz-background-size:cover;-webkit-background-size:cover;*/
+     width:100%;
+     height:100%;
+     background-color: #c42d3c;
+    }
+    .rule{
+        padding: 18px 15px 0;
+        float: right;
+    }
+    .ruleBtn{
+        background-color: rgba(0,0,0,0.3);
+        width: 65px;
+        height: 25px;
+        font-size: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 15px;
+    }
+    .ruleBtn a{
+        color: #fff;
+    }
+    .draw1{
+        padding-top:4.453333333333334rem;
+    }
+    .biling{
+        margin: 0 0.4rem;
+        height: 9.32rem;
+        width: 9.32rem;
+        /*width: 335px;*/
+        background-image: url('././img/satis/lotterybg.png');
+        background-repeat: no-repeat;   
+        background-size: 100% 100%;
+        display: flex;
+        /*align-items: center;*/
+        justify-content: center;
+    }
+    .shanDeng, .shanDeng2{
+      width: 8.8rem;
+      height: 8.8rem;
+      background-size: 100% 100%;
+	  background-repeat: no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 0.21333333333333335em;
+    }
+    .shanDeng{
+		background-image: url('././img/satis/shandeng1.png');
+	}
+	.shanDeng2{
+		background-image: url('././img/satis/shandeng2.png');
+	}
+    .billboard{
+        margin: 0.8533333333333334em auto;
+        width: 9.44rem;
+        padding-bottom:  0.8533333333333334em;
+    }
+    .billboard-img{
+        background-image: url('././img/satis/boardbg.png');
+        background-repeat: no-repeat;   
+        background-size: 100% 100%;
+        width: 9.44rem;
+        height: 0.88rem;
+        margin: 0 auto;
+    }
+    .billboard-boby{
+        background-color: #fecb9d;
+        margin: -1px 0.24rem;
+        box-shadow: 1px 0 0 0 rgba(251,193,140, 0.4);
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        padding-bottom: 15px;
+    }
+    .billboard-title{
+        display: flex;
+        justify-content: center;
+        padding-bottom: 15px;
+    }
+    .titleBtn{
+        background-color: #f29a4b;
+        color: #fff;
+        width: 120px;
+        height: 25px;
+        border-radius: 15px;
+        font-size: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .billboard-list{
+        list-style: none;
+        /*padding: 0px 15px;*/
+    }
+    .drawlist{
+        padding: 0 15px 15px;
+    }
+     .billboard-list li:nth-child(odd){
+         background-color: #fbc18c;
+     }
+    .billboard-list li{
+          display: flex; 
+          height: 35px;
+          font-size: 0.32rem;
+          align-items: center;
+          overflow: hidden;
+          padding-left:10px;
+          justify-content: space-around;
+    }
+    .drawlist li{
+        justify-content: center;
+    }
+    .billboard-list li span {
+       /*padding: 0 10px 0 5px;*/
+       white-space: nowrap;
+       overflow: hidden;
+       /*text-overflow: ellipsis;*/
+    }
+    #luck{
+      width: 7.946666666666663rem;
+      height: 7.946666666666663rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 2px;
+    }
+    #luck table{
+        background-color: transparent;
+        border-spacing: 0.1333333333333333rem;
+        text-align: center;
+        border-collapse: separate;
+        width: 7.893333333333331rem;
+        height: 7.893333333333331rem;
+    }
+    #luck .active{
+         background-color: #fff;
+    }
+    .luck-unit{
+        /*width:  3.925333333333333em;
+        height: 3.925333333333333em;*/
+        /*width: 92px;
+        height: 92px;*/
+        background-color: #fd977f;
+        border-radius: 12px;
+    }
+    .luck-unit img{
+        height: 1.28rem;
+        margin-top: 5px;
+    }
+    .luck-unit span{
+        display: block;
+        color: #581000;
+        font-size:14px;
+        margin-top:-8px;
+    }
+    .cjBtn,.cjBtnDom{
+        width:  2.4533333333333rem;
+        height: 2.4533333333333rem;
+        background-repeat: no-repeat;
+		background-size: 100%;    
+    }
+    .cjBtn{
+        background-image: url('././img/satis/cjbtn.png');
+    }
+    .cjBtnDom{
+		background-image: url('././img/satis/cjbtnDow.png');
+	}
+    .cjBtn button,.cjBtnDom button{
+        width:  100%;
+        height: 100%;
+     }
+    .sureBtn{
+        width: 2.533333333333333rem;;
+        height: 0.88rem;
+        background-image: url('././img/satis/surebtn.png');
+         background-repeat: no-repeat;
+		background-size: 100%;  
+        margin: 0 auto;  
+    }
+    /************/
+    .swiper-container{
+        padding: 0 15px;
+        height: 175px;
+    }
+    .swiper-wrapper{
+        width: auto;
+    }
+    .swiper-slide{
+        /*border: 1px solid #aaa;*/
+          height: 175px!important;
+          width: auto!important;
+    }
+</style>
+
+<!--<body id="contain" ontouchstart="" style="background-color: #f0f2f2;">-->
+ <div class='wrap'>
+     <!--规则按钮-->
+     <div class='rule'>
+         <div class='ruleBtn'>
+         <a  href="././satisfaction/template/lottery/rule.html"><span>规则</span><span style="padding-left: 6px;">＞</span></a>
+         </div>
+     </div>
+    <div class="draw1">
+        <div class='biling'>
+            <div class="shanDeng shanDeng2" id="deng">
+                <!-- luck -->
+                <div id="luck" >
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="luck-unit luck-unit-0" style="width:  2.453333333333333rem;">
+                                    <img src="././img/satis/prize0.png" >
+                                    <span> 2元红包  </span>
+                                </td>
+                                <td class="luck-unit luck-unit-1">
+                                    <img src="././img/satis/prize5.png">
+                                     <span> 20元红包  </span>
+                                </td>
+                                <td class="luck-unit luck-unit-2">
+                                    <img src="././img/satis/prize2.png">
+                                      <span> 5元红包  </span>
+                                 </td>
+
+                            </tr>
+                            <tr>
+                                <td class="luck-unit luck-unit-7">
+                                    <img src="././img/satis/prize3.png">
+                                      <span> 10元红包  </span>
+                                </td>
+                                <td class="cjBtn"><button  id="awardbtn"></button></td>
+                                <td class="luck-unit luck-unit-3">
+                                    <img src="././img/satis/prize3.png">
+                                    <span> 10元红包  </span>
+                                    </td>
+                            </tr>
+                            <tr>
+                                <td class="luck-unit luck-unit-6">
+                                    <img src="././img/satis/prize1.png">
+                                    <span> 3元红包  </span>
+                                    </td>
+                                <td class="luck-unit luck-unit-5">
+                                     <img src="././img/satis/prize5.png">
+                                     <span> 20元红包  </span>
+                                </td>
+                                <td class="luck-unit luck-unit-4">
+                                       <img src="././img/satis/prize4.png">
+                                      <span> 15元红包  </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- luckEnd -->
+            </div>
+        </div>
+        <div class='billboard'>
+            <div class='billboard-img'></div>
+            <div class='billboard-boby' >
+            <div class='billboard-title'>
+                <div class='titleBtn'><span data-bind="text:billboardTitle"></span></div>
+            </div>
+            <div class='swiper-container drawInfo' style='display: none'>
+                <div class='swiper-wrapper' data-bind="foreach:awardInfo">     
+                    <ul class='billboard-list swiper-slide 'data-bind="foreach:$data">
+                        <li >
+                            <span data-bind="text:$data.communityName" style="text-overflow: ellipsis;width: 3.2rem;"></span>
+                            <span data-bind="text:$data.userName" style=""></span>
+                            <span data-bind="text:'抽中'+$data.awardName" style='color: #c63134;text-overflow: ellipsis;width:3.2rem;padding-left:15px'></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <ul class='billboard-list drawlist'>
+                <!-- ko foreach: award -->
+                <li data-bind="text:name,visible:level<6"></li>
+                <!-- /ko -->
+            </ul>
+          
+            </div>
+        </div>
+    </div>
+ </div>
+
+ <div id="layer" style="z-index: 9999; position: fixed; width: 100%; height: 100%; left: 0px; top: 0px; background: rgba(0,0,0,0.6); display: none;">
+    <div id="tip" style="height: 100%; width: 100%; display: -webkit-box; -webkit-box-orient: vertical; -webkit-box-pack: center; -webkit-box-align: center; text-align: center;">
+        <div class="layeriphone" style="background-color: #fff; background: url('././img/satis/zjalert.png') no-repeat; background-size: 280px 392px; height: 392px; width: 280px; display: none">
+            <div style="font-size: 30px; color: #fff; margin-top: 165px"><b>中奖啦！</b></div>
+            <div style="margin: 10px 25px; font-size: 15px; color: #fff;line-height: 24px;text-align: left"
+             data-bind="text:'恭喜您获得'+ drawName() +'，请您保持手机畅通与信息准确，我们将在调查结束后的15个工作日内与您联系核实信息。'">
+            </div>
+            <div style="height: 57px; text-align: center; padding-top: 10px">
+                <div class="sureBtn"></div>
+            </div>
+        </div>
+        <div class="layerred" style="background-repeat: no-repeat; background-size: 100% 100%; width: 7.466666666666667rem;"
+              data-bind="style:{'backgroundImage':'url(\'././img/satis/zjalert.png\')'}">
+            <div style="font-size: 30px; color: #fff; margin-top: 4.666666666666667rem"><b>中奖啦</b></div>
+            <div style="margin: 10px 25px; font-size: 15px; color: #fff;text-align: left" 
+               data-bind="text:'恭喜您抽中'+ drawName() +'。谢谢您的参与，您的意见与建议是我们前进的动力。'">
+            </div>
+            <div style="height: 57px; text-align: center; padding-top: 10px">
+                <div class="sureBtn"></div>
+            </div>
+        </div>
+        <div class="layernone" style="background-color: #fff; background: url('././img/satis/wzjalert.png') no-repeat; background-size: 280px 260px; height: 260px; width: 280px; display: none">
+            <div style="font-size: 30px; color: #fff; margin-top: 50px"><b>谢谢参与！</b></div>
+            <div style="margin: 15px 25px; font-size: 15px; color: #fff;line-height: 24px;text-align: left;">
+                没有中奖？哎呀~好气啊！感谢您的支持，园区伙伴们一样感谢您！
+            </div>
+            <div style="height: 57px; text-align: center; padding-top: 10px">
+                <div class="sureBtn"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="./js/swiper-3.3.1.jquery.min.js"></script>
+<link href="./css/swiper-3.3.1.min.css" rel="stylesheet" />
+<link href="./img/satis/zjalert.png" rel="icon" type="image/x-icon">
+<script>
+    	//闪灯效果
+		var num = 0;
+		$(".shanDeng").attr("class",function(){
+			setInterval(function(){ 
+				num++;
+				if(num%2==0){
+					$('#deng').addClass("shanDeng2");
+				}else{
+					$('#deng').addClass("shanDeng");
+					$('#deng').removeClass('shanDeng2');
+				}
+			},500)
+		})
+
+</script>

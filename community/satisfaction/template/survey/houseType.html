@@ -1,0 +1,112 @@
+<style>
+    body{
+        background-image: linear-gradient(-218deg, #07CA71 0%, #00B17F 98%);
+        padding: 0 0.4rem;
+    }
+    .title{
+        line-height: 1rem;
+        font-size: 0.72rem;
+        color: #fff;
+        font-size: 700;
+        padding-top: 0.5rem;
+    }
+     .bannertxt{
+        color: #fff;
+        font-size:  0.4rem;
+        padding: 0.626666666667rem 0 .8rem 0;
+    }
+    .bannertxt p{
+       text-indent: 2em;
+       line-height: 1.8;
+    }
+    .houseType{
+        display: flex;
+        display: -webkit-flex;
+        -webkit-align-items: center;
+        flex-direction: column;
+        -webkit-flex-direction: column;
+        align-items: center;
+    }
+    .house,.office{
+        width: 9.2rem;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        height: 3.2rem;
+        background: #FFFFFF;
+        box-shadow: 0 10px 10px 0 rgba(0,0,0,0.10);
+        border-radius: 8px;
+        display: flex;
+        display: -webkit-flex;
+        -webkit-align-items: center;
+        align-items: center;
+        margin-bottom:  0.53333333rem;
+    }
+    .house img,.office img{
+        width: 3.4666666666667rem;
+        padding: 0 0.266666666667rem  0 0 ;
+    }
+     .house .typetxt,.office .typetxt{
+         display: flex;
+         display: -webkit-flex;
+         flex-direction: column;
+         -webkit-flex-direction: column;
+         font-size: 0.4rem;
+         color: #333333;
+         padding-right: 0.4rem;
+     }
+      .house .typetitle,.office .typetitle{
+           font-size: 1.25em;
+           color: #00c66c;
+           padding-bottom: 0.6em;
+      }
+      .remark{
+          color: #fff;
+          font-size: .4rem;
+          text-align: left;
+      }
+</style>
+<script>
+    var html = document.documentElement; 
+    window.rem = html.getBoundingClientRect().width / 10;
+     console.log(window.rem);
+    html.style.fontSize = window.rem + 'px'; 
+    $('#contain').css('fontSize', window.rem + 'px');
+    $('.house,.office').click(function(){
+         var voteId = $(this).attr('voteId');
+         //做判断
+         window.location.href = './index.html#/satisfaction/vote' +
+                            '?token=' + token +
+                            '&companyCode=' + companyCode +
+                            '&defCommunityId=' + defCommunityId +
+                            '&defRoomId=' + defRoomId +
+                            '&voteId=' + voteId;
+    });
+</script>
+<div class='title'>2017年业主满意度调查</div>
+
+<div class='bannertxt'>
+<b>尊敬的业主家人:</b>
+<p> 为了更有针对性的调研，我们对不同类型的业态， 制定了不同的调查问卷，请您根据您房子的实际用途， 选择问卷类型。</p>
+</div>
+
+
+<div class="houseType">
+    <div class="house" voteId='d55a76e7-9d05-11e7-b3fe-ecf4bbbf7d00'>
+       <img src='././img/satis/houseicon2.png'  >
+       <div class='typetxt'>
+           <span class="typetitle"> <b>住宅类型</b> </span>
+           <span>高层、排屋、别墅、公寓（住宅）</span>
+       </div>
+    </div>
+    <div class="office" voteId='2f603041-9d24-11e7-b3fe-ecf4bbbf7d00'>
+       <img src='././img/satis/houseicon1.png'  >
+       <div class='typetxt'>
+           <span class="typetitle"><b>写字楼类型</b> </span>
+           <span>写字楼、商铺、公寓（办公）</span>
+       </div>
+    </div>
+
+</div>
+    <div class='remark'>
+        <span>业态类型选择后，将出现不同的问卷题目</span>
+    </div>

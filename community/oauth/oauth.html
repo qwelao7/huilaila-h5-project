@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,
+            minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>授权登录</title>
+    <link rel="stylesheet" href="./oauth.css">
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/common.js"></script>
+</head>
+<body style="background-color:#fff">
+<!--<div style="border:0.5px solid #889f1e"></div>-->
+<div class="head">
+    <div style='padding-top: 110px'>
+        <span>该应用由与回来啦社区合作的第三方开发</span>
+        <br />
+        <span>由回来啦社区为您推荐，请放心授权。&nbsp;</span>
+        <br />
+        <span>如出现不明广告抽奖页面等请即刻离开页面，<br>
+        并联系回来啦社区客服电话<a href="tel:95059" style="color: white;text-decoration: none;">95059</a></span>
+    </div>
+</div>
+<div class="info">
+    <div style="display: flex; align-items: center">
+        <img src="img/nochk.png" style="width:15px;height:15px;"/>
+        <span>获取您公开信息（头像、昵称）</span>
+    </div>
+    <div style="display: flex; align-items: center">
+        <img sign='h' id="chk" src="img/chked.png" onclick="changeSlt(this);" style="width:15px;height:15px;"/>
+        <span sign='h'>获取您的个人资料（姓名、联系方式等）</span>
+    </div>
+
+</div>
+<div class="bottom" onclick="javascript:Oauth()">
+    <span>授权登录</span>
+</div>
+<script src="oauth.js" type="text/javascript"></script>
+</body>
+</html>

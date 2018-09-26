@@ -1,0 +1,32 @@
+﻿<div style="height: auto !important; min-height: 100%; margin: 0 auto -80px">
+    <div class="ui-whitespace" style="border-top: 1px solid #e0e0e0;">
+        <div style="color: #333333; text-align: center">
+            <img width="125" style="padding-top: 37px" data-bind="attr:{src:imgsrc}" />
+            <p style="font-size: 10px" data-bind="text:'version '+version"></p>
+        </div>
+    </div>
+
+    <div style="padding-top: 8px; padding-bottom: 72px; padding-top: 40px; color: #333333">
+        <ul id="list" class="ui-list ui-whitespace" style="background-color: transparent;">
+            <!-- ko foreach:item -->
+            <li class="li-list ui-border-radius" style="border: 1px solid #d3d3d3;">
+                <a data-bind="attr: { href: url }" style="width:100%;display:block;">
+                    <div style="width: 100%; display: table; height: 40px">
+                        <div class="li-div-txt" style="text-align: center">
+                            <p style="color: #333333; font-size: 15px" data-bind="text:name"></p>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <!-- /ko -->
+        </ul>
+    </div>
+</div>
+
+<div style="height: 80px; display: table; width: 100%; bottom: 0">
+    <div class="li-div-txt" style="text-align: center; margin: auto; height: 60px">
+        <p style="color: #aaaaaa; font-size: 10px; padding-bottom: 15px">绿漫科技  版权所有</p>
+        <p style="color: #aaaaaa; font-size: 10px">Copyright 2018-2022 All Right Reserved</p>
+    </div>
+</div>
+

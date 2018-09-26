@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+    <script type="text/javascript" src="./static/JBridge.js"></script>
+    <script type="text/javascript" src="./static/config.js"></script>
+    <title>小邑2.0首页卡片</title>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>
+<script>
+    var html = document.documentElement;
+    window.rem = html.getBoundingClientRect().width / 10 ;
+    if (window.rem === 0) {
+      window.onload = function () {
+        html = document.documentElement;
+        window.rem = html.getBoundingClientRect().width / 10;
+      }
+    }
+    html.style.fontSize = window.rem + 'px';
+    var dpi = window.devicePixelRatio;
+</script>

@@ -1,0 +1,170 @@
+﻿<style>
+    body { background-color: #ffb8b6; }
+    .promotion{
+        width: 100%; height: 100%;
+    }
+    .time{
+        height: 1.013333333333rem; color: #fff;font-size: 18px;font-weight: 700;padding: 0.16rem 0.4rem;text-align: center;
+    }
+    .timeTitle{
+        background: url(./img/promo/banner.png);display: block;    margin: 0 auto;
+        width: 9.2rem;background-repeat: no-repeat;background-size: 100% 100%;
+        height: 38px;font-size: 18px;line-height: 38px;
+    }
+    .top { width: 100%; height: 5.81333333333333333333rem; /*//  background-image: url('http://uploads.yuwenmi.com/allimg/201611/081478600540336594.jpg');*/ background-size: 100% 100%; }
+
+    .redBag { height: 94px; background-color: rgba(0,0,0,0.2); padding: 16px 0; text-align: center;display:none }
+
+    .red { width: 87px; height: 94px; margin: 0 auto; color: #aaa; background: url(./img/promo/red.png) no-repeat; background-size: 87px 94px;line-height: 0px }
+
+    .red-money { display: inline-block; color: #fff; line-height: 40px; width: 100%; font-size: 24px; font-weight: 400; }
+
+    .red-limit { display: block; color: #ffb8b6; line-height: 12px; font-size: 12px; padding: 10px 10px 3px; }
+
+    .red-service { display: block; color: #ffb8b6; font-size: 12px;  line-height: 12px;padding:0 10px}
+
+    .zc{ padding-bottom: 0.8rem;}
+
+    .banner { text-align: center; padding:0.4rem; }
+
+        .banner div { width: 100%; height: 38px; margin: 0 auto; background: url(./img/promo/banner.png); background-repeat: no-repeat;background-size: 100% 100%; color: #ffffff; font-size: 18px; line-height: 38px; }
+
+    .ui-space { padding: 0 8px; background-color: #fff; }
+
+    .ui-nowrap-font { padding-top: 8px; padding-bottom: 8px; font-size: 15px; color: #333333; line-height: 21px}
+    
+    .progress-li {
+        display: flex;
+        display: -webkit-flex;
+       justify-content: space-between;
+       -webkit-justify-content: space-between;
+    }
+     
+    .name {
+        padding: 5px 0 2px 0;
+        font-size: 15px;
+        color: #333333;
+        height: 21px;
+        line-height: 21px;
+    }
+
+    .sku {
+        padding-bottom: 5px;
+        font-size: 12px;
+        color: #AAAAAA;
+        height: 16.5px;
+        line-height: 16.5px;
+    }
+
+    /*进度条*/
+    .progress { height: 13px; background: #f3bdbd; -webkit-border-radius: 20px; border: 1px solid #fa5757; overflow: hidden; width: 100px; font-size: 0px; background-color: #f3bdbd; box-sizing: border-box; }
+
+        .progress span { display: block; width: 0%; background: #fa5757; height: 100%; animation: animate-positive 2s; }
+
+    .rate { display: block; width: 1.36rem; color: #aaa; text-align: right; line-height: 15px; vertical-align: middle; font-size: 10px; }
+
+
+    @-webkit-keyframes animate-positive {
+        0% { width: 0; }
+    }
+
+    @keyframes animate-positive {
+        0% { width: 0; }
+    }
+    /*商品列表*/
+    .ui-halve { overflow: hidden; background-color: #fff;padding: 0.4rem 0.4rem 0;}
+
+        .ui-halve > li { width: 50%;}
+
+        .ui-halve li { padding-bottom: 0.5333333333333333333rem; float: left; position: relative; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+
+
+    .ui-halve-img { position: relative; width: 100%; padding-top: 100%; background-color: #fff; }
+
+        .ui-halve-img > span { width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 1; background-repeat: no-repeat; -webkit-background-size: cover; }
+    /*价格*/
+    .price { padding-top: 8px; color: #fa5757; font-size: 18px;height: 28px; display: flex;display: -webkit-flex;justify-content: space-between;
+     -webkit-justify-content: space-between; align-items: flex-end;-webkit-align-items: flex-end;
+    }
+
+    .price_dec { color: #fa5757; font-size: 12px; }
+    /*抢字*/
+    .sale { height: 28px; }
+
+    .goods-left { padding-right: 4px; }
+</style>
+    <div class="ui-loading-wrap" style='font-size: 18px'>
+        <i class="ui-loading"></i>
+    </div>
+<div class='promotion' style="display: none" >
+    <div class='time'><span class="timeTitle" data-bind="text: activityStatus() == 1 ? startTime() + ' 大促开始' : endTime() + ' 大促结束'"></span></div>
+    <div class="top" data-bind="style: { backgroundImage: 'url(' + bgPic() + ')'}">
+    </div>
+
+    <div class="redBag">
+        <ul class="ui-row ui-flex-pack-center   " data-bind="foreach:redPackets;">
+            <li class="ui-col ui-col-33" data-bind="attr:{rid:topicRedPacketId}">
+                <div class="red">
+                    <span class="red-money">
+                        <label style="font-size: 12px; font-weight: 200">¥ </label><label data-bind="text:money"></label>
+                    </span>
+                    <span class="red-limit ui-nowrap" data-bind="text:exchange"></span>
+
+                    <span class="red-service ui-nowrap" data-bind="text:redpacketType==1?'全场通用':(redpacketType==2?'限'+shopName:'限'+storeName)"></span>
+
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!--专场-->
+    <div class="zc">
+     <!-- ko foreach: groups -->
+        <div class="banner">
+            <div data-bind="text:name"></div>
+        </div>
+        <ul class="ui-halve">
+            <!-- ko foreach:$data.goods -->
+            <li data-bind="style:{'padding-left':$index()%2==0?'0px':'0.2rem','padding-right':$index()%2==0?'0.2rem':'0px'},attr:{id:id}">
+                <div class="ui-halve-img">
+                    <span style="background-size: 100% 100%" data-bind="style: { backgroundImage: 'url(' + coverimg + ')'}"></span>
+
+                </div>
+                <div style="background-color: #fff">
+                    <div class="ui-nowrap name" data-bind="text:name">
+                    </div>
+                    <div class="ui-nowrap sku" data-bind="text:skuStr">
+                    </div>
+                    <div class="progress-li">
+                        <div class="progress">
+                            <span data-bind="style:{'width':rate}"></span>
+                        </div>
+                        <div class='rate'>
+                            <span data-bind="text:'已售' + rate"></span>
+                        </div>
+                    </div>
+                    <div class="price">
+                        <div>
+                        <span><b>¥ </b></span><span><b data-bind="text:price"></b></span><span class="price_dec"><b data-bind="text:'.'+price_dec"></b></span>
+                        </div>
+                        <div class="sale">
+                            <img src="./img/promo/sale.png" width="28" />
+                        </div>
+                    </div>
+
+                   
+                </div>
+            </li>
+            <!-- /ko -->
+
+        </ul>
+    <!-- /ko -->  
+    </div>
+</div>
+<script>
+    var html = document.documentElement; 
+    window.rem = html.getBoundingClientRect().width / 10;
+     console.log(window.rem);
+    html.style.fontSize = window.rem + 'px'; 
+    $('#contain').css('fontSize', window.rem + 'px');
+</script>

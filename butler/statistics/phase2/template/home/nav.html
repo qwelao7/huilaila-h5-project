@@ -1,0 +1,49 @@
+﻿<!--导航页-->
+
+    <div class="ui-whitespace" style="margin-bottom: 16px">
+
+        <ul class="ui-nav ui-list-link"  data-bind="foreach:list">
+
+            <li class=" ui-li ui-border-radius " data-bind="attr:{term:code},css:css"  style="display:none">
+                <div style="height: 100%; width: 38%;">
+                    <div style="height: 60px; width: 100%; display: table;">
+                        <div class="li-div-txt" style="padding-top: 20px; text-align: right;">
+                            <p style="color: #334455; font-size: 22px; border-right: 1px solid #f0f2f2;">
+                                <b style="padding-right: 15px" data-bind="text:yearCount"></b>
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="p-left" data-bind="text:colums"></p>
+                    </div>
+                </div>
+                <div style="height: 100%; width: 38%; height: 100px">
+                    <div style="height: 60px; display: table">
+                        <div class="li-div-txt" style="padding-top: 20px; padding-left: 15px">
+                            <p style="font-size: 22px" data-bind="css:{'level':$data.monthCompare==0,'up':$data.monthCompare>0,'down':$data.monthCompare<0 }">
+                                <b data-bind="text:monthCount"></b>
+                            </p>
+                        </div>
+                        <div class="li-div-txt" style="padding-top: 20px; padding-left: 5px">
+                            <p data-bind="css:{'arrow-level':$data.monthCompare==0,'arrow-up':$data.monthCompare>0,'arrow-down':$data.monthCompare<0 }"></p>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="p-right">*本月新增</p>
+                    </div>
+
+                </div>
+                <div style="width: 24%; background-color: #6e95bb; border-radius: 0px 4px 4px 0px">
+                    <div style="width: 80%; display: table; height: 100px">
+                        <div class="li-div-txt" style="text-align: center">
+                            <p style="color: #fff; font-size: 14px" data-bind="html:item">
+                            </p>
+                        </div>
+                    </div>
+                    <div class="ui-txt-info"></div>
+                </div>
+            </li>
+
+        </ul>
+
+    </div>

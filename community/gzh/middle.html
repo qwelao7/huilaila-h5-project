@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+  <title>回来啦</title>
+  <script type="text/javascript">
+    var search = location.search;
+    var obj = {};
+    var reg = /[?&][^?&]+=[^?&]+/g;
+    var arr = search.match(reg);
+    if (arr) {
+      arr.forEach(function (item) {
+        var tempArr = item.substring(1).split('=');
+        var key = decodeURIComponent(tempArr[0]);
+        var val = decodeURIComponent(tempArr[1]);
+        obj[key] = val;
+      });
+    }
+    var path = obj.path;
+    var state = obj.state;
+    var code = obj.code;
+    let fromOauth = obj.fromOauth;
+    var urlPath = window.location.pathname;
+    var commonPath = urlPath.substr(0, urlPath.lastIndexOf('/'));
+    var linkURL = location.origin + commonPath + '/index.html#/' + path + '?out=1&state=' + state + '&code=' + code + '&fromOauth=' + fromOauth;
+    if (path) {
+      window.location.href = linkURL;
+    }
+  </script>
+</head>
+<body>
+</body>
+</html>

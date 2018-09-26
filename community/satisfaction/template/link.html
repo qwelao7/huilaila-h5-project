@@ -1,0 +1,92 @@
+﻿<style>
+    #btnSub,#btnResult{
+      border:none;
+    }
+   #lottery{ 
+        text-align: center;
+        color: #666666;
+        background-image:url("././img/satis/resultbg.png") ;
+        background-repeat:no-repeat;
+        background-size:100% 100%;
+        width:100%;
+        height:100%;
+        background-color: #DE4E47;
+    }
+    .godraw{
+        background-image:url("././img/satis/godraw.png") ;
+        background-repeat:no-repeat;
+        background-size:100% 100%;
+        width: 240px;
+        height: 54px;
+        color: #fff;
+        font-size: 18px;
+    }
+</style>
+
+
+<div id="lottery" style="display: none">
+    <div style="padding-top:70px;font-size: 28px; ">
+        <div style=" margin: 0 auto;font-size: 15px;background-image: url(./img/satis/tip_lottery.png); background-repeat:no-repeat;
+            background-size:100% 100%;width: 299px;height: 307px;">
+            <div style='padding: 171px 24px 26px;'>
+                <p>谢谢参与！您获得了一次抽奖机会！</p>
+                <p>请在当天24点前完成抽奖！</p>
+            </div>
+            <div>
+                <button  id="btnAward" class="godraw" onclick="locationUrl('lottery')">去抽奖</button>
+            </div>
+        </div>
+
+      
+    </div>
+</div>
+
+
+<div id="lotteryResult" style="height: 100%; background-color: #fff; text-align: center; color: #666666; display: none">
+    <div style="padding-top: 90px; font-size: 28px; vertical-align: middle;">
+
+        <img src="./img/satis/tip_nowine.png" width="165" style="vertical-align: text-top; padding-right: 8px" />
+    </div>
+    <div style="height: 25px; padding: 10px 0 20px; font-size: 15px">
+        <p>谢谢您的参与！</p>
+    </div>
+
+    <div style="padding: 10px 15px">
+        <button id="btnResult" class="ui-btn-lg ui-btn-primary" onclick="locationUrl('drawResult')">
+            查看抽奖结果
+        </button>
+    </div>
+</div>
+
+
+<div id="lotteryCancel" style="height: 100%; background-color: #fff; text-align: center; color: #666666; display: none">
+    <div style="padding-top: 90px; font-size: 28px; vertical-align: middle;">
+
+        <img src="./img/satis/tip.png" width="165" style="vertical-align: text-top; padding-right: 8px" />
+    </div>
+    <div style=" padding: 20px 15px; font-size: 15px; text-align: center;line-height: 24px;">
+        <p>您好，您的调查问卷已核实作废，</p>
+        <p>谢谢您的参与。</p>
+        <p>如有疑问，详询园区管理员。</p>
+    </div>
+</div>
+
+<div id="voteAlert" style="height: 100%; background-color: #fff; text-align: center; color: #666666; display: none">
+    <div style="padding-top: 90px; font-size: 28px; vertical-align: middle;">
+        <img src="./img/satis/tip_overdue.png" width="165" style="vertical-align: text-top; padding-right: 8px" />
+    </div>
+    <div style=" padding: 20px 25px; font-size: 15px; text-align: center;line-height: 24px;">
+        <p data-bind="text:alerttxt"></p>
+    </div>
+</div>
+
+<script>
+    function locationUrl(type) {
+        window.location.href = './index.html#/satisfaction/' + type+
+                                '?token=' + token +
+                                  '&companyCode=' + companyCode +
+                                  '&defCommunityId=' + defCommunityId +
+                                  '&defRoomId=' + defRoomId +
+                                  '&voteId=' + voteId;
+    }
+</script>

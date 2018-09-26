@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>投票</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+    <link href="../../css/frozen.css" rel="stylesheet" />
+    <link href="../../css/app.css" rel="stylesheet" />
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/knockout.js"></script>
+    <script src="../../js/common.js"></script>
+</head>
+<body ontouchstart="">
+    <div style="padding:5px 15px;">
+        <div id="instroduce" data-bind="html:rule" style="word-break:break-all"></div>
+    </div>
+
+    <script>
+
+
+        $(function () {
+            //init paper
+            var rule = getRule();
+            ko.applyBindings({ rule: rule });
+            fixImg();
+        });
+
+        function fixImg() {
+            $("#instroduce").find("img").each(function () {
+                //when cached
+                var imgWidth = $(this).width();
+                var bodyWidth = $(window).width() - 30;
+                if (imgWidth > bodyWidth) {
+                    $(this).css("background-size", "contain").css("width", bodyWidth + "px");
+                }
+
+                //when first load
+                $(this).load(function () {
+                    var imgWidth = $(this).width();
+                    var bodyWidth = $(window).width() - 30;
+
+                    if (imgWidth > bodyWidth) {
+                        $(this).css("background-size", "contain").css("width", bodyWidth + "px");
+                    }
+                })
+            });
+        }
+
+        function getRule() {
+            var postData = {
+                companyCode: getParam("companyCode"),
+                voteId: getParam("voteId"),
+                token: getParam("token"),
+                version: getParam2("version"),
+                fieds: getParam("fieds"),
+                sign: getParam("sign")
+            }
+
+            var ret = DoAjax("scVoteAction!getRuleInfo.action", postData);
+
+            var result = $.parseJSON(ret);
+            if (result.status != _SUCCESSED) {
+                alert("获取数据失败！");
+                return false;
+            }
+
+            return result.data;
+        }
+
+    </script>
+</body>
+</html>

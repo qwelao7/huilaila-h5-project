@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>投票</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+    <link href="../css/frozen.css" rel="stylesheet" />
+    <link href="../css/app.css" rel="stylesheet" />
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/knockout.js"></script>
+    <script src="../js/common.js"></script>
+    <style>
+        .option{margin: 0 15px}
+    </style>
+</head>
+<body ontouchstart="">
+    <div class="ui-loading-wrap">
+        <p>正在加载中...</p>
+        <i class="ui-loading"></i>
+    </div>
+
+    <div id="paperContent" style="display:none;padding-bottom: 20px">
+
+        <div class="ui-whitespace" style="">
+            <!--margin-top:25px;-->
+            <div id="instroduce" data-bind="html:paper.introduce"></div>
+           <div style="font-size:12px;color:#aaaaaa;display: flex;display:-webkit-flex;height: 25px;align-items: center;-webkit-align-items: center">
+                <img src="../img/question.png" width="25" /><span style="color:#00c66c;padding-left:5px;" data-bind="text:paper.joinUserCnt"></span> <span>位业主投票</span>
+
+                <!-- ko if: paper.agreeCnt!=''&&parseInt(paper.agreeCnt)>0-->
+                <span>,有</span><span style="color:#00c66c" data-bind="text:paper.agreeCnt"></span><span>位与您意见一致</span>
+                <!-- /ko -->
+            </div>
+        </div>
+
+        <!-- ko foreach: paper.questions -->
+        <div class="border-list" style="margin-top:15px;">
+            <div data-bind="text:des" style="color: #333333;font-size: 18px;font-weight: 700;line-height: 25px"></div>
+            <div class="option-limit">已投票</div>
+            <!--<div style="clear:both"></div>-->
+        </div>
+          <div class="option">
+            <ul class="ui-list-text votetable" data-bind="foreach:options,attr:{qid:id,maxscnt:maxSCnt}">
+                <li class="percent">
+                    <div class="percent-back">
+                         <span class="" data-bind="style:{width:percent},css:selected=='0'?'uncheck':'check'"></span>
+                         <span class="" data-bind="style:{width:(100 -percent.substring(0,percent.length-1)+'%'}" style='background-color: #fff'></span>
+                    </div>
+                     <div class="percent-div">
+                         <span class="percent-span" data-bind="text:des,attr:{percent:percent}"></span>
+                         <span class="percent-txt" data-bind="text:percent"></span>
+                     </div>
+                </li>
+            </ul>
+          </div>
+        <!-- /ko -->
+        <!--init paper & post result-->
+        <script>
+
+        $(function () {
+            //init paper
+            var paperInfo = getPaperResult();
+            ko.applyBindings({ paper: paperInfo });
+
+            // show render body
+            $("#paperContent").show();
+            $(".ui-loading-wrap").remove();
+
+            fixImg();
+
+            initPercent();
+            $("body").resize();
+        })
+
+        function fixImg() {
+            $("#instroduce").find("img").each(function () {
+                //when cached
+                var imgWidth = $(this).width();
+                var bodyWidth = $(window).width() - 30;
+
+                if (imgWidth > bodyWidth) {
+                    $(this).css("background-size", "contain").css("width", bodyWidth + "px");
+                }
+
+                //when first load
+                $(this).load(function () {
+                    var imgWidth = $(this).width();
+                    var bodyWidth = $(window).width() - 30;
+
+                    if (imgWidth > bodyWidth) {
+                        $(this).css("background-size", "contain").css("width", bodyWidth + "px");
+                    }
+                })
+            });
+        }
+
+        function getPaperResult() {
+            var jd = new JData();
+            var requestHead = getRequestHead();
+            jd.initRequestHead(requestHead);
+            jd.add("voteId", getParam("voteId"));
+
+            var postData = eval("(" + jd.toJson() + ")");
+            var ret = DoAjax("scVoteAction!getPaperResult.action", postData);
+
+            var result = $.parseJSON(ret);
+            if (result.status != _SUCCESSED) {
+                alert("获取数据失败！");
+                return false;
+            }
+
+            return result.data;
+        }
+
+        function initPercent() {
+            $(".votetable li").each(function (i, obj) {
+               var percentdivHeight =$(obj).find('.percent-div').height();
+               $(obj).find(".percent-back").css("height", percentdivHeight + "px");         
+            })
+         }
+        </script>
+        </div>
+</body>
+</html>

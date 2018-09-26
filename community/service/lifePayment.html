@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+    <title>生活缴费服务</title>
+    <link href="../css/frozen.css" rel="stylesheet" />
+    <style>
+        html, body { background-color: #fff; color: #333333; font-size: 15px; margin: 0; padding: 0 }
+        .title{padding-top:17px;color: #333333;font-size: 27px;line-height: 36px;}
+        .banner{ padding: 24px 0 20px 0}
+        .txt1 {line-height: 21px;}
+        .txt2 { font-size: 12px; line-height: 18px;padding: 15px 0 10px 0 }
+        .iconlist {padding: 0;margin: 0}
+        .icon-item { display: flex;flex-direction: column;align-items: center;}
+        .icon-item  img { width: 28px; padding: 10px;}
+         .icon-item span { color: #aaaaaa;padding-bottom: 11px;line-height: 16px;font-size: 12px} 
+        .ui-btn-lg { font-size: 18px; height: 44px; line-height: 44px; display: block; width: 100%; border-radius: 5px;border:none }
+
+        .ui-btn-primary { border-color: #18adfb; background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.5, #18adfb), to(#18adfb)); color: white; background-clip: padding-box; }
+    </style>
+</head>
+<body>
+    <div style='padding: 0 15px'>
+        <div class='title'>水电煤缴费</div>
+        <div class="banner">
+            <img src="../service/img/banner.jpg" style="width: 100%" />
+        </div>
+        <div class="txt1">该服务需要您跳转到支付宝-生活缴费页面 </div>
+        <div class="txt2">
+            <span>您可进行下列费用的缴纳：</span>
+        </div>
+    </div>
+    <div class="ui-row-flex ui-whitespace iconlist">
+        <div class="ui-col ui-col icon-item ">
+            <img src='img/waterfee_icon.png'>
+            <span>水费</span>
+        </div>
+        <div class="ui-col ui-col icon-item ">
+            <img src='img/electric_icon.png'>
+            <span>电费</span>
+        </div>
+        <div class="ui-col ui-col icon-item ">
+            <img src='img/fire_icon.png'>
+            <span>燃气费</span>
+        </div>
+        <div class="ui-col ui-col icon-item ">
+            <img src='img/tvcharge_icon.png'>
+            <span>有线电视</span>
+        </div>
+         <div class="ui-col ui-col icon-item ">
+            <img src='img/phonecharge_icon.png'>
+            <span>固话</span>
+        </div>
+    </div>
+        <div class="ui-row-flex ui-whitespace iconlist">
+        <div class="ui-col ui-col icon-item ">
+            <img src='img/broadband_icon.png'>
+            <span>宽带</span>
+        </div>
+        <div class="ui-col ui-col icon-item ">
+            <img src='img/propertyfee_icon.png'>
+            <span>物业费</span>
+        </div>
+        <div class="ui-col ui-col icon-item ">
+        
+        </div>
+        <div class="ui-col ui-col icon-item ">
+           
+        </div>
+         <div class="ui-col ui-col icon-item ">
+           
+        </div>
+    </div>
+        <div style="padding:15px">
+            <button id="btnSub" class="ui-btn-lg ui-btn-primary" onclick="javascript:window.location.href='alipays://platformapi/startapp?appId=20000193'">
+               立刻打开支付宝
+            </button>
+        </div>
+       
+</body>
+</html>

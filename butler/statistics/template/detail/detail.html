@@ -1,0 +1,33 @@
+﻿
+<div id="notice" style="display:none;width:70%;height:50px;top:180px;margin-left:35%;color:#334455;font-size:26px;position:absolute;z-index:999"  >
+      <div><i></i>暂无数据</div>
+</div>
+
+
+
+<div id="chart" style="width: 100%; height: 382px;padding-top:10px;"></div>
+
+<div  style="white-space: nowrap">
+
+    <div>
+        <ul id="bar"  class="ui-row-flex mtop ui-whitespace" style="background-color:#d6dde2;color:#334455;line-height:34px;height:auto;vertical-align:middle;font-size:12px">
+            <!-- ko foreach:colums -->
+            <li  class="ui-col ui-flex ui-flex-pack-center ui-flex-align-center"  >
+                <div style="display: block;white-space:normal;word-break:break-all;" ><b  data-bind="text:$data"></b>
+                  <span></span>                
+                </div>
+            </li>
+            <!-- /ko -->
+        </ul>
+
+    </div>
+
+    <div class="mbottom">
+        <!-- ko foreach:list -->
+        <ul class="ui-row-flex  ui-border-b" data-bind="css:{'ui-color':$index()%2!=0},template:{name:'columns-template'}"></ul>
+        <!-- /ko -->
+    </div>
+
+</div>
+
+

@@ -1,0 +1,413 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>表决详情</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+    <link href="../../css/frozen.css" rel="stylesheet" />
+    <link href="../../css/app.css" rel="stylesheet" />
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/knockout.js"></script>
+    <script src="../../js/common.js?v=3.2"></script>
+    <script src="../../layer-mobile/layer.js"></script>
+    <style>
+        .title{
+           word-break:break-all;color:#333333;font-size: 24px;line-height: 34px;font-weight: 700;
+        }
+        .question{display:inline;word-wrap:break-word;word-break:break-all;font-size:18px;color:#333333;font-weight: 700;}
+        .option{ margin: 0 15px;}
+    </style>
+</head>
+<body ontouchstart=""style="background-color:#fff" >
+    <div class="ui-loading-wrap">
+        <p>正在加载中...</p>
+        <i class="ui-loading"></i>
+    </div>
+    <div id="layer" style="z-index:9998;display:none;position:absolute;width:100%; left:0px;background-color:black;opacity:0.5;"> </div>
+    
+    <div  id="tip" style="width:100%;text-align:center;z-index:9999;display:none;top:40%;position:fixed;">
+        <div class="layermchild  layermanim" style="background-color:#fff;">
+            <div class="layermcont">投票前，请先同意并接受此次表决规则</div>
+            <div class="layermbtn"><span type="0">查看规则</span><span type="1">知道了</span></div>
+        </div>
+    </div>
+
+
+
+    <div id="paperContent" style="display:none;background-color:#fff" ><!---->
+        <div style="padding-left:15px;padding-right:15px;padding-top:5px">
+            <div class='title' data-bind="text:title"></div>
+            <div style="height:22px;font-size:14px;line-height:18px;color:#aaaaaa;margin-top:10px;"><span data-bind="text:intime"></span><span style="float:right;color:#00c66c;" data-bind="text:endtime"></span></div>
+            <div id="instroduce" data-bind="html:paper.introduce" style="word-break:break-all;margin-top:15px;color:#333333" ></div>
+        </div>
+
+        <!-- ko foreach: paper.questions -->
+        <div class="border-list" style="margin-top:25px;">
+            <!--style="display:inline-block"--> 
+            <div data-bind="text:des" class="question"></div>
+            <div style="font-size:14px;color:#00c66c" data-bind="text:'最多选'+maxSCnt+'个'"></div>
+            <div style="clear:both"></div>
+        </div>
+        <!--<ul style="padding-bottom:10px;color:#666666;font-size:15px;" class="ui-list-text border-list" data-bind="foreach:options,attr:{qid:id,maxscnt:maxSCnt}">
+            <li class="ui-border-radius">
+                <span data-bind="text:des,attr:{oid:id}"  style="word-wrap:break-word"></span>
+                <img class="img-right" src="../../img/zan.png" />
+                <div style="clear:both"></div>
+            </li>
+        </ul>-->
+             <div class="option">
+              <ul class="ui-list-text votetable" data-bind="foreach:options,attr:{qid:id,maxscnt:maxSCnt}">
+                    <li style="line-height: 52px" data-bind="attr:{oid:id}">
+                        <span style="flex:1;-webkit-flex:1" data-bind="text:des"></span>
+
+                        <span style="flex:0 0 52px;-webkit-flex:0 0 52px; width: 52px; display: flex;justify-content: center;align-items: center;display:-webkit-flex;-webkit-justify-content: center;-webkit-align-items: center">
+                            <img class="paper_uncheck" src="../../img/satis/unchecked_icon.png" width="22"/>
+                            <img class="paper_check" src="../../img/satis/checked_icon.png" width="22" height="22" style="display: none;border-radius: 100%;" /></span>
+                        <div style="clear: both"></div>
+                    </li>
+                </ul>
+             </div>
+        <!-- /ko -->
+            <div id="agreement" style="font-size:14px;vertical-align: bottom;color:#aaaaaa;padding:20px 15px;">
+                我已阅读并同意
+                <a style="color:#00c66c;text-decoration:underline" href="javascript:viewRule()">表决规则</a>
+            </div>
+
+     
+              <div style="padding:0 15px 20px;">
+                <button id="btnSub" class="ui-btn-lg ui-btn-primary" onclick="saveResult(this)">
+                    确认投票
+                </button>
+            </div>
+         </div>
+
+   
+        <!--init paper & post result-->          
+         <script>
+                $(function () {
+                    if(getParam("state")=="4"){
+                        var url=window.location.href.toString().replace("paper.html","result.html");
+                        window.location.href=url;
+                    }
+                    if(getParam("isTimeout")=="1"){
+                        $("#btnSub").attr("disabled", true);
+                        $("#btnSub").css("backgroud-color", "gray");
+                        $("#btnSub").text("已结束,请耐心等待公示结果");
+                    }
+                    
+
+                    //init paper
+                    var paperInfo = getPaper();
+                    ko.applyBindings({
+                        paper: paperInfo,
+                        title: decodeURIComponent(getParam("title")),
+                        intime: decodeURIComponent(getParam("intime")),
+                        endtime: decodeURIComponent(getParam("endtime"))
+                    });
+
+                    // show render body                    
+                    $("#paperContent").show();
+                    $(".ui-loading-wrap").remove();
+
+                    bindOptionClickHandler();
+
+                    fixImg();
+
+                    $("#instroduce").css("width", $(window).width() - 30);
+                })
+
+                function fixImg() {
+                    $("#instroduce").find("img").each(function () {
+                        //when cache
+                        var imgWidth = $(this).width();
+                        var bodyWidth = $(window).width()-30;
+                        if (imgWidth > bodyWidth) {
+                            $(this).css("background-size", "contain").css("width", bodyWidth + "px");
+                        }
+
+                        //when first load
+                        $(this).load(function () {
+                            var imgWidth = $(this).width();
+                            var bodyWidth = $(window).width()-30;
+
+                            if (imgWidth > bodyWidth) {
+                                $(this).css("background-size", "contain").css("width", bodyWidth + "px");
+                            }
+                        })
+                    });
+                }
+
+                function getPaper() {
+                    var jd = new JData();
+                    var requestHead = getRequestHead();
+                    jd.initRequestHead(requestHead);
+                    jd.add("voteId", getParam("voteId"));
+
+                    var postData = eval("(" + jd.toJson() + ")");
+                    var ret = DoAjax("scVoteAction!getPaper.action", postData);
+
+                    var result = $.parseJSON(ret);
+                    if (result.status == _SUCCESSED) {
+                        return $.parseJSON(ret).data;
+                    } else {
+                        $("#btnSub").attr("disabled", true);
+                        $("#btnSub").css("backgroud-color", "gray");
+                        alert(result.msg == "" ? result.data : result.msg);
+                        return false;
+                    }
+                }
+
+                function showResult() {
+                    var jd = new JData();
+                    jd.add("voteId", getParam2("voteId"));
+                    jd.add("token", getParam2("token"));
+                    jd.add("version", getParam2("version"));
+                    jd.add("companyCode", getParam2("companyCode"));
+                    jd.add("fieds", getParam2("fieds"));
+                    jd.add("sign", getParam2("sign"));
+                    jd.add("title", getParam2("title"));
+                    jd.add("intime", getParam2("intime"));
+                    jd.add("endtime", getParam2("endtime"));
+
+                    var urlParams = jd.toUrlParams() + "&rand=" + Math.random();
+                    
+                    window.location.href = "result.html?" + urlParams + "&rand=" + Math.random();
+                }
+
+                function saveResult(obj) {
+                    // //判断是否同意协议去除协议
+                    // if ($("#slt").attr("src").indexOf("unchecked") != -1) {
+                    //     //openTipDaolog();
+                        
+                    //     UamaJSBridge._app_showAlert("投票前，请先同意并接受此次表决规则", getParam2("voteId"));
+                    //     return false;
+                    // }
+
+                   if(!confirm("确定提交？")){
+                        return false;
+                    }
+
+                    var ret = postData();
+                    if (ret == false) {
+                        return false;
+                    }
+
+                    if (ret.status == _SUCCESSED) {
+                        alert("投票成功");
+                        showResult();
+                    } else if (ret.status == "106") {
+                        $("#btnSub").attr("disabled", true);
+                        $("#btnSub").css("backgroud-color", "gray");
+                        alert(ret.msg);
+                    } else if (ret.status == "1061") {
+                        $("#btnSub").attr("disabled", true);
+                        $("#btnSub").css("backgroud-color", "gray");
+                        alert("本次自治表决已经结束");
+                        $("li").removeClass("check");
+                        $("#btnSub").text("已结束，请耐心等待公示结果");
+                    } else {
+                        alert("提交失败！");
+                    }
+                }
+
+                function checkPermission() {
+                    if (gcheckPms) {
+                        return true;
+                    }
+
+                    var postData = {
+                        companyCode: getParam("companyCode"),
+                        voteId: getParam("voteId"),
+                        token: getParam("token"),
+                        version: getParam2("version"),
+                        fieds: getParam("fieds"),
+                        sign: getParam("sign"),
+                        category:'automony'
+                    }
+
+                    var ret = DoAjax("scVoteAction!checkPermission.action", postData);
+
+                    ret= $.parseJSON(ret);
+                    if (ret.status == _SUCCESSED) {
+                        gcheckPms = true;              
+                    }
+                   else if (ret.status == "106") {
+                        $("#btnSub").attr("disabled", true);
+                        $("#btnSub").css("backgroud-color", "gray");
+                        alert(ret.msg);
+                    } else if (ret.status == "1061") {
+                        $("#btnSub").attr("disabled", true);
+                        $("#btnSub").css("backgroud-color", "gray");
+                        $("#btnSub").text("已结束,请耐心等待公示结果");
+                    } else {
+                        console.log(ret.msg)
+                        alert("没有权限！");
+                    }
+
+                    return gcheckPms;
+                }
+
+                function postData() {
+                    var tmpQs = "";
+                    var isValid = true;
+                    $("body").find("ul[qid]").each(function (i, obj) {
+                        var qid = $(obj).attr("qid");
+                        var sltCnt = $(obj).find("li.check").size();
+                        if (sltCnt < 1) {
+                            alert("每个问题至少选择一项！");
+                            isValid = false;
+                            return false;
+                        }
+
+                        var tmpOps = "";
+
+                        $(obj).find("li[oid]").each(function (i, obj) {
+                            var isSlt = $(obj).hasClass("check");
+                            if (!isSlt) {
+                                return;
+                            }
+
+                            var oid = $(obj).attr("oid");
+                            var slpt = tmpOps != "" ? "," : "";
+                            tmpOps += slpt + "{\"oid\":\"" + oid + "\"}";
+                        });
+
+                        var slpt = tmpQs != "" ? "," : "";
+                        tmpQs += slpt + "{\"qid\":\"" + qid + "\",\"options\":[" + tmpOps + "]}";
+                    });
+
+                    if (!isValid) {
+                        return false;
+                    }
+
+                    var postData = {
+                        companyCode: getParam("companyCode"),
+                        voteId: getParam("voteId"),
+                        token: getParam("token"),
+                        version: getParam2("version"),
+                        fieds: getParam("fieds"),
+                        sign: getParam("sign"),
+                        type:'automony',
+                        questions: "[" + tmpQs + "]"
+                    }
+
+                    var ret = DoAjax("scVoteAction!saveResult.action", postData);
+
+                    return $.parseJSON(ret);
+                }
+                    
+                var gcheckPms = false;
+                    
+                function bindOptionClickHandler()
+                {
+                    var isClick = true;
+                    $('li').on('touchmove', function(e){
+                        isClick = false;
+                    });
+                    $("li").on("touchstart", function() {
+                        isClick = true;
+                    });
+                    $("li").on("touchend", function() {
+                      if (isClick)
+                        {
+                            //判断权限
+                            var isHasPms = checkPermission();
+                            if (!isHasPms)
+                            {
+                                return false;
+                            }
+
+                            // //判断是否同意协议
+                            // if ($("#slt").attr("src").indexOf("unchecked") != -1)
+                            // {
+                            //     // openTipDaolog();
+                            //     UamaJSBridge._app_showAlert("投票前，请先同意并接受此次表决规则", getParam2("voteId"));
+                            //     return false;
+                            // }
+
+                            //交互效果与最多选择项校验
+                            var maxSCnt = $(this).parent().attr("maxSCnt");
+                            var hasSCnt = $(this).parent().find("li.check").size();
+
+                            var hasSlt = $(this).hasClass("check");
+                            if (!hasSlt)
+                            {
+                                if (maxSCnt == 1 && hasSCnt > 0)
+                                {
+                                    $(this).parent().find(".check").eq(0).find('img').eq(0).show();
+                                    $(this).parent().find(".check").eq(0).find('img').eq(1).hide();
+                                    $(this).parent().find("li.check").removeClass("check");
+                                } else if (hasSCnt + 1 > maxSCnt)
+                                {
+                                    alert("对不起，您当前的选择已达上限。");
+                                    return false;
+                                }
+
+                                $(this).addClass("check");
+                                $(this).find('img').eq(0).hide();
+                                $(this).find('img').eq(1).show();
+                            } else
+                            {
+                                $(this).removeClass("check");
+                                $(this).find('img').eq(0).show();
+                                $(this).find('img').eq(1).hide();
+                            }//end
+                        }
+                    })
+                }
+                   
+                function viewRule() {
+                    UamaJSBridge._app_setVoteRules(getParam("voteId"));
+                }
+
+
+                function selectChanged(obj) {
+                    var src = $("#slt").attr("src");
+                    if (src.indexOf("unchecked") != -1) {
+                        $("#slt").attr("src", "../../img/checked.png");
+                    } else {
+                        $("#slt").attr("src", "../../img/unchecked.png");
+                    }
+                }
+                
+                function openTipDaolog() {
+                    var height = document.documentElement.clientHeight;
+                    $("body").height(height + 'px')
+                    $("body").css("overflow-y", "hidden");
+                    $("#layer").height(height + 'px');
+                    $("#layer").show();
+                    $("#tip").show();
+                }
+
+                function closeTipDaolog() {
+                    $("#layer").hide();
+                    $("#tip").hide();
+                    $("#paperContent").show();
+                }
+                
+                $("[type]").each(function () {
+                    $(this).bind('click', function () {
+                        var action = $(this).attr("type");
+                        if (action == 1) {
+                            closeTipDaolog();
+                            location.href = "#agreement";
+                        }
+                        else {
+                            closeTipDaolog();
+                            viewRule();
+                        }
+                    })
+                });
+          </script>
+       
+   
+
+</body>
+</html>

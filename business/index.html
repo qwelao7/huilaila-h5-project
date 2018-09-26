@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>实时数据</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+    <script src="js/sea.js"></script>
+    <script src="js/seajs-css.js"></script>
+    <!--<script src="../js/seajs-text.js"></script>-->
+    <script src="js/utils.js?v=32"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/director.min.js"></script>
+    <script src="main.js?v=1"></script>
+    <script>
+        //   _HOME = "http://121.40.102.80:6080/";
+        //_HOME = "http://121.40.102.80:7000/mockjsdata/2/";
+        //  _HOME = "http://192.168.1.83:8080/lmweb/";
+        //_homes = "http://api.4001113900.com:6080/";
+
+        //  _HOME = "http://newapi.4001113900.com/";
+
+        var routes = {
+            '/statistics/home/:category': {
+                on: function (category)
+                {
+                    viewHome(category);
+                }
+            },
+            '/statistics/detail/:category/:module': {
+                on: function (category, module)
+                {
+                    viewDetail(category, module);
+                }
+            },
+            '/statistics/phase/home/:category': {
+                on: function (category)
+                {
+                    viewPhaseHome(category);
+                }
+            },
+            '/statistics/phase/term/:category': {
+                on: function (category)
+                {
+                    viewPhaseDetail(category);
+                }
+            },
+            '/statistics/phase/termdetail/:category': {
+                on: function (category)
+                {
+                    viewTermDetail(category);
+                }
+            },
+            '/statistics/phase/rank/:category': {
+                on: function (category)
+                {
+                    viewRank(category);
+                }
+            },
+            '/statistics/phase/rankdetail/:companytype/:category': {
+                on: function (companytype, category)
+                {
+                    viewRankDetail(companytype, category);
+                }
+            },
+            '/about/:category': {
+                on: function (category)
+                {
+                    viewAbout(category);
+                }
+            },
+            '/aboutdetail/:category': {
+                on: function (category)
+                {
+                    viewAboutdetail(category);
+                }
+            },
+            //满意度
+            '/satisfaction/:category': {
+                on: function (category)
+                {
+                    console.log(category);
+                    veiwSatisfaction(category);
+                }
+            },
+            //促销页面
+            '/promotion/:category/:template': {
+                on: function (category, template)
+                {
+                    veiwPromotion(category, template);
+                }
+            },
+        };
+
+        var router = new Router(routes);
+        router.init();
+    </script>
+    <style>
+        html, body { height: 100%; margin: 0; }
+    </style>
+</head>
+<body id="contain" ontouchstart="" style="background-color: #f0f2f2;">
+</body>
+</html>

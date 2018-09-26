@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>设备信息</title>
+    <style>
+        html, body {
+        	width: 100%;
+        	height: 100%;
+        	margin: 0;
+        	padding: 0;
+        }
+        .log-title {
+        	font-weight: bold;
+        	display: flex;
+            display: -webkit-flex; 
+    		justify-content: space-between;
+            -webkit-justify-content: space-between;
+        	font-size: 0.56rem;
+    		height: 0.933rem;
+			line-height: 0.933rem;
+			margin-top: 0.4rem;
+        }
+        .log-title .title {
+			color: #333333;
+        }
+        .log-item {
+        	display: flex;
+            display: -webkit-flex; 
+    		justify-content: space-between;
+            -webkit-justify-content: space-between;
+        	font-size: 0.4rem;
+        	color: #333333;
+        	height: 0.56rem;
+        	line-height: 0.56rem;
+        	padding: 0.307rem 0;
+        	border-bottom: 1px solid #D3D3D3;
+        }
+        .ellipsis {
+        	overflow: hidden; 
+			text-overflow: ellipsis;
+			display: -webkit-box; 
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 2; 
+        }
+        .header {
+        	display: flex;
+            display: -webkit-flex; 
+        	height: 4.053rem;
+        	padding: 0.533rem 0;
+        	margin: 0 0.4rem;
+        	align-items: center;
+            -webkit-align-items: center;
+        }
+        .header .header-left {
+        	width: 2.4rem;
+        	height: 100%;
+        	text-align: center;
+        }
+        .header .header-left img {
+        	display: block;
+			width:2.4rem;
+			height: 2.4rem;
+        }
+        .header .header-left .header-left-status {
+        	display: inline-block;
+        	color: #FFFFFF;
+        	width: 1.867rem;
+        	height: 0.587rem;
+        	line-height: 0.587rem;
+        	border-radius: 1.333rem;
+        	font-size: 0.32rem;
+        	text-align: center;
+        }
+        .header .header-left .header-left-status.green {
+            background-color: #00C66C;
+        }
+        .header .header-left .header-left-status.gray {
+            background-color: #aaaaaa;
+        }
+        .header .header-left .header-left-status.red {
+            background-color: #ff6648;
+        }
+        .header .header-right {
+        	display: flex;
+            display: -webkit-flex; 
+        	flex-direction: column;
+            -webkit-flex-direction: column;
+        	padding-left:0.4rem;
+        	font-size:0.4rem;
+			color: #333333;
+			line-height: 0.667rem;
+        }
+        .header .header-right .header-right-name {
+        	width: 5.68rem;
+        	font-size: 0.56rem;
+    		margin-bottom: 0.347rem;
+        }
+        .header .arrow {
+        	width: 0.24rem;
+        	height: 0.427rem;
+        }
+        .content {
+        	margin: 0 0.4rem;
+        	padding-bottom: 1.333rem;
+        	border-top: 1px dashed #AAAAAA;
+        }
+        .content .manager {
+        	display: flex;
+            display: -webkit-flex; 
+        	justify-content: space-between;
+            -webkit-justify-content: space-between;
+        	align-items: center;
+            -webkit-align-items: center;
+        	height: 1.867rem;
+        	border-bottom: 1px solid #D8D8D8;
+            font-size: 0.32rem;
+            color: #aaaaaa;
+        }
+        .manager img {
+        	width: 1.067rem;
+        	height: 1.067rem;
+        	background-size: 100% 100%;
+        	background-repeat: no-repeat;
+            border-radius: 50%;
+        }
+        .managerInfo {
+        	flex:1;
+            -webkit-flex: 1;
+        	display: flex;
+            display: -webkit-flex;
+        	flex-direction: column;
+            -webkit-flex-direction: column;
+            padding-left: 0.4rem;
+        }
+        .managerInfo .name {
+        	font-size: 0.4rem;
+        	line-height: 0.56rem;
+        	color: #333333;
+        	padding-bottom: 0.067rem;
+        }
+        .phoneIcon {
+        	width: 0.587rem;
+        	height: 0.587rem;
+        	background-size: 100% 100%;
+        	background-repeat: no-repeat;
+        	background-image: url('img/call_icon_green@2x.png')
+        }
+        .footer {
+		    position: fixed;
+		    bottom: 0;
+		    left: 0;
+		    text-align: center;
+		    font-size: 0.48rem;
+		    color: #ffffff;
+		    background-color: #00C66C;
+		    width: 100%;
+		    height: 1.333rem;
+		    line-height: 1.333rem;
+		}
+        [v-cloak] {
+          display: none;
+        }
+    </style>
+</head>
+<body>
+	<div id="app" v-cloak>
+	    <div class="header" @click="goDetail">
+	    	<div class="header-left">
+	    		<img :src="deviceImg" @click.stop>
+	    		<span class="header-left-status" :class="{ 'gray': deviceStatusIndex === 0, 'green': deviceStatusIndex === 1, 'red': deviceStatusIndex === 2 || deviceStatusIndex === 3 }" v-text="deviceStatus"></span>
+	    	</div>
+	    	<div class="header-right">
+	    		<span class="header-right-name ellipsis"><b v-text="deviceName"></b></span>
+	    		<span v-text="'设备年龄：' + deviceAge"></span>
+		    	<span class="ellipsis" v-text="'品牌名称：' + brand"></span>
+	    	</div>
+	    	<img class="arrow" src="img/arrow_icon_grey@2x.png"/>
+	    </div>
+	    <div class="content">
+	    	<div class="manager">
+	    		<img :src="managerImg">
+	    		<div class="managerInfo">
+	    			<span class="name"><b v-text="chargerName"></b></span>
+	    			<span v-text="managerDesc"></span>
+	    		</div>
+                <a class='phoneIcon' v-if="chargerMobile" :href="chargerMobile"></a>
+	    	</div>
+	    	<!-- 维保记录 -->
+	    	<div class="maint">
+	    		<div class="log-title">
+	    			<span class="title">维保记录</span>
+	    		</div>
+	    		<div class="log-item" v-for="item in maint">
+	    			<span v-text="item.maintainTime"></span>
+	    			<span v-text="item.maintainUsername"></span>
+	    		</div>
+                <div class="log-item" v-show="!maint.length">
+                    <span>上次维保时间</span>
+                    <span>暂无</span>
+                </div>
+	    	</div>
+	    	<!-- 巡检记录 -->
+	    	<div class="patrol">
+	    		<div class="log-title">
+	    			<span class="title">巡检记录</span>
+	    		</div>
+	    		<div class="log-item" v-for="item in patrol">
+	    			<span v-text="item.maintainTime"></span>
+	    			<span v-text="item.maintainUsername"></span>
+	    		</div>
+	    		<div class="log-item" v-show="!patrol.length">
+	    			<span>上次巡检时间</span>
+	    			<span>暂无</span>
+	    		</div>
+	    	</div>
+	    </div>
+	    <div class="footer" @click="submit">设备异常，我要报事</div>
+	</div>
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/config.js"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/JBridge.js"></script>
+<script src="../js/vue.min.js"></script>
+ <script>
+ 	var html = document.documentElement;
+ 	window.rem = html.getBoundingClientRect().width / 10;
+ 	html.style.fontSize = window.rem + 'px';
+
+ 	var qrCode = getRouterParam('qrCode');
+ 	var token = getRouterParam('token');
+ 	var companyCode = getRouterParam('companyCode');
+ 	var mobileType = getRouterParam('mobileType');
+ 	var defCommunityId = getRouterParam('defCommunityId');
+ 	var defRoomId = getRouterParam('defRoomId');
+    var deviceID = '';
+
+ 	new Vue({
+ 		el: '#app',
+ 		data: {
+ 			deviceImg: '',
+ 			deviceStatus_: ['停用', '在用', '已报废', '删除'],
+ 			deviceStatus: '',
+            deviceStatusIndex: '',
+ 			deviceName: '',
+ 			deviceAge: '',
+ 			brand: '',
+ 			managerImg: 'img/headportrait@3x.png',
+ 			chargerName: '',
+ 			managerDesc: '设备负责人',
+ 			chargerMobile: '',
+ 			maint: [],
+ 			patrol: [],
+            installAddress: ''
+ 		},
+ 		created: function(){
+ 			this.getData();
+ 		},
+ 		methods: {
+            handleImg: function () {
+                var imgstr = [];
+                $(".header-left img").each(function (i) {
+                    imgstr.push($(this).attr("src"));
+                    $(this).click(function () {
+                        location = "image://?url=" + imgstr + "&currentIndex=" + i;
+                    })
+                });
+            },
+ 			getData: function(){
+                var self = this;
+ 				$.ajax({
+ 					type: 'get',
+ 					url: _NewHome + '/device/qrcode',
+ 					headers: {
+ 						token: token,
+ 						companyCode: companyCode,
+ 						defCommunityId: defCommunityId,
+ 						defRoomId: defRoomId,
+ 						mobileType: mobileType
+ 					},
+ 					data: { qrCode: qrCode },
+ 					dataType: 'json',
+ 					success: function (d) {
+ 						if (d.status == '100') {
+                            deviceID = d.data.deviceID;
+ 							self.deviceImg = d.data.deviceImg;
+                            self.deviceStatusIndex = d.data.deviceStatus;
+ 							self.deviceStatus = self.deviceStatus_[d.data.deviceStatus];
+ 							self.deviceName = d.data.deviceName || '暂无';
+ 							self.deviceAge = d.data.deviceAge || '暂无';
+ 							self.brand = d.data.brand || '暂无';
+ 							// self.managerImg = d.data.managerImg;
+ 							self.chargerName = d.data.chargerName || '暂无';
+                            if (d.data.chargerMobile) {
+ 							  self.chargerMobile = 'tel:' + d.data.chargerMobile;
+                            }
+                            self.maint = d.data.maintainRecord;
+                            self.patrol = d.data.patrolRecord;
+                            self.installAddress = d.data.installAddress || '暂无';
+                            setTimeout(function () {
+                                self.handleImg();
+                            }, 250);
+ 						} else {
+ 							alert(d.msg);
+ 						}
+ 					}
+ 				});
+ 			},
+ 			goDetail: function () {
+ 				window.location.href = "./deviceDetail.html?qrCode=" + qrCode + "&deviceID=" + deviceID + "&token=" + token + "&companyCode=" + companyCode + "&mobileType=" + mobileType + "&defCommunityId=" + defCommunityId + "&defRoomId=" + defRoomId;
+ 			},
+ 			submit: function () {
+	 			if (window.WebViewJavascriptBridge) {
+	 				var obj = {
+	 					subCode: 101,
+	 					orderNumber: 2,
+	 					orderName: '小区报修',
+	 					content: this.deviceName + '，' + this.installAddress + '；'
+	 				};
+		        	window.WebViewJavascriptBridge.callHandler('_app_addReport', obj);
+		        }
+ 			}
+ 		}
+ 	});
+ </script>
+</html>

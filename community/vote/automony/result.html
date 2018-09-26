@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>投票</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+    <link href="../../css/frozen.css" rel="stylesheet" />
+    <link href="../../css/app.css" rel="stylesheet" />
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/knockout.js"></script>
+    <script src="../../js/common.js?v=3.2"></script>
+    <style>
+        .option{margin: 0 15px}
+    </style>
+</head>
+<body ontouchstart="" style="background-color:#f0f2f2" >
+    <div class="ui-loading-wrap">
+        <p>正在加载中...</p>
+        <i class="ui-loading"></i>
+    </div>
+
+    <div id="paperContent" style="display:none;background-color:#fff">
+        <div style="padding-left:15px;padding-right:15px;padding-top:5px">
+            <div class='title' data-bind="text:title"></div>
+            <div style="height:22px;font-size:14px;line-height:18px;color:#aaaaaa;margin-top:10px;"><span data-bind="text:intime"></span><span style="float:right;color:#00c66c;" data-bind="text:endtime"></span></div>
+            <div id="instroduce" data-bind="html:paper.introduce" style="word-break:break-all;margin-top:15px;color:#333333" ></div>
+        </div>
+
+        <!-- ko foreach: paper.questions -->
+         <div class="border-list" style="margin-top:25px;">
+            <!--style="display:inline-block"--> 
+            <div data-bind="text:des"  style="display:inline;word-wrap:break-word;word-break:break-all;font-size:18px;color:#333333;font-weight: 700"></div>
+            <div  style="text-align:right;font-size:14px;color:#00c66c" data-bind="text:'最多选'+maxSCnt+'个'"></div>
+            <div style="clear:both"></div>
+        </div>
+        <!--<ul style="padding-bottom:10px;color:#666666;font-size:15px;" class="ui-list-text border-list" data-bind="foreach:options,attr:{qid:id,maxscnt:maxSCnt}">
+            <li class="ui-border-radius" style="word-wrap:break-word"  data-bind="css:selected=='0'?'uncheck':'check'">
+                <span data-bind="text:des"></span>
+                <img class="img-right" src="../../img/zan.png" />
+                <div style="clear:both"></div>
+            </li>
+        </ul>-->
+             <div class="option">
+              <ul class="ui-list-text votetable" data-bind="foreach:options,attr:{qid:id,maxscnt:maxSCnt}">
+                    <li style="word-wrap:break-word"  data-bind="css:selected=='0'?'uncheck':'check'">
+                        <span style="flex:1;-webkit-flex:1" data-bind="text:des"></span>
+
+                        <span style="flex:0 0 52px;-webkit-flex:0 0 52px; width: 52px; display: flex;justify-content: center;align-items: center;display:-webkit-flex;-webkit-justify-content: center;-webkit-align-items: center">
+                            <img class="paper_uncheck" src="../../img/satis/unchecked_icon.png" width="22" data-bind="visible:selected =='0'"/>
+                            <img class="paper_check" src="../../img/satis/checked_icon.png" width="22" data-bind="visible:selected !='0'"  style="border-radius: 100%"/></span>
+                        <div style="clear: both"></div>
+                    </li>
+                </ul>
+             </div>
+        <!-- /ko -->
+        
+
+        <div style="padding:20px 15px">
+            <button id="btn" class="ui-btn-lg ui-btn-primary">--</button>
+        </div>
+
+        <!--init paper & post result-->
+        <script>
+        var isTimeout = getParam("isTimeout");
+        var state = getParam("state");
+        var paperInfo;
+
+        $(function () {
+            init();
+
+            //init paper
+            paperInfo = getPaperResult();
+            ko.applyBindings({
+                paper: paperInfo,
+                title: decodeURI(decodeURI(getParam("title"))),
+                intime: decodeURI(decodeURI(getParam("intime"))),
+                endtime: decodeURI(decodeURI(getParam("endtime")))
+            });
+
+            // show render body
+            $("#paperContent").show();
+            $(".ui-loading-wrap").remove();
+
+            fixImg();
+                   
+           // $("body").resize();
+        })
+
+        function init() {
+            // if (state == "4") {
+            //     //已经出结果，跳转到结果
+            //     $("#btn").text("点击查看表决公告");
+            //     $("#btn").click(function () {
+            //         UamaJSBridge._app_setVoteResult(paperInfo.gsggId);
+            //     });
+            // }
+            // else {
+                if (isTimeout == "1") {
+                    $("#btn").text("已结束，请耐心等待公示结果");
+                    $("#btn").attr("disabled", "disabled");
+                } else {
+                    $("#btn").text("请耐心等待公示结果");
+                    $("#btn").attr("disabled", "disabled");
+                }
+            //}
+        }
+
+        function fixImg() {
+            $("#instroduce").find("img").each(function () {
+                //when cached
+                var imgWidth = $(this).width();
+                var bodyWidth = $(window).width() - 30;
+                if (imgWidth > bodyWidth) {
+                    $(this).css("background-size", "contain").css("width", bodyWidth + "px");
+                }
+
+                //when first load
+                $(this).load(function () {
+                    var imgWidth = $(this).width();
+                    var bodyWidth = $(window).width() - 30;
+
+                    if (imgWidth > bodyWidth) {
+                        $(this).css("background-size", "contain").css("width", bodyWidth + "px");
+                    }
+                })
+            });
+        }
+
+        function getPaperResult() {
+            var jd = new JData();
+            var requestHead = getRequestHead();
+            jd.initRequestHead(requestHead);
+            jd.add("voteId", getParam("voteId"));
+            jd.add("type", "zzbj");
+
+            var postData = eval("(" + jd.toJson() + ")");
+            var ret = DoAjax("scVoteAction!getPaperResult.action", postData);
+
+            var result = $.parseJSON(ret);
+            if (result.status != _SUCCESSED) {
+                alert("获取数据失败！");
+                return false;
+            }
+
+            return result.data;
+        }
+
+        </script>
+        </div>
+</body>
+</html>

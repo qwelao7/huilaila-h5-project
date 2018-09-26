@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>绿植信息</title>
+    <style>
+        html, body {
+        	width: 100%;
+        	height: 100%;
+        	margin: 0;
+        	padding: 0;
+        }
+        .infoItem {
+            display: flex;
+            display: -webkit-flex; 
+        }
+        .label {
+            display: inline-block;
+            flex: 0 0 2.6rem;
+            -webkit-flex: 0 0 2.6rem;
+        }
+        .ellipsis-1 {
+        	overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 1;
+        }
+        .ellipsis-2 {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+        .header {
+        	width: 100%;
+        	height: 7.507rem;
+        }
+        .header .swiper-container {
+        	height: 100%;
+        }
+        .header .swiper-container .swiper-pagination {
+		    display: flex;
+            display: -webkit-flex; 
+		    align-items: center;
+            -webkit-align-items: center;
+		    justify-content: center;
+            -webkit-justify-content: center;
+        	width: 0.933rem;
+        	height: 0.933rem;
+        	line-height: 0.933rem;
+        	bottom: 0.387rem;
+        	left: auto;
+        	right: 0.427rem;
+        	border-radius: 50%;
+        	background-color: rgba(0,0,0,0.60);
+			color: #FFFFFF;
+        }
+        .content {
+        	margin: 0 0.4rem;
+        	padding-bottom: 1.307rem;
+        }
+        .content .plantTitle {
+        	margin: 0.413rem 0 0.267rem 0;
+			font-size: 0.56rem;
+			color: #333333;
+        }
+        .content .plantInfo {
+        	font-size: 0.48rem;
+			color: #333333;
+			line-height: 0.8rem;
+        }
+        .content .manager {
+        	display: flex;
+            display: -webkit-flex; 
+        	justify-content: space-between;
+            -webkit-justify-content: space-between;
+        	align-items: center;
+            -webkit-align-items: center;
+        	height: 1.867rem;
+        	border-bottom: 1px dashed #AAAAAA;
+            font-size: 0.32rem;
+            color: #aaaaaa;
+            margin-bottom: 0.4rem;
+        }
+        .manager img {
+        	width: 1.067rem;
+        	height: 1.067rem;
+        	background-size: 100% 100%;
+        	background-repeat: no-repeat;
+            border-radius: 50%;
+        }
+        .managerInfo {
+        	flex:1;
+            -webkit-flex: 1;
+        	display: flex;
+            display: -webkit-flex; 
+        	flex-direction: column;
+            -webkit-flex-direction: column;
+            padding-left: 0.4rem;
+        }
+        .managerInfo .name {
+        	font-size: 0.4rem;
+        	line-height: 0.56rem;
+        	color: #333333;
+        	padding-bottom: 0.067rem;
+        }
+        .phoneIcon {
+        	width: 0.587rem;
+        	height: 0.587rem;
+        	background-size: 100% 100%;
+        	background-repeat: no-repeat;
+        	background-image: url('img/call_icon_green@2x.png')
+        }
+        .footer {
+		    position: fixed;
+		    bottom: 0;
+		    left: 0;
+		    text-align: center;
+		    font-size: 0.48rem;
+		    color: #ffffff;
+		    background-color: #00C66C;
+		    width: 100%;
+		    height: 1.307rem;
+		    line-height: 1.307rem;
+		}
+        [v-cloak] {
+          display: none;
+        }
+    </style>
+</head>
+<body>
+	<div id="app" v-cloak>
+	    <div class="header" v-if="showImg">
+			<div class="swiper-container">
+			  <div class="swiper-wrapper">
+			  	<img class="swiper-slide" :src="item" v-for="item in imgUrls">
+			  </div>
+			  <div class="swiper-pagination"></div>
+			</div>
+	    </div>
+	    <div class="content">
+	    	<div class="plantTitle ellipsis-2"><b>{{plantName}}</b></div>
+	    	<div class="plantInfo">
+	    		<div class="infoItem"><span class="label">树龄：</span><span>{{plantAge}}</span></div>
+	    		<div class="infoItem"><span class="label">品种：</span><span class="ellipsis-1">{{variety}}</span></div>
+	    		<div class="infoItem"><span class="label">习性：</span><span class="ellipsis-1">{{habit}}</span></div>
+	    		<div class="infoItem"><span class="label">种植时间：</span><span class="ellipsis-1">{{plantTime}}</span></div>
+	    		<div class="infoItem"><span class="label">种植地点：</span><span class="ellipsis-1">{{plantAddress}}</span></div>
+	    	</div>
+            <div class="manager">
+	    		<img :src="managerHeadimg">
+	    		<div class="managerInfo">
+	    			<span class="name"><b>{{managerName}}</b></span>
+	    			<span>{{managerDesc}}</span>
+	    		</div>
+                <a class='phoneIcon' v-if="managerMobile" :href="managerMobile"></a>
+	    	</div>
+	    	<div class="plantInfo">
+	    		<div class="infoItem"><span class="label">树木简介：</span><span>{{remark}}</span></div>
+	    	</div>
+	    </div>
+	    <div class="footer" @click="submit">绿植有异常，我要反馈</div>
+	</div>
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/config.js"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/JBridge.js"></script>
+<script src="../js/vue.min.js"></script>
+<script src="../js/swiper-3.3.1.jquery.min.js"></script>
+<link href="../css/swiper-3.3.1.min.css" rel="stylesheet" />
+ <script>
+ 	var html = document.documentElement;
+ 	window.rem = html.getBoundingClientRect().width / 10;
+ 	html.style.fontSize = window.rem + 'px';
+
+ 	var qrCode = getRouterParam('qrCode');
+ 	var token = getRouterParam('token');
+ 	var companyCode = getRouterParam('companyCode');
+ 	var mobileType = getRouterParam('mobileType');
+ 	var defCommunityId = getRouterParam('defCommunityId');
+ 	var defRoomId = getRouterParam('defRoomId');
+
+ 	new Vue({
+ 		el: '#app',
+ 		data: {
+ 			imgUrls: [],
+            showImg: true,
+ 			plantName: '',
+ 			plantAge: '',
+ 			variety: '',
+ 			habit: '',
+ 			plantTime: '',
+ 			plantAddress: '',
+ 			remark: '',
+ 			managerHeadimg: '',
+ 			managerName: '',
+ 			managerDesc: '绿植负责人',
+ 			managerMobile: ''
+ 		},
+ 		created: function () {
+ 			this.getData();
+ 		},
+ 		methods: {
+            handleImg: function (imgUrls) {
+                var imgstr = [];
+                imgUrls.forEach(function (v, i) {
+                    imgstr.push(v);
+                    $($(".swiper-wrapper img")[i+1]).click(function () {
+                      location = "image://?url=" + imgstr + "&currentIndex=" + i;
+                    })
+                });
+            },
+ 			initSwiper: function () {
+		 		new Swiper('.swiper-container', {
+					loop : true,
+					pagination : '.swiper-pagination',
+					paginationType : 'custom',
+					paginationCustomRender: function (swiper, current, total) {
+				    	return '<span><span style="font-size:0.533rem;">' + current + '</span>' + '<span style="font-size:0.32rem;">/' + total+ '</span></span>';
+				    }
+				});
+ 			},
+ 			getData: function() {
+                var self = this;
+ 				$.ajax({
+ 					type: 'get',
+ 					url: _NewHome + '/plant/qrcode',
+ 					headers: {
+ 						token: token,
+ 						companyCode: companyCode,
+ 						defCommunityId: defCommunityId,
+ 						defRoomId: defRoomId,
+ 						mobileType: mobileType
+ 					},
+ 					data: { qrCode: qrCode },
+ 					dataType: 'json',
+ 					success: function (d) {
+ 						if (d.status == '100') {
+                            if (d.data.imgUrls.length == 0) {
+                              self.showImg = false;
+                            } else {
+ 							  self.imgUrls = d.data.imgUrls;
+                              setTimeout(function () {
+                                self.initSwiper();
+                                self.handleImg(self.imgUrls);
+                              }, 250);
+                            }
+ 							self.plantName = d.data.plantName || '暂无';
+ 							self.plantAge = d.data.plantAge || '暂无';
+ 							self.variety = d.data.variety || '暂无';
+ 							self.habit = d.data.habit || '暂无';
+ 							self.plantTime = d.data.plantTime || '暂无';
+ 							self.plantAddress = d.data.plantAddress || '暂无';
+ 							self.remark = d.data.remark || '暂无';
+ 							self.managerHeadimg = d.data.managerHeadimg || 'img/headportrait@3x.png';
+ 							self.managerName = d.data.managerName || '暂无';
+                            if (d.data.managerMobile) {
+ 							  self.managerMobile = 'tel:' + d.data.managerMobile;
+                            }
+ 						} else {
+ 							alert(d.msg);
+ 						}
+ 					}
+ 				});
+ 			},
+ 			submit: function () {
+	 			if (window.WebViewJavascriptBridge) {
+	 				var obj = {
+	 					subCode: 101,
+	 					orderNumber: 2,
+	 					orderName: '小区报修',
+	 					content: this.plantName + '，' + this.plantAddress + '；'
+	 				};
+		        	window.WebViewJavascriptBridge.callHandler('_app_addReport', obj);
+		        }
+ 			}
+ 		}
+ 	});
+ </script>
+</html>

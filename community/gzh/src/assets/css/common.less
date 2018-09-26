@@ -1,0 +1,1654 @@
+/* -- 二级页面头部样式 -- */
+.commonHeader{
+  .vux-header{
+    background-color: #ffffff;
+    border-bottom: 0.5px solid #D8D8D8;
+    .vux-header-title{
+      color: #333333;
+      span {
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+    .vux-header-left .left-arrow:before{
+      border-color: #333333;
+    }
+    .vux-header-right {
+      .right-btn {
+        color: #333;
+        font-size: 15px;
+      }
+    }
+  }
+}
+.vux-tab-bar-inner{
+  border-radius: 10px;
+}
+.vux-tab .vux-tab-item{
+  background-size: 100% 0.03333rem!important;
+}
+/* -- 公共组件样式 -- */
+.commentList{
+  .weui-cells{
+    margin-top: 10px;
+  }
+  .commentCell .weui-cells{
+    margin-top: 0;
+  }
+}
+/* -- 共用样式 -- */
+.no-margin-top{
+  .weui-cells{
+    margin-top: 0;
+  }
+  .weui-cells:before, .weui-cells:after{
+    border: none;
+  }
+}
+.commentList, .signUp, .personInfo, .my, .activityDetail, .receivingAdd, .comAdd{
+  .weui-cell_access.vux-cell-box:after{
+    width: 10px;
+    height: 10px;
+    border-width: 1px 1px 0 0;
+    margin-top: -5px;
+    border-color: #aaaaaa;
+  }
+}
+
+/* -- 推荐 -- */
+.recommend, .community{
+  .weui-grid__icon{
+    width: 44px;
+    height: 44px;
+  }
+  .weui-grid__label{
+    font-size: 12px;
+  }
+}
+.commentInput{
+  .weui-cell{
+    padding: 2.5px 5px;
+    border:0.5px solid #d8d8d8;
+    border-radius: 5px;
+  }
+}
+/* -- 发布帖子 -- */
+.publish{
+  .vux-header{
+    .vux-header-right a{
+      color: #0DAB60;
+      font-size: 15px;
+    }
+  }
+  .weui-textarea{
+    font-size: 18px;
+    color: #333333;
+  }
+  textarea::-webkit-input-placeholder { /* WebKit browsers*/
+    color:#aaa;
+    font-size: 18px;
+  }
+  textarea:-moz-placeholder {  /* Mozilla Firefox 4 to 18*/
+    color:#aaa;
+    font-size:18px;
+  }
+  textarea::-moz-placeholder {  /* Mozilla Firefox 19+*/
+    color:#aaa;
+    font-size:18px;
+  }
+  textarea:-ms-input-placeholder { /* Internet Explorer 10+*/
+    color:#aaa;
+    font-size:18px;
+  }
+}
+.publishActivity{
+  .hasTop{
+    margin-top: 26px;
+  }
+  .noTop{
+    margin-top: 0;
+    .vux-label{
+      color: #333333!important;
+    }
+  }
+  .vux-label{
+    color: #aaaaaa;
+  }
+  .vux-header{
+    .vux-header-right a{
+      color: #aaaaaa;
+      font-size: 15px;
+    }
+  }
+  .weui-cells:before, .weui-cells:after {
+    border: none;
+  }
+  .weui-cell_access .weui-cell__ft:after, .weui-cell_access.vux-cell-box:after{
+    width: 10px;
+    height: 10px;
+    border-width: 1px 1px 0 0;
+    margin-top: -5px;
+    border-color: #aaaaaa;
+  }
+  .weui-cells:before{
+    border: 0;
+  }
+  .weui-cells__title{
+    margin: 0;
+    font-size: 15px;
+    color: #aaaaaa;
+    padding-left: 0;
+    padding-bottom: 5px;
+    height: 21px;
+    line-height: 21px;
+    //padding-top: 15px;
+  }
+  .weui-cell__ft{
+    text-align: left;
+    color: #aaaaaa;
+  }
+  .vux-cell-value{
+    color: #333333;
+    font-size: 21px;
+    font-weight: 700;
+  }
+  .weui-cell{
+    //padding: 15px 0;
+    padding: 0;
+    font-size: 21px;
+  }
+  .weui-input{
+    font-size: 21px;
+    color: #333333;
+    font-weight: 400;
+  }
+  .weui-textarea{
+    font-size: 18px;
+    color: #333333;
+  }
+  .vux-cell-placeholder{
+    font-size: 21px;
+    color: #aaaaaa;
+    font-weight: 500;
+  }
+  input::-webkit-input-placeholder { /* WebKit browsers*/
+    color:#aaa;
+    font-size: 21px;
+  }
+  input:-moz-placeholder {  /* Mozilla Firefox 4 to 18*/
+    color:#aaa;
+    font-size:21px;
+  }
+  input::-moz-placeholder {  /* Mozilla Firefox 19+*/
+    color:#aaa;
+    font-size:21px;
+  }
+  input:-ms-input-placeholder { /* Internet Explorer 10+*/
+    color:#aaa;
+    font-size:21px;
+  }
+  textarea::-webkit-input-placeholder { /* WebKit browsers*/
+    color:#aaa;
+    font-size: 18px;
+  }
+  textarea:-moz-placeholder {  /* Mozilla Firefox 4 to 18*/
+    color:#aaa;
+    font-size:18px;
+  }
+  textarea::-moz-placeholder {  /* Mozilla Firefox 19+*/
+    color:#aaa;
+    font-size:18px;
+  }
+  textarea:-ms-input-placeholder { /* Internet Explorer 10+*/
+    color:#aaa;
+    font-size:18px;
+  }
+  .specialItem{
+    .vux-x-switch.weui-cell_switch{
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+    .weui-cells{
+      width: 100%;
+      margin-top: 0;
+    }
+  }
+  .description{
+    .weui-cells{
+      margin-top: 0;
+    }
+  }
+}
+.registeryFee{
+  .weui-cells__title{
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+    color: #aaaaaa;
+  }
+  .weui-cell{
+    padding: 0;
+  }
+  .weui-input{
+    font-size: 21px;
+    color: #333333;
+    font-weight: 400;
+  }
+  .weui-cells:before, .weui-cells:after{
+    border: none;
+  }
+  input::-webkit-input-placeholder { /* WebKit browsers*/
+    color:#aaa;
+    font-size: 21px;
+  }
+  .weui-cell:before{
+    border: none;
+  }
+  .reFound{
+    .weui-cells__title{
+      color: #333333;
+      padding: 12px 0;
+    }
+    .weui-cell{
+      padding: 15px 0;
+      //text-align: center;
+      border-top: 0.5px solid #D8D8D8;
+    }
+    .weui-cells_radio .weui-check:checked + .weui-icon-checked:before{
+      content: none;
+    }
+    //[class^="weui-icon-"]:before, [class*=" weui-icon-"]:before{
+    //  background: url("../../assets/images/checkadd_icon_green44.png") no-repeat center / contain 22px 22px;
+    //}
+    .weui-icon-checked{
+      width: 22px;
+      height: 22px;
+      background: url("../../assets/images/checked_icon_green.png") no-repeat center / contain;
+    }
+  }
+  .weui-btn:after{
+    border: none;
+  }
+}
+/* -- 个人主页 -- */
+.personPage, .QRcode, .integral_exchange{
+  .vux-header .vux-header-left{
+    .left-arrow{
+      background-color: rgba(0,0,0,0.60);
+      border-radius: 50%;
+    }
+    .left-arrow:before{
+      left: 10px;
+    }
+  }
+}
+
+/* -- 社群 -- */
+.vux-x-dialog-absolute .weui-dialog{
+  position: fixed;
+}
+.popupBanner{
+  .title {
+    font-size: 18px;
+    color: #333333;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 9px;
+  }
+  ul {
+    padding: 0 19px;
+    padding-bottom: 15px;
+    li {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-top: 10px;
+      input {
+        border: none;
+      }
+      .copy {
+        margin-left: 10px;
+        background: #F5F5F5;
+        border: 1px solid #979797;
+        padding: 2px 5px;
+        border-radius: 4px;
+        color: #333333;
+        font-size: 12px;
+      }
+      .isCopied {
+        color: #aaaaaa;
+      }
+      span {
+        text-align: left;
+        font-size: 15px;
+        color: #aaaaaa;
+      }
+      .num {
+        width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+    .illustrate{
+      align-items: flex-start;
+    }
+    li:first-child {
+      margin-top: 0;
+    }
+  }
+  .btn {
+    border-top: 1px solid #e5e5e5;
+    height: 50px;
+    font-size: 18px;
+    color: #0DAB60;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* -- 新鲜事 --*/
+.newThingsDetail, .vote, .activityDetail{
+  .vux-header .vux-header-right{
+    top: 10px;
+  }
+  .vux-header .vux-header-right .vux-header-more:after{
+    content: '';
+    display: block;
+    width: 28px;
+    height: 28px;
+    background-image: url("../images/dotdotdot_icon_56black.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
+/* -- 举报 -- */
+.onReport{
+  .weui-cells{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .weui-cell{
+    width: 40%;
+    text-align: left;
+    font-size: 15px;
+  }
+  .weui-cell:before{
+    border-top: none;
+  }
+  .weui-btn_primary{
+    margin-top: 40px;
+    background-color: #0DAB60;
+  }
+}
+/* -- 活动详情 -- */
+.activityDetail, .voteDetail{
+  .banner.weui-cell_access.vux-cell-box:after{
+    border-color: #ffffff;
+    width: 10px;
+    height: 10px;
+    border-width: 1px 1px 0 0;
+    margin-top: -5px;
+  }
+}
+.banner, .signUp{
+  .weui-cells{
+    margin-top: 0;
+  }
+  .weui-cell{
+    padding: 12px 15px;
+  }
+  .signUpList, .options{
+    .weui-cells:before{
+      border: none;
+    }
+  }
+  .noDetail{
+    flex: 1;
+    justify-content: space-between;
+    .weui-cell{
+      padding: 0;
+    }
+    .vux-number-selector-plus{
+      margin-right: 0;
+    }
+    .vux-number-input{
+      font-size: 15px;
+    }
+    .vux-number-selector.vux-number-disabled svg{
+      fill: #ccc;
+    }
+    .vux-number-selector svg{
+      fill: #0DAB60;
+    }
+  }
+  .signUpList{
+    .noline.weui-cell:before{
+      border: none;
+    }
+  }
+  .options{
+    .weui-cells__title{
+      color: #aaaaaa;
+      font-size: 15px;
+    }
+    .weui-textarea{
+      font-size: 18px;
+      color: #333333;
+    }
+    textarea::-webkit-input-placeholder { /* WebKit browsers*/
+      color:#aaa;
+      font-size: 18px;
+    }
+    textarea:-moz-placeholder {  /* Mozilla Firefox 4 to 18*/
+      color:#aaa;
+      font-size:18px;
+    }
+    textarea::-moz-placeholder {  /* Mozilla Firefox 19+*/
+      color:#aaa;
+      font-size:18px;
+    }
+    textarea:-ms-input-placeholder { /* Internet Explorer 10+*/
+      color:#aaa;
+      font-size:18px;
+    }
+    .weui-cells:after{
+      border-bottom: none;
+    }
+  }
+  .options.chooses .weui-cells__title{
+    color: transparent;
+  }
+}
+
+/* -- 添加参与人 -- */
+.addPerson{
+  .weui-cell_access.vux-cell-box:after, .weui-cell_access .weui-cell__ft:after{
+    width: 10px;
+    height: 10px;
+    border-width: 1px 1px 0 0;
+    margin-top: -5px;
+    border-color: #aaaaaa;
+    right: 8.5px;
+  }
+  .avatar{
+    .weui-cell{
+      padding: 10px 0;
+    }
+    .weui-cells{
+      margin-top: 0;
+    }
+    .weui-cell__ft{
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  .sexOption{
+    .weui-cell__ft{
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  .birthday{
+    .vux-cell-value{
+      text-align: left;
+      font-size: 21px;
+      color: #333333;
+    }
+  }
+  .vux-label{
+    font-size: 21px;
+    color: #aaaaaa;
+  }
+  .weui-cells:before, .weui-cells:after{
+    border: none;
+  }
+  .weui-cell{
+    //padding: 15px 0;
+    padding: 0 0 15px 0;
+  }
+  .weui-cells__title{
+    padding: 0;
+  }
+  .weui-input{
+    font-size: 21px;
+    color: #333333;
+    font-weight: 400;
+  }
+  input::-webkit-input-placeholder { /* WebKit browsers*/
+    color:#aaa;
+    font-size: 21px;
+  }
+  input:-moz-placeholder {  /* Mozilla Firefox 4 to 18*/
+    color:#aaa;
+    font-size:21px;
+  }
+  input::-moz-placeholder {  /* Mozilla Firefox 19+*/
+    color:#aaa;
+    font-size:21px;
+  }
+  input:-ms-input-placeholder { /* Internet Explorer 10+*/
+    color:#aaa;
+    font-size:21px;
+  }
+  .hasTop{
+    margin-top: 26px;
+  }
+  .noTop{
+    margin-top: 0;
+    .vux-label{
+      color: #333333!important;
+    }
+  }
+}
+
+/* -- 投票选项 -- */
+.voteSelect{
+  .weui-cells {
+    border: 0.5px solid #D8D8D8;
+    background-color: #f8f8f8;
+    .choose {
+      background-color: rgba(13,171,96,0.20);;
+    }
+  }
+  .weui-cell:before{
+    left: 0;
+  }
+}
+
+/* -- 我家 -- */
+.my{
+  .vux-header-title-area{
+    margin: 0 80px;
+  }
+  .vux-header .vux-header-right{
+    top: 10px;
+  }
+  .infoList{
+    .weui-cell{
+      padding: 17px 15px;
+    }
+  }
+}
+/* -- 账户资料 -- */
+.personInfo{
+  .tag, .payPsd{
+    .weui-cells{
+      margin-top: 10px;
+    }
+  }
+  .tag{
+    .weui-cells:before ,.weui-cells:after{
+      border: none;
+    }
+  }
+  .normal{
+    .weui-label{
+      font-size: 14px;
+    }
+    .vux-cell-value{
+      color: #333333;
+      font-size: 14px;
+      margin-right: 10px;
+    }
+    .weui-cell_access .weui-cell__ft:after{
+      width: 10px;
+      height: 10px;
+      border-width: 1px 1px 0 0;
+      margin-top: -5px;
+      border-color: #aaaaaa;
+    }
+  }
+  .vux-cell-placeholder{
+    color: #aaaaaa;
+  }
+}
+/* -- 我的地址 -- */
+.modifyAddress{
+  .weui-cells:before{
+    border-top: none;
+  }
+  .lastGroup{
+    .weui-cells{
+      //margin-top: 0;
+    }
+    .weui-cells:after{
+      border-bottom: none;
+    }
+  }
+}
+
+.chooseCommunity{
+  .search{
+    .weui-search-bar, .weui-search-bar__form{
+      background-color: #ffffff;
+    }
+    .weui-search-bar{
+      padding: 15px 10px;
+      padding-bottom: 0;
+    }
+    .weui-search-bar:before, .weui-search-bar:after{
+      border: none;
+    }
+    .weui-search-bar__label{
+      border-radius: 100px;
+      background: #f2f2f2;
+      text-align: left;
+      padding-left: 10px;
+    }
+    .weui-search-bar__label .weui-icon-search{
+      margin-right: 0;
+    }
+    .weui-search-bar__form:after{
+      border-radius: 100px;
+      border: none;
+      background: #f2f2f2;
+    }
+  }
+  .weui-cells:before, .weui-cells:after{
+    border: none;
+  }
+  .weui-cell{
+    padding: 10px 0;
+  }
+  .weui-cell:before{
+    left: 0;
+  }
+  .weui-cells.vux-search_show{
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 14px;
+  }
+}
+
+.verifiedName, .nickName, .qqNum, .password{
+  .weui-cells:before{
+    border-top: none;
+  }
+  .weui-input{
+    font-size: 21px;
+    color: #333333;
+  }
+}
+.signDetail{
+  .userTitle span{
+    font-size: 15px;
+  }
+  .vux-label{
+    font-size: 18px;
+    //font-weight: 700;
+    color: #333333;
+  }
+  .weui-cell_access .weui-cell__ft:after{
+    width: 10px;
+    height: 10px;
+    border-width: 1px 1px 0 0;
+    margin-top: -5px;
+    border-color: #aaaaaa;
+  }
+  .joinPeople{
+    .weui-cells{
+      margin-top: 0;
+    }
+  }
+}
+.QRcode {
+   background-color: rgba(0, 0, 0, 0.6)!important;
+   height: 100%;
+   position: relative;
+   .banner{
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     /*padding-bottom: .53rem;*/
+     .head{
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       margin-top: -0.4rem;
+       p{
+         color: #ffffff;
+         font-size: 15px;
+       }
+       p:first-child{
+         font-size: 21px;
+         font-weight: bold;
+       }
+     }
+     .qrCard{
+       width: 315px;
+       /*height: 8.64rem;*/
+       background-color: #ffffff;
+       border-radius: 10px;
+       margin-top: 20px;
+       /*padding: .25rem 0 .4rem 0;*/
+       .name{
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         /*padding-bottom: .34rem;*/
+         padding: 12.5px 15px;
+         border-bottom: 1px dashed #aaaaaa;
+         font-size: 15px;
+         span:first-child{
+           font-size: 18px;
+         }
+       }
+       .qrPic{
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         /*padding: .4rem .3rem .5rem .3rem;*/
+         margin-top: 20px;
+         padding-bottom: 25px;
+         border-bottom: 1px dashed #aaaaaa;
+         position: relative;
+         span{
+           margin-bottom: 15px;
+         }
+         img{
+           width: 150px;
+           height: 150px;
+         }
+         .hasSign{
+           position: absolute;
+           right: -20px;
+           top: -25px;
+           width: 80px;
+           height: 80px;
+         }
+       }
+       ul{
+         padding: 15px 15px 20px 15px;
+         li{
+           display: flex;
+           flex-direction: row;
+           align-items: flex-start;
+           margin-top: 13px;
+           font-size: 12px;
+           span:last-child{
+             flex: 1;
+             margin-left: 2px;
+             word-break: break-all;
+             white-space: normal;
+           }
+         }
+         li:first-child{
+           margin-top: 0;
+         }
+       }
+     }
+   }
+ }
+.changeBanner {
+  .weui-cells {
+    margin-top: 0;
+  }
+  .weui-cells:before{
+    border: none;
+  }
+}
+.bind{
+  .weui-dialog{
+    //width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    border-radius: 5px;
+  }
+  .verFiled{
+    padding: 20px 19px 0 19px;
+    p{
+      font-size: 18px;
+      margin-bottom: 17.5px;
+    }
+    button {
+      color: #0DAB60;
+      background-color: #ffffff;
+      border: 1px solid #0DAB60;
+    }
+    .disableBtn {
+      color: #aaaaaa;
+      background-color: #ffffff;
+      border: 0.5px solid #D8D8D8;
+    }
+    .weui-cell{
+      padding: 14.5px 0;
+    }
+    .weui-btn:after,.weui-cell:before {
+      border: none
+    }
+  }
+  .btn{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #e5e5e5;
+    span{
+      flex: 0.5;
+      text-align: center;
+      height: 20px;
+      line-height: 50px;
+      font-size: 18px;
+    }
+    span:last-child{
+      color: #0DAB60;
+      border-left: 1px solid #e5e5e5;
+    }
+  }
+}
+
+.subscribe {
+  .weui-dialog{
+    //width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    border-radius: 5px;
+  }
+  .verFiled{
+    padding: 20px 19px 0 19px;
+    p{
+      font-size: 18px;
+      margin-bottom: 17.5px;
+    }
+    button {
+      color: #0DAB60;
+      background-color: #ffffff;
+      border: 1px solid #0DAB60;
+    }
+    .disableBtn {
+      color: #aaaaaa;
+      background-color: #ffffff;
+      border: 0.5px solid #D8D8D8;
+    }
+    .weui-cell{
+      padding: 14.5px 0;
+    }
+    .weui-btn:after,.weui-cell:before {
+      border: none
+    }
+  }
+  .btn{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #e5e5e5;
+    span{
+      flex: 0.5;
+      text-align: center;
+      height: 20px;
+      line-height: 50px;
+      font-size: 18px;
+    }
+    span:last-child{
+      color: #0DAB60;
+      border-left: 1px solid #e5e5e5;
+    }
+  }
+}
+
+/* 新增收货地址 */
+.addressSelect{
+  .weui-cells{
+    margin-top: 10px
+  }
+  .weui-cells__title{
+    margin-top: 0;
+  }
+  .weui-cells:before{
+    border-top: none;
+  }
+  .weui-cell_access .weui-cell__ft:after{
+    width: 10px;
+    height: 10px;
+    border-width: 1px 1px 0 0;
+    margin-top: -5px;
+    border-color: #aaaaaa;
+  }
+  .weui-cell__ft{
+    color: #333333;
+    font-size: 21px;
+  }
+  .vux-label{
+    color: #aaaaaa;
+    font-size: 21px;
+  }
+}
+.addressOption {
+  .weui-cells{
+    margin-top: 15px;
+  }
+  .weui-cells__title{
+    margin-top: 0;
+  }
+  .weui-cells:before{
+    border-top: none;
+  }
+  .weui-cell_access .weui-cell__ft:after{
+    width: 10px;
+    height: 10px;
+    border-width: 1px 1px 0 0;
+    margin-top: -5px;
+    border-color: #aaaaaa;
+  }
+  .weui-cell__ft{
+    color: #333333;
+    font-size: 21px;
+  }
+  .vux-label{
+    color: #aaaaaa;
+    font-size: 21px;
+  }
+}
+.myAddress {
+  .weui-cell_access {
+    padding-right: 30px !important;
+  }
+}
+.replyMsg{
+  .weui-mask{
+    //background: rgba(0, 0, 0, 0.05);
+  }
+}
+.commentPopup{
+  .vux-header{
+    background-color: #ffffff;
+    border-bottom: 0.5px solid #D8D8D8;
+    .vux-header-right a, .vux-header-left a{
+      font-size: 15px;
+      color: #0DAB60;
+    }
+  }
+  .weui-cells{
+    margin-top: 15px;
+  }
+  .weui-cells:before, .weui-cells:after{
+    border: none;
+  }
+  .weui-textarea{
+    font-size: 14px;
+    color: #333333;
+  }
+  .replyName{
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    span{
+      color: #869DC7;
+    }
+  }
+}
+.feePopup{
+  .vux-header{
+    background-color: #ffffff;
+    border-bottom: 0.5px solid #D8D8D8;
+  }
+  .vux-header .vux-header-title{
+    color: #333333;
+    font-size: 18px;
+  }
+  .vux-header .vux-header-left .left-arrow:before{
+    border-color: #333333;
+  }
+  .weui-cells:before, .weui-cells:after{
+    border: none;
+  }
+  .weui-cell{
+    //padding: 15px 0;
+    padding: 0;
+    font-size: 21px;
+  }
+  .weui-input{
+    font-size: 21px;
+    color: #333333;
+    font-weight: 400;
+  }
+  .vux-cell-placeholder{
+    font-size: 21px;
+    color: #aaaaaa;
+    font-weight: 500;
+  }
+  .weui-cells__title{
+    margin: 0;
+    font-size: 15px;
+    color: #aaaaaa;
+    padding-left: 0;
+    padding-bottom: 5px;
+    height: 21px;
+    line-height: 21px;
+    //padding-top: 15px;
+  }
+  .feeNum{
+    background-color: #ffffff;
+    height: 55px;
+    line-height: 55px;
+    padding: 15px;
+    font-size: 21px;
+    .hasTop{
+      margin-top: 26px;
+    }
+    .noTop{
+      margin-top: 0;
+    }
+  }
+  .reFound{
+    background-color: #ffffff;
+    margin-top: 10px;
+    padding: 0 15px;
+    .title{
+      padding: 12px 0;
+      font-size: 15px;
+    }
+    .radioSelect {
+      li {
+        position: relative;
+        border-top: 0.5px solid #D8D8D8;
+        span {
+          font-size: 18px;
+          padding: 15px 0;
+          text-align: center;
+        }
+        i {
+          position: absolute;
+          right: 2px;
+          top: 18px;
+          width: 22px;
+          height: 22px;
+          display: block;
+          background: url("../../assets/images/unchecked_icon_grey.png") no-repeat center / cover;
+        }
+        .checked{
+          background: url("../../assets/images/checked_icon_green.png") no-repeat center / contain;
+        }
+      }
+    }
+    .weui-cells__title{
+      font-size: 15px;
+      color: #333333;
+      padding: 15px 0;
+    }
+    .weui-cell{
+      padding: 15px 0;
+      font-size: 18px;
+      display: flex;
+      text-align: center;
+      border-top: 0.5px solid #D8D8D8;
+    }
+    .weui-cells_radio .weui-cell__ft{
+      width: 28px;
+      height: 22px;
+      background: url("../../assets/images/unchecked_icon_grey.png") no-repeat;
+      background-size: contain;
+      background-position: center;
+      vertical-align: middle;
+    }
+    .weui-cell:before{
+      border: none;
+    }
+    [class^="weui-icon-"] {
+      display: block;
+    }
+    .weui-cells_radio .weui-check:checked + .weui-icon-checked:before{
+      color: transparent;
+      margin-left: 0;
+      width: 22px;
+      height: 22px;
+      background: url("../../assets/images/checked_icon_green.png") no-repeat;
+      background-size: contain;
+      background-position: left;
+    }
+  }
+  .confirm{
+    padding: 0 15px;
+    margin-top: 20px;
+    button{
+      background-color: #0DAB60;
+      height: 44px;
+      font-size: 18px;
+    }
+  }
+}
+.integralCheckstand{
+  .vux-header .vux-header-title{
+    color: #ffffff;
+  }
+}
+.verifiedName{
+  .weui-cells:before, .weui-cells:after{
+    border: 0;
+  }
+  .weui-cells__title{
+    margin: 0;
+    font-size: 15px;
+    color: #aaaaaa;
+    padding-left: 0;
+    padding-bottom: 5px;
+    height: 21px;
+    line-height: 21px;
+    //padding-top: 15px;
+  }
+  .weui-cell__ft{
+    text-align: left;
+    color: #aaaaaa;
+  }
+  .vux-cell-value{
+    color: #333333;
+    font-size: 21px;
+    font-weight: 700;
+  }
+  .weui-cell{
+    //padding: 15px 0;
+    padding: 0;
+    font-size: 21px;
+  }
+  .weui-input{
+    font-size: 21px;
+    color: #333333;
+    font-weight: 400;
+  }
+  .vux-cell-placeholder{
+    font-size: 21px;
+    color: #aaaaaa;
+    font-weight: 500;
+  }
+}
+.addNewCommunityAddress{
+  .submit{
+    .weui-cells:after{
+      border: none;
+    }
+  }
+}
+.payPopup{
+  .wholePage{
+    background-color: #F5F5F5;
+  }
+  .total{
+    background-color: #ffffff;
+    position: relative;
+    height: 114px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    i{
+      width: 16px;
+      height: 15px;
+      position: absolute;
+      right: 13.5px;
+      top: 13.5px;
+      background-image: url("../../assets/images/delete_icon_gray.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+    }
+    p{
+      font-size: 12px;
+      color: #333333;
+    }
+    p.money{
+      font-size: 15px;
+      color: #0DAB60;
+      span{
+        display: inline-block;
+        font-size: 27px;
+      }
+    }
+  }
+  .reFound .weui-cell{
+    text-align: left;
+    .weui-cell__bd p{
+      display: flex;
+      align-items: center;
+      .vux-radio-icon{
+        width: 33px;
+        height: 33px;
+        margin-right: 10px;
+      }
+      span{
+        font-size: 15px;
+        color: #333333;
+      }
+    }
+  }
+  .goPay{
+    margin-top: 20px;
+    button{
+      width: 100%;
+      height: 50px;
+      font-size: 18px;
+      color: #ffffff;
+      background-color: #0DAB60;
+      border: none;
+    }
+  }
+  .content{
+    background-color: #f5f5f5;
+    height: 70%;
+    .content-tit{
+      background-color: #ffffff;
+      padding: 0 15px;
+    }
+    span{
+      display: inline-block;
+    }
+    p{
+      height: 55px;
+      line-height: 55px;
+      font-size: 15px;
+    }
+    .items{
+      color: #333333;
+      border-bottom: 0.5px solid #D8D8D8;
+    }
+    .plus{
+      color: #0DAB60;
+      text-align: right;
+    }
+  }
+}
+/*服务*/
+.service{
+  .businessApp{
+    .weui-grids {
+      //padding: 14px 0 20px 0;
+      .weui-grid {
+        padding: 0;
+        padding-top: 14px;
+        .weui-grid__label {
+          font-size: 12px;
+        }
+      }
+    }
+    .weui-grid__icon{
+      width: 44px;
+      height: 44px;
+    }
+    .weui-grid__label{
+      font-size: 12px;
+    }
+    .weui-grid:after{
+      border: none;
+    }
+  }
+  .hotAndNew{
+    .vux-tab{
+      height: 30px;
+    }
+    .vux-tab .vux-tab-item{
+      line-height: 30px;
+      font-size: 15px;
+      border: none!important;
+      background: none;
+      background-color: #F2F2F2;
+    }
+  }
+}
+.serviceRating, .commodityRating{
+  .inputArea{
+    .weui-cells:after{
+      border-bottom: none;
+    }
+  }
+}
+/*红包*/
+.redBagPopup{
+  height: 100%;
+  background-color: #f5f5f5;
+  .vux-x-switch.weui-cell_switch{
+    padding: 12px 15px;
+  }
+  .vux-no-group-title{
+    margin-top: 10px;
+  }
+  .weui-switch:checked{
+    border-color: #FF6648;
+    background-color: #FF6648;
+  }
+  .redBagList{
+    margin-top: 10.5px;
+    background-color: #ffffff;
+    padding: 0 15px;
+    li{
+      padding: 15px 0;
+      border-bottom: 0.5px solid #D8D8D8;
+      .align-right{
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        span{
+          font-size: 12px;
+          margin-right: 15px;
+        }
+        i{
+          width: 22px;
+          height: 22px;
+          background: url("../../assets/images/unchecked_icon_grey.png") no-repeat;
+          background-size: cover;
+        }
+        .isChecked{
+          width: 22px;
+          height: 22px;
+          background: url("../../assets/images/checked_icon_orange.png") no-repeat;
+          background-size: cover;
+        }
+      }
+      .content{
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-end;
+        span{
+          font-size: 12px;
+          color: #aaaaaa;
+        }
+        .type{
+          text-align: center;
+          .money{
+            font-size: 24px;
+            color: #FF6648;
+          }
+        }
+        .name{
+          span:first-child{
+            margin-top: 0;
+          }
+          span{
+            margin-top: 11px;
+          }
+        }
+      }
+    }
+  }
+}
+/*留言*/
+.msgPopup{
+  height: 100%;
+  background-color: #ffffff;
+  .vux-header .vux-header-right a{
+    font-size: 18px;
+    color: #333333;
+  }
+  .weui-cells:before, .weui-cells:after{
+    border: none;
+  }
+  .weui-cell{
+    padding: 20px 18px;
+  }
+  .weui-cells{
+    margin-top: 0;
+  }
+  .weui-textarea{
+    font-size: 15px;
+  }
+}
+// 确认订单 - 支付方式
+.confirmOrders{
+  .reFound{
+    background-color: #ffffff;
+    margin-top: 10px;
+    padding: 0 15px;
+    .weui-cells__title{
+      font-size: 15px;
+      color: #333333;
+      padding: 12px 0;
+      margin: 0;
+    }
+    .weui-cell{
+      padding: 12px 0;
+      font-size: 18px;
+      display: flex;
+      text-align: center;
+      border-top: 0.5px solid #D8D8D8;
+    }
+    .weui-cells_radio .weui-cell__ft{
+      width: 28px;
+      height: 22px;
+      background: url("../../assets/images/unchecked_icon_grey.png") no-repeat;
+      background-size: contain;
+      background-position: center;
+      vertical-align: middle;
+    }
+    .weui-cell:before,.weui-cells:after {
+      border: none;
+    }
+    .weui-cells:before{
+      border-top: 0.5px solid #D8D8D8;
+    }
+    [class^="weui-icon-"] {
+      display: block;
+    }
+    .weui-cells_radio .weui-check:checked + .weui-icon-checked:before{
+      color: transparent;
+      margin-left: 0;
+      width: 22px;
+      height: 22px;
+      background: url("../../assets/images/checked_icon_orange.png") no-repeat;
+      background-size: contain;
+      background-position: left;
+    }
+  }
+  .weui-cell_access .weui-cell__ft:after{
+    width: 8px;
+    height: 8px;
+    border-width: 1.2px 1.2px 0 0;
+    margin-top: -5px;
+    border-color: #b2b2b2;
+  }
+  .weui-cell{
+    padding: 0;
+  }
+  .vux-cell-value{
+    color: #aaaaaa;
+    font-size: 15px;
+  }
+}
+//商品详情
+.product-detail {
+  .vux-header .vux-header-left {
+    .left-arrow {
+      background-color: rgba(0, 0, 0, 0.60);
+      border-radius: 50%;
+    }
+    .left-arrow:before {
+      left: 10px;
+    }
+  }
+}
+//商品详情sku选择popup
+.sku-popup-container {
+  .vux-number-selector svg {
+    fill: #666;
+  }
+
+  .vux-number-input {
+    color: #333;
+    font-size: 15px;
+  }
+  .weui-cell {
+    font-size: 15px;
+    color: #aaa;
+  }
+  .weui-cells:after {
+    border-bottom: 0 solid #fff;
+
+  }
+  .weui-cells:before {
+    border-top: 0 solid #fff;
+  }
+}
+
+.tab-wrapper {
+  .tab {
+    //.scrollable .vux-tab-item {
+    //  flex: 0 0 auto;
+    //}
+  }
+}
+.shopping-cart-wrapper {
+  .weui-icon-success {
+    color: #FF6648;
+  }
+  .weui-icon-success:before {
+    color: #FF6648 !important;
+  }
+  .vux-number-selector svg {
+    fill: #666;
+  }
+  .vux-number-input {
+    color: #333;
+    font-size: 15px;
+  }
+  .product-wrapper {
+    .product-list-wrapper {
+      .product-count-wrapper {
+        .weui-cell {
+          padding: 0;
+        }
+      }
+    }
+  }
+}
+/*支付确认*/
+.confirm .confirmPayResult {
+  li {
+    border-bottom: 1px solid #D8D8D8;
+  }
+  .confirm_1 {
+    padding: 15px 0;
+  }
+  .confirm_ok {
+    color: #fc6679;
+    padding: 10px 0;
+  }
+  .confirm_repay {
+    color: #aaaaaa;
+    padding: 10px 0;
+    border: none;
+  }
+}
+
+.pay-later-wrapper {
+  .weui-dialog{
+    //width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    border-radius: 20px;
+  }
+  .title{
+    font-size: 16px;
+    font-weight: 700;
+    padding-top: 15px;
+  }
+  .pay-later-text {
+    font-size: 14px;
+    padding: 5px 15px;
+  }
+  .btn{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #e5e5e5;
+    span{
+      flex: 0.5;
+      text-align: center;
+      line-height: 50px;
+      font-size: 16px;
+      color: #18adfb;
+    }
+    span:last-child{
+      //color: #0DAB60;
+      border-left: 1px solid #e5e5e5;
+    }
+  }
+}
+
+.pay-password-wrapper {
+  .weui-dialog{
+    //width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    border-radius: 5px;
+  }
+  .title-wrapper {
+    font-size: 15px;
+    font-weight: 600;
+    padding-top: 20px;
+    padding-bottom: 15px;
+  }
+  .btn{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #e5e5e5;
+    span{
+      flex: 0.5;
+      text-align: center;
+      line-height: 50px;
+      font-size: 15px;
+    }
+    span:last-child{
+      color: #0DAB60;
+      border-left: 1px solid #e5e5e5;
+    }
+    .cancel {
+      color: #aaa;
+    }
+  }
+}
+
+.not-auth-wrapper {
+  .weui-dialog{
+    //width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    border-radius: 5px;
+  }
+  .not-auth-text {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 20px 15px 15px 15px;
+  }
+  .btn{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #e5e5e5;
+    span{
+      flex: 1;
+      text-align: center;
+      line-height: 50px;
+      font-size: 18px;
+      color: #0DAB60;
+    }
+    .cancel {
+      color: #aaa;
+    }
+  }
+}
+.confirmExchange {
+  .vux-number-selector svg {
+    fill: #666;
+  }
+
+  .vux-number-input {
+    color: #333;
+    font-size: 15px;
+  }
+}
+
+.karma {
+  .fixed-icon {
+    .vux-x-icon {
+      fill: #fff;
+    }
+  }
+}

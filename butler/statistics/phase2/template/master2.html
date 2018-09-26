@@ -1,0 +1,17 @@
+﻿<!--fullpage滑动模版-->
+<div class="narBox">
+    <ul>
+         <!-- ko foreach:Data -->
+            <li   data-bind="css:{'active':$index()==0}" >
+                <div style="display: block;white-space:normal;word-break:break-all;" >
+                            <b  data-bind="text:$data"></b>    
+                </div>
+            </li>
+        <!-- /ko -->
+    </ul>
+</div>
+
+     
+<div id="pageContain" data-bind="template:{name:'columns-template'}">
+
+</div>

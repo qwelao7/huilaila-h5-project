@@ -1,0 +1,26 @@
+﻿<!--具体的详情页同一期-->
+<div class="detail">
+    <div class="chart" style="width: 100%; height: 382px;"class="mtab"></div>
+    <div  style="white-space: nowrap">
+
+        <div>
+            <ul id="bar"  class="ui-row-flex mtop ui-whitespace" style="background-color:#d6dde2;color:#334455;line-height:34px;height:auto;vertical-align:middle;font-size:12px">
+                <!-- ko foreach:colums -->
+                <li  class="ui-col ui-flex ui-flex-pack-center ui-flex-align-center"  >
+                    <div style="display: block;white-space:normal;word-break:break-all;" ><b  data-bind="text:$data"></b>
+                      <span></span>                
+                    </div>
+                </li>
+                <!-- /ko -->
+            </ul>
+
+        </div>
+
+        <div class="mbottom">
+            <!-- ko foreach:list -->
+            <ul class="ui-row-flex  ui-border-b" data-bind="css:{'ui-color':$index()%2!=0},template:{name:'columns-detemplate'}"></ul>
+            <!-- /ko -->
+        </div>
+
+    </div>
+</div>

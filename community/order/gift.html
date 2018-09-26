@@ -1,0 +1,704 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>来自回来啦社区的大礼包</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+    <link href="../css/frozen.css?v=23" rel="stylesheet" />
+    <link href="../css/app.css?v=ss29k" rel="stylesheet" />
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/knockout.js"></script>
+    <script src="../js/utils.js?d=9"></script>
+    <style type="text/css">
+        body { background: #ffffff; color: #666666; overflow-x: hidden; /*text-align: center;*/ }
+
+        #content { width: 480px; height: auto; margin: 0 auto; background: #fff; /*text-align: left;*/ }
+
+        .top { /*background-image:url(../img/top2.png);*/ background-size: contain; background-repeat: no-repeat; width: 480px; height: auto; }
+
+        hr { height: 1px; border: none; border-top: 1px dotted #956134; }
+
+        .radis-input { border-radius: 4px; border: 1px solid; border-color: #aaaaaa; margin: 15px 0px; height: 28px; width: 200px; text-align: center; }
+
+
+        .img2 { border-radius: 25px; -webkit-border-radius: 25px; -moz-border-radius: 25px; }
+
+        /*.ui-form-item {
+            background-color:#f1eddc;
+        }*/
+        .show-hide { opacity: 1; background-color: none; }
+        .timer { text-align: center; margin-top: -30px; font-size: 16px; color: #333333; background-color: #f1eddc; }
+        .ui-btn-wrap { padding: 0px 15px; margin-top: 17px; /*margin-bottom: 64px;*/ }
+    </style>
+
+    <script type="text/html" id="provinceTemplate">
+        <!-- ko foreach: province -->
+        <div class="ui-form-item ui-border-b" style="line-height: 44px; height: 44px; font-size: 20px; background-color: #f1eddc" data-bind="click:$root.sltAddress">
+            <span style="margin-left: 30px;" data-bind="text:$data.name"></span>
+        </div>
+        <div style="clear: both"></div>
+        <!-- /ko -->
+    </script>
+    <script>
+        // _NewHOME =  "http://192.168.10.77:3360/";
+        var interval = 1000;
+        function ShowCountDown(year, month, day, hh, mm, ss)
+        {
+            var now = new Date();
+            var endDate = new Date(year, month - 1, day, hh, mm, ss);
+            var leftTime = endDate.getTime() - now.getTime();
+            if (leftsecond <= 0)
+            {
+                $("#timer").text("已失效！");
+                clearInterval(timer1);
+            }
+
+            var leftsecond = parseInt(leftTime / 1000);
+            var day1 = Math.floor(leftsecond / (60 * 60 * 24));
+            var hour = Math.floor((leftsecond - day1 * 24 * 60 * 60) / 3600);
+            var minute = Math.floor((leftsecond - day1 * 24 * 60 * 60 - hour * 3600) / 60);
+            var second = Math.floor(leftsecond - day1 * 24 * 60 * 60 - hour * 3600 - minute * 60);
+
+            $("#timer").text("有效期：剩余" + hour + "小时" + minute + "分");
+        }
+
+        function openTimer()
+        {
+            var dateStr = decodeURI(viewModel.order.referTime);
+            var year = parseInt(dateStr.split('-')[0]);
+            var month = parseInt(dateStr.split('-')[1]);
+            var day = parseInt(dateStr.split('-')[2]);
+
+            var hh = parseInt(dateStr.split(' ')[1].split(":")[0]);
+            var mm = parseInt(dateStr.split(' ')[1].split(":")[1]);
+            var ss = parseInt(dateStr.split(' ')[1].split(":")[2]);
+
+            ShowCountDown(year, month, day, hh, mm, ss);
+            timer1 = setInterval(function () { ShowCountDown(year, month, day, hh, mm, ss); }, interval);
+        }
+    </script>
+
+</head>
+<body ontouchstart="" style="background-image: url(../img/gif-bg.jpg); margin: 0px; display: none;">
+    <div id="map" onclick="hideAddress()" style="display: none; background-color: black; opacity: 0.6; position: absolute; z-index: 99988; height: 100%; width: 100%;"></div>
+    <div id="container" style="background-image: url(../img/gif-hd2.png); background-size: contain; background-repeat: no-repeat; margin: 0px; border: 0px;">
+        <img src="../img/gif-title.gif" style="z-index: 8888; position: absolute; margin-top: 30px;" />
+        <img src="../img/gif-anim.gif" />
+    </div>
+
+    <div style="padding: 0px 15px" id="home">
+        <div class="content" style="padding: 0px 15px;">
+            <p style="font-size: 20px; height: 30px; font-style: italic; background-repeat: no-repeat; margin-top: 20px;">亲爱的朋友：</p>
+            <p style="font-size: 20px; line-height: 40px; margin-top: 20px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一份薄礼，聊表心意，希望你喜欢。</p>
+            <p style="font-size: 20px; line-height: 40px; text-align: right" data-bind="text:'赠送人：'+order.contributor"></p>
+            <p>&nbsp;</p>
+        </div>
+        <div class="ui-btn-wrap">
+            <button id="btn" class="ui-btn-lg ui-btn-danger giftbtn">
+                马上领取
+            </button>
+        </div>
+
+        <div style="text-align: center; color: #956134; font-size: 20px; margin-top: 44px; background-image: url(../img/gif-line.png); background-size: cover">
+            礼品详情
+        </div>
+
+        <!-- ko foreach: order.orderItem -->
+        <div class="ui-form-item" style="vertical-align: middle;" data-bind="click:viewProductDetail.bind($data,productId,discountId)">
+            <span style="line-height: 45px; float: left; width: 70%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><u data-bind="text: productName"></u></span>
+            <span data-bind="text: 'X'+itemNum" style="float: right"></span>
+        </div>
+        <div style="clear: both"></div>
+        <!-- /ko -->
+
+        <div style="clear: both"></div>
+        <div style="text-align: center; color: #956134; font-size: 20px; margin-top: 44px; background-image: url(../img/gif-line.png); background-size: cover">
+            领取规则
+        </div>
+        <div style="color: #956134; margin-top: 15px; margin-bottom: 15px; font-size: 14px; padding: 0px 15px;">
+            <p>1、邮寄地址仅支持中国大陆（新疆、海南除外）；</p>
+            <p>2、超过24小时未领取或未提交收货地址，礼包将过期。</p>
+        </div>
+        <div style="clear: both"></div>
+
+    </div>
+
+
+    <div id="show" style="display: none; background-color: #f1eddc; position: absolute; margin-top: 200px; z-index: 99999;">
+
+
+        <div id="sltAddress" style="display: none; width: 100%; height: 230px; background-color: #f1eddc; overflow-y: scroll" data-bind="template:{name:'provinceTemplate'}"></div>
+        <div class="ui-form" id="dvContent" style="background-color: #f1eddc; padding: 0px 15px;">
+            <img src="../img/time.png" style="margin-top: -26px; height: 52px; width: 52px;" />
+            <div id="timer" class="timer"></div>
+            <div style="margin-top: 14px; font-size: 20px; color: #956134">
+                亲爱的<b data-bind="text:nickName" style="color: red"></b>,请在有效期内填写您的收货信息：
+            </div>
+
+            <div class="ui-form-item ui-border-b  ui-border-t  " style="background-color: #f1eddc; margin-top: 14px">
+                <label>收货人：</label>
+                <input id="userName" type="text" maxlength="10" placeholder="请输入您的姓名">
+            </div>
+            <div class="ui-form-item ui-border-b  ui-border-t" style="background-color: #f1eddc;">
+                <label>联系电话：</label>
+                <input id="phone" type="text" maxlength="11" placeholder="请输入手机号">
+            </div>
+            <div class="ui-form-item ui-border-b  ui-form-item-link" style="background-color: #f1eddc;">
+                <label>收货地址：</label>
+                <span id="address" type="text" style="float: right; padding-right: 25px; overflow: hidden; white-space: nowrap; text-align: right; width: 170px; height: 44px; text-overflow: ellipsis;">请选择&nbsp;&nbsp;</span>
+            </div>
+            <div class="ui-form-item ui-border-b" style="background-color: #f1eddc;">
+                <label>详细地址：</label>
+                <input id="address2" type="text" maxlength="40" placeholder="请输入详细地址">
+            </div>
+            <div class="ui-btn-wrap" style="background-color: #f1eddc;">
+                <button id="btnSub" class="ui-btn-lg ui-btn-danger giftbtn">
+                    确认提交
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady()
+        {
+            WeixinJSBridge.call('hideToolbar');
+            WeixinJSBridge.call('hideOptionMenu');
+        });
+
+        function getOrder()
+        {
+
+            var jd = new JData();
+            jd.add("companyCode", "lc");
+            jd.addParams("orderId");//等同 var caseId=getParams("caseId");jd.add("caseId",caseId);
+            //jd.addParams("token");
+            // jd.add("sign", "9c19d8b9dfab1d41a99bc54dced3a9795dd033c8");
+            // jd.add("fieds", "version");
+            // jd.add("version", "2");
+            var ret = NewDoAjax("grant/orderDetail", jd.getJson());
+            var result = $.parseJSON(ret);
+            if (result.status == _SUCCESSED)
+            {
+                var order = result.data;
+
+                //1-未被领取。2-已领取但还未填写地址。3-已领取且填写地址。0-不是转赠类型。4-未领取失效。5-已填写手机号的失效。6-未付款失效
+                var giftStatus = result.data.givingStatus;
+                //不为0的时候失效，
+                var grantTimeoutStatus = result.data.grantTimeoutStatus;
+                //是否正在售后中 0否 1是
+                var isAftersalesIng = result.data.isAftersalesIng || "0";
+                //优化效果
+                $("body").show();
+
+                if (isAftersalesIng == "0")
+                {
+                    if (grantTimeoutStatus == "0")
+                    {
+                        //未领取
+                        if (giftStatus == "1")
+                        {
+                            $("#container").css("background-image", "url(../img/gif-hd.png)");
+
+                            unLockSubmit();
+                            console.log(_g_submit_lock);
+                            $("#btn").on(_CLICK_MODEL, function ()
+                            {
+                                console.log(_g_submit_lock);
+                                console.log("点击了领取 on _CLICK_MODEL")
+                                try
+                                {
+                                    console.log(isLockSubmit());
+                                    if (isLockSubmit())
+                                    {
+                                        return false;
+                                    }
+
+                                    lockSubmit();
+
+                                    //调用领取接口
+                                    getGrantOrder(order.id, order.referTime, openId, order.contributor);
+                                } catch (ex) { }
+                                finally
+                                {
+                                    unLockSubmit();
+                                    return false;//防止冒泡
+                                }
+                            });
+
+                            $("#btnSub").on(_CLICK_MODEL, function ()
+                            {
+                                submitGrantOrder();
+                            });
+                        }
+                            //已失效
+                        else if (giftStatus == "0" || giftStatus == "4" || giftStatus == "5" || giftStatus == "6")
+                        {
+                            $("#btn").removeClass("ui-btn-danger").removeClass("giftbtn");
+                            $("#btn").addClass("giftbtn-invalid");
+                            $("#btn").removeClass("ui-btn-lg").addClass("ui-btn-lg2");
+                            $("#btn").text("已失效");
+                        }
+                            //已领取
+                        else
+                        {
+                            //当前用户领取
+                            if (order.openId == openId)
+                            {
+                                if (giftStatus == "2")
+                                {
+                                    //存在&未填，进入用户信息页面填写。
+                                    $("#btn").text("补全信息");
+                                    $("#btn").on(_CLICK_MODEL, function ()
+                                    {
+                                        test();
+                                    });
+                                    $("#btnSub").on(_CLICK_MODEL, function ()
+                                    {
+                                        submitGrantOrder();
+                                    });
+                                } else if (giftStatus == "3")
+                                {
+                                    //存在&已填，进入详情
+                                    window.location.href = "order.html?orderId=" + getParam("orderId") + "&openId=" + openId;
+                                } else
+                                {
+                                    alert("领取状态错误！");
+                                    return false;
+                                }
+                            }
+                                //不是该用户领取
+                            else
+                            {
+
+                                $("#btn").removeClass("ui-btn-danger").removeClass("giftbtn");
+                                $("#btn").addClass("giftbtn-invalid");
+                                $("#btn").removeClass("ui-btn-lg").addClass("ui-btn-lg2");
+                                $("#btn").text("已被领取");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        $("#btn").removeClass("ui-btn-danger").removeClass("giftbtn");
+                        $("#btn").addClass("giftbtn-invalid");
+                        $("#btn").removeClass("ui-btn-lg").addClass("ui-btn-lg2");
+                        $("#btn").text("已失效");
+                    }
+                }
+                else
+                {
+                    $("#btn").removeClass("ui-btn-danger").removeClass("giftbtn");
+                    $("#btn").addClass("giftbtn-invalid");
+                    $("#btn").removeClass("ui-btn-lg").addClass("ui-btn-lg2");
+                    if (giftStatus == "7") {
+                        $("#btn").text("申请取消的订单"); 
+                     } else { 
+                        $("#btn").text("已失效"); 
+                    }
+                }
+
+                return order;
+            } else
+            {
+                alert("获取数据失败！")
+                return;
+            }
+        }
+    </script>
+
+    <script>
+        //微信授权openid
+        var openId = getParam2("openId");
+
+        var jdata = [];
+
+        //init paper
+        var orderInfo = getOrder();
+        var viewModel = {
+            order: orderInfo,
+            nickName: decodeURIComponent(getParam2("nickName")),
+            words: decodeURIComponent(getParam2("words")),
+            province: ko.observableArray(jdata),
+            sltAddress: function (data)
+            {
+                console.log(data);
+                if (data.isLeaf == "0")
+                {
+                    getAddress(data.id);
+                    _address.push(data.name);
+                }
+                else
+                {
+                    _address.push(data.name);
+
+                    var fullAddress = "";
+                    for (var i = 0; i < _address.length; i++)
+                    {
+                        if (_address[i] == "市辖区" || _address[i] == "县")
+                        {
+                            _address[i] = "";
+                        } else
+                        {
+                            fullAddress += _address[i] + " ";
+                        }
+                    }
+
+                    $("#address").text(fullAddress);
+                    hideAddress();
+                }
+            }
+        }
+
+
+
+
+        $(function ()
+        {
+            ko.applyBindings(viewModel);
+
+            $("#container").find("img").each(function ()
+            {
+
+                console.log("执行了第一次自动自适应缩放")
+                var imgWidth = $(this).width();
+                var bodyWidth = $(window).width();
+                if (imgWidth > bodyWidth)
+                {
+                    $(this).css("background-size", "contain").css("width", bodyWidth + "px");
+                }
+
+                $(this).load(function ()
+                {
+                    console.log("执行了加载完成之后的自动自适应缩放")
+                    var imgWidth = $(this).width();
+                    var bodyWidth = $(window).width();
+                    if (imgWidth > bodyWidth)
+                    {
+                        $(this).css("background-size", "contain").css("width", bodyWidth + "px");
+                    }
+                })
+            });
+
+            //$.getJSON("province.json", {}, function (response)
+            //{
+            //    jdata = response;
+
+            //    viewModel.province(jdata.name);
+
+            //});
+
+
+            //  getAddress();
+
+            // viewModel.province(["安徽省", "北京市", "福建省", "甘肃省", "广东省", "广西壮族自治区", "贵州省", "河北省", "河南省", "黑龙江省", "湖北省", "湖南省", "吉林省", "江苏省", "江西省", "辽宁省", "内蒙古自治区", "宁夏回族自治区", "青海省", "山东省", "山西省", "陕西省", "上海市", "四川省", "天津市", "西藏自治区", "云南省", "浙江省", "重庆市"]);
+        })
+
+
+
+        var _level = 1, _idx2 = 0, _address = new Array();
+
+        function sltProvince(index, data)
+        {
+            var jdt = [];
+            if (_level == 1)
+            {//显示市
+                console.log(data.id);
+                _address.push(name);
+
+                _idx2 = index;
+                jdt = jdata.children[_idx2].name;
+                viewModel.province(jdt);
+                console.log(viewModel.province());
+                _level++;
+            } else if (_level == 2)
+            {//显示县
+                jdt = jdata.children[_idx2].children[index].name;
+                _address.push(name);
+                viewModel.province(jdt);
+                _level++;
+            } else
+            {
+                _address.push(name);
+
+                var fullAddress = "";
+                for (var i = 0; i < _address.length; i++)
+                {
+                    if (_address[i] == "市辖区" || _address[i] == "县")
+                    {
+                        _address[i] = "";
+                    } else
+                    {
+                        fullAddress += _address[i] + " ";
+                    }
+                }
+
+                $("#address").text(fullAddress);
+                hideAddress();
+            }
+        }
+
+        function getAddress(id)
+        {
+
+            var jd = new JData();
+            jd.add("companyCode", "lc");
+            jd.add("orderId", getParam("orderId"));
+            jd.addParams("token");
+            if (id != undefined && id != "" && id != null)
+            {
+                jd.add("id", id);
+            }
+            // var ret = DoAjax("grantOrderAction!queryShopAddress.action", jd.getJson());
+            $.ajax({
+                type: "post", url: _NewHome + "grant/queryShopAddress",
+                async: true,
+                cache: false,
+                data: jd.getJson(),
+                contentType: "application/x-www-form-urlencoded;charset=utf-8",
+                dataType: "text",
+                success: function (msg)
+                {
+                    console.log($.parseJSON(msg).data);
+                    viewModel.province($.parseJSON(msg).data);;
+                    console.log(222, viewModel.province());
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown)
+                {
+                    //alert("获取数据接口失败！"+errorThrown);
+                }
+            });
+
+            //console.log(ret);
+            //  viewModel.province($.parseJSON(ret).data);
+            // console.log(viewModel.province());
+        }
+
+        function choiceAddress()
+        {
+            _level = 1, _idx2 = 0, _address = new Array();
+            //viewModel.province(jdata.name);
+
+            getAddress();
+            console.log(22233, viewModel.province());
+            $("#dvContent").hide();
+
+
+            var addressHeight = $("#sltAddress").height();
+            var showHeight = $("#show").height();
+            $("#sltAddress").height(showHeight);
+            $("#show").height(addressHeight);
+            $("#sltAddress").show();
+        }
+
+        function hideAddress()
+        {
+            $("#dvContent").show();
+            $("#sltAddress").hide();
+            $("#show").height(_showHeight);
+        }
+
+        var _showHeight = 0;
+        function test()
+        {
+            openTimer();
+
+            $("#home").remove();
+
+            $("#map").show();
+            $("#dvContent").width($(window).width() - 30);
+            $("#sltAddress").width($(window).width());
+
+
+            $("#show").show();
+            $("#show").animate({
+                top: '-80px'
+            }, function ()
+            {
+                $("#address").click(function ()
+                {
+                    choiceAddress();
+                    // getAddress(viewModel);
+
+                })
+            }
+			);
+
+            var showHeight = $("#show").height();
+            var winHeight = $(window).height();
+
+
+            var diff = winHeight - 120;
+            if (diff > showHeight)
+            {
+                $("#show").height(diff)
+            }
+            _showHeight = $("#show").height();
+            $("body").css("background-color", "white").css("background-image", "").css("overflow-y", "hidden");
+
+            $("#container").find("img").each(function ()
+            {
+                console.log("执行了第一次，自动缩放图片方法")
+
+                var bodyWidth = $(window).width() - 30;
+                $(this).css("background-size", "contain").css("width", bodyWidth + "px");
+                $("#container").width(bodyWidth + "px")
+                $("#container").css("margin-left", 15 + "px")
+
+                $(this).load(function ()
+                {
+                    console.log("执行了load之后，自动缩放图片方法")
+                    var bodyWidth = $(window).width() - 30;
+
+                    $(this).css("background-size", "contain").css("width", bodyWidth + "px");
+                    $("#container").width(bodyWidth + "px")
+                    $("#container").css("margin-left", 15 + "px")
+                });
+
+            });
+
+        }
+
+
+        /*领取外赠订单*/
+        function getGrantOrder(caseId, referTime, openId, contributor)
+        {
+            console.log("进入getGrantOrder（）");
+
+            //showLoading("");
+            $("#map").height($(window).height());
+            $("#map").show();
+            //var jd = new JData();
+            //jd.add("companyCode", "lc");
+            //jd.addParams("caseId");
+            //jd.add("openId", openId)
+            //jd.addParams("oauthType");
+            //jd.add("nickName", decodeURI(getParam("nickName")));
+
+            var jd = new Object();
+            jd.companyCode = "lc";
+            jd.openId = openId;
+            jd.caseId = getVal("orderId");
+            jd.oauthType = getVal("oauthType");
+            jd.nickName = decodeURI(getVal("nickName"));
+
+            var ret = NewDoAjax("grant/takeGrant", jd);
+            console.log(ret);
+            console.log(JSON.stringify(ret))
+            var result = $.parseJSON(ret);
+            if (result.status == _SUCCESSED)
+            {
+                $("#map").hide();
+                //领取成功
+                test();
+                //removeLoading();
+            } else
+            {
+                console.log("领取失败！");
+                window.location.reload();//重新刷新，重新显示。
+            }
+        }
+
+        function viewProductDetail(productId, discountId)
+        {
+            window.location.href = "product.html?productId=" + (productId == null ? '' : productId) + "&discountId=" + (discountId == null ? '' : discountId) + "&random=" + new Date();
+        }
+
+
+        /*领取外赠订单*/
+        function submitGrantOrder()
+        {
+
+            var address = $("#address").text().replace("请选择", "").replace(/\s/g, "");
+
+            var address2 = $("#address2").val().replace(/\n/g, "\\n");
+
+            var remark = "";//$("#remark").val().replace(/\n/g, "\\n");
+
+            var userName = $("#userName").val();
+            var phone = $("#phone").val();
+
+
+            if ($.trim(userName) == "")
+            {
+                alert("请输入收货人姓名！");
+                return false;
+            }
+            if (!isPhone(phone))
+            {
+                alert("请输入正确的手机号！");
+                return false;
+            }
+
+            if ($.trim(address) == "")
+            {
+                alert("请选择收货地址！");
+                return false;
+            }
+
+            if ($.trim(address2) == "")
+            {
+                alert("请输入详细地址！");
+                return false;
+            }
+
+            //if (isLockSubmit()) {
+            //    alert("请勿重复提交！");
+            //    return false;
+            //}
+
+            try
+            {
+                var jd = new JData();
+                jd.add("companyCode", "lc");
+                jd.addParams("orderId");
+                 jd.add("phone", phone);
+                jd.add("phone", phone);
+                jd.add("userName", userName);
+                jd.add("userAddress", address + address2);
+                jd.addParams("openId");//
+                jd.add("orderRemark", remark);
+
+                var ret = NewDoAjax("grant/grantOrderSure", jd.getJson());
+                var result = $.parseJSON(ret);
+                if (result.status == _SUCCESSED)
+                {
+                    alert("提交成功！");
+                    window.location.href = "order.html?orderId=" + getParam("orderId") + "&openId=" + getParam2("openId") + "&random=" + new Date();;
+                } else
+                {
+                    alert("提交失败！" + result.msg);
+                    window.location.reload();
+                }
+            } catch (e)
+            {
+                //unLockSubmit();
+                console.log(e.message);
+            }
+        }
+
+        function getVal(key)
+        {
+            var value = getRouterParam(key);
+
+            if (value == undefined || typeof (value) == undefined || value == null)
+            {
+                return "";
+            }
+
+            return value;
+        }
+    </script>
+
+</body>
+</html>

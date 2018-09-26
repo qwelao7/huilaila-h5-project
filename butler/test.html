@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+    <script src="js/jquery.min.js"></script>
+    <title>公共wifi接入</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f2;
+            height: 100%;
+            width: 100%;
+        }
+
+        .bnner {
+            width: 100%;
+        }
+
+        .section {
+            padding: 0px 15px;
+            padding-top: 24px;
+        }
+
+            .section p {
+                color: #aaaaaa;
+                font-size: 12px;
+                margin: 0;
+            }
+
+        .ui-btn-lg, .ui-btn-lg2 {
+            font-size: 20px;
+            height: 44px;
+            line-height: 44px;
+            display: block;
+            width: 100%;
+            border-radius: 3px;
+            border: none;
+        }
+
+        .ui-btn-primary {
+            border-color: #acc43d;
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.5, #acc43d), to(#acc43d));
+            color: white;
+            background-clip: padding-box;
+        }
+
+        .ui-input {
+            color: #aaaaaa;
+            font-size: 16px;
+            text-indent: 16px;
+            border: 1px solid #d3d3d3;
+        }
+
+        .with-line {
+            width: 100%;
+            font-size: 16px;
+            color: #aaaaaa;
+            margin: 0 auto;
+            position: relative;
+            text-align: center;
+        }
+
+            .with-line:before {
+                content: "";
+                border-top: 1px solid #d3d3d3;
+                display: block;
+                position: absolute;
+                width: 45%;
+                top: 10px;
+                left: 0;
+            }
+
+            .with-line:after {
+                content: "";
+                border-top: 1px solid #d3d3d3;
+                display: block;
+                position: absolute;
+                width: 45%;
+                top: 10px;
+                right: 0;
+            }
+    </style>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#test").bind("click", function () {
+
+
+                //var req = new XMLHttpRequest();
+                //if (req != null) {
+                //    req.onreadystatechange = function () { //// Checks the asyn request completed or not.
+                //        if (req.readyState == 4) {
+                //            console.log(req);
+                //            if ((req.status >= 200 && req.status < 300) || req.status == 304) {
+                //                alet(req.responseText); //获取成功就弹出取得的内容
+                //            } else {
+                //                alert("Request was unsuccessful: " + req.status);
+                //            }
+                //        }
+                //    };
+                //    req.open("GET", "http://10.10.111.111/auth/client/app", true); //url是获取的地址
+                //    req.send(null);
+                //};
+
+               window.location.href = "http://10.10.111.111/auth/client/app";
+            });
+        });
+        function createXMLHttpRequest() {
+            if (window.ActiveXObject) {
+                return new ActiveXObject("Microsoft.XMLHTTP");//如果是IE5 IE6
+            }
+            else if (window.XMLHttpRequest) {//其他浏览器
+                return new XMLHttpRequest();
+            }
+        }
+        function state_Change() {
+            if (xmlHttp.readyState == 4) {// 4 = "loaded"
+                //alert(xmlHttp.status);
+                if (xmlHttp.status == 200) {// 200 = "OK"
+                    var dateStr = xmlHttp.getResponseHeader('Date');
+                    var now = new Date(dateStr);//alert(now);alert("ddf");
+                    total_seconds = (endDate.getTime() - now.getTime()) / 1000;
+                    setInterval('exe()', 1000);
+                }
+                else {
+                    alert("Problem retrieving data:" + xmlHttp.statusText);
+                }
+            }
+    
+        }
+
+     
+    </script>
+</head>
+<body>
+    <div class="bnner">
+        <img src="image/bnner.png" style="width: 100%;" />
+    </div>
+    <div class="section">
+        <button class="ui-btn-lg ui-btn-primary" id="test">
+            业主登录
+        </button>
+        <div style="padding: 15px 0 20px 0">
+            <p>*点击将打开回来啦社区App，您可在智慧管家->公共WIFI中点击链接使用。</p>
+            <p>*未安装的业主将使用WIFI免费下载回来啦社区App。</p>
+        </div>
+        <div class="with-line">or</div>
+    </div>
+    <div class="section">
+        <div style="padding-bottom: 12px">
+            <input type="number" class="ui-btn-lg ui-input" placeholder="请输入访客通行码后四位" />
+        </div>
+        <button class="ui-btn-lg ui-btn-primary">
+            园区访客登录
+        </button>
+        <div style="padding: 15px 0 20px 0">
+            <p>*访客通行仅在访当天有效。</p>
+
+        </div>
+    </div>
+</body>
+</html>

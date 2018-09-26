@@ -1,0 +1,44 @@
+﻿<!--前后十排名  -->
+<div style="width: 100%; height: auto !important; min-height: 100%;">
+    <ul class="ui-list ui-list-text ui-border-tb" style="background-color: transparent">
+        <li class="ui-border-t">
+            <div class="ui-list-info">
+                <h4 data-bind="text:order"></h4>
+            </div>
+            <div class="ui-list-action" data-bind="text:date"></div>
+        </li>
+    </ul>
+
+    <div style="white-space: nowrap; padding-bottom: 54px">
+        <div>
+            <ul id="bar" class="ui-row-flex  ui-whitespace" style="background-color: #d6dde2; color: #334455; line-height: 34px; height: auto; vertical-align: middle; font-size: 14px">
+                <!-- ko foreach:colums -->
+                <li class="ui-col ui-flex ui-flex-pack-center ui-flex-align-center">
+                    <div style="display: block; white-space: normal; word-break: break-all;">
+                        <b data-bind="text:$data"></b>
+                        <span></span>
+                    </div>
+                </li>
+                <!-- /ko -->
+            </ul>
+
+        </div>
+
+        <div id="list" style="background-color: #fff">
+            <!-- ko foreach:list -->
+            <ul class="ui-row  ui-border-b" style="font-size: 13px; color: #334455" data-bind="css:{'ui-color':$index()%2!=0},template:{name:'columns-ranktemplate'}"></ul>
+            <!-- /ko -->
+        </div>
+
+    </div>
+</div>
+
+
+<div style="background-color: #ffffff; padding: 10px 0px; height: 44px; text-align: center; bottom: 0; width: 100%; opacity: 0.9; position: absolute">
+    <div style="width: 90%; text-align: center; margin: 0 auto; height: 44px;">
+        <button class="ui-btn-lg ui-btn-view ">
+            查看全部
+        </button>
+    </div>
+</div>
+

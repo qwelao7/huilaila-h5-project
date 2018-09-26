@@ -1,0 +1,306 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>投票</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+    <link href="../css/frozen.css" rel="stylesheet" />
+    <link href="../css/app.css" rel="stylesheet" />
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/knockout.js"></script>
+    <script src="../js/common.js"></script>
+    <style>
+        .option{margin: 0 15px}
+    </style>
+</head>
+<body ontouchstart="" >
+    <div class="ui-loading-wrap">
+        <p>正在加载中...</p>
+        <i class="ui-loading"></i>
+    </div>
+
+    <div id="paperContent" style="display:none">
+        <div style="padding-left:15px;padding-right:15px">
+            <!--margin-top:25px;-->
+            <!--<div data-bind="text:paper.title"></div>-->
+            <div id="instroduce" data-bind="html:paper.introduce" style="word-break:break-all"></div>
+            <div style="font-size:12px;color:#aaaaaa;display: flex;display:-webkit-flex;height: 25px;align-items: center;-webkit-align-items: center"><img src="../img/question.png" width="25" /><span style="color:#00c66c;padding-left:5px;" data-bind="text:paper.joinUserCnt"></span> <span>位业主投票</span> </div>
+        </div>
+
+        <!-- ko foreach: paper.questions -->
+       <div class="border-list" style="margin-top:25px;">
+            <!--style="display:inline-block"--> 
+            <div data-bind="text:des"  style="display:inline;word-wrap:break-word;word-break:break-all;font-size:20px;"></div>
+            <div  style="font-size:14px;color:#00c66c" data-bind="text:'最多选'+maxSCnt+'个'"></div>
+            <div style="clear:both"></div>
+        </div>
+        <div class="option">
+            <ul class="ui-list-text votetable" data-bind="foreach:options,attr:{qid:id,maxscnt:maxSCnt}">
+                <li data-bind="attr:{oid:id}">
+                    <span style="flex:1;-webkit-flex:1" data-bind="text:des"></span>
+
+                    <span style="flex:0 0 52px; -webkit-flex:0 0 52px;width: 52px; display: flex;justify-content: center;align-items: center;display:-webkit-flex;-webkit-justify-content: center;-webkit-align-items: center">
+                        <img class="paper_uncheck" src="../img/satis/unchecked_icon.png" width="22"/>
+                        <img class="paper_check" src="../img/satis/checked_icon.png" width="22" height="22" style="display: none;border-radius: 100%;" /></span>
+                    <div style="clear: both"></div>
+                </li>
+            </ul>
+        </div>
+        <!-- /ko -->
+
+        <div style="padding:20px 15px">
+            <button id="btnSub" class="ui-btn-lg ui-btn-primary" onclick="saveResult(this)">
+                提交
+            </button>
+        </div>
+
+        <!--init paper & post result-->          
+         <script>
+                $(function () {
+                    //init paper
+                    var paperInfo = getPaper();
+                    ko.applyBindings({ paper: paperInfo });
+
+                    // show render body                    
+                    $("#paperContent").show();
+                    $(".ui-loading-wrap").remove();
+
+                    checkPermission();
+                    if (gcheckPms) {
+                        //bind event
+                        bindOptionClickHandler();
+                    } else {
+                        // $("li").addClass("invalid");
+                    }
+
+
+                    fixImg();
+
+                    $("#instroduce").css("width", $(window).width() - 30);
+                })
+
+                function fixImg() {
+                    $("#instroduce").find("img").each(function () {
+                        //when cached
+                        var imgWidth = $(this).width();
+                        var bodyWidth = $(window).width()-30;
+
+                        if (imgWidth > bodyWidth) {
+                            $(this).css("background-size", "contain").css("width", bodyWidth + "px");
+                        }
+
+                        //when first load
+                        $(this).load(function () {
+                            var imgWidth = $(this).width();
+                            var bodyWidth = $(window).width()-30;
+
+                            if (imgWidth > bodyWidth) {
+                                $(this).css("background-size", "contain").css("width", bodyWidth + "px");
+                            }
+                        })
+                    });
+                }
+
+                function getPaper() {
+                    var jd = new JData();
+                    var requestHead = getRequestHead();
+                    jd.initRequestHead(requestHead);
+                    jd.add("voteId", getParam("voteId"));
+                    jd.add("sign", "9c19d8b9dfab1d41a99bc54dced3a9795dd033c8");
+                    jd.add("fieds", "version");
+                    jd.add("version", "2");
+
+                    var postData = eval("(" + jd.toJson() + ")");
+                    var ret = DoAjax("scVoteAction!getPaper.action", postData);
+
+                    var result = $.parseJSON(ret);
+                    if (result.status == _SUCCESSED) {
+                        return $.parseJSON(ret).data;
+                    } else {
+                        $("#btnSub").attr("disabled", true);
+                        $("#btnSub").css("backgroud-color", "gray");
+                        alert(result.msg == "" ? result.data : result.msg);
+                        //window.document.write("");
+                        return false;
+                    }
+                }
+
+                function showResult() {
+                    var jd = new JData();
+                    jd.add("voteId", getParam("voteId"));
+                    jd.add("token", getParam("token"));
+                    jd.add("version", getParam("version"));
+                    jd.add("companyCode", getParam("companyCode"));
+                    jd.add("fieds", getParam("fieds"));
+                    jd.add("sign", getParam("sign"));
+                    var urlParams = jd.toUrlParams() + "&rand=" + Math.random();
+
+                    window.location.href = "result.html?" + urlParams + "&rand=" + Math.random();
+                }
+
+                function saveResult(obj) {
+                    //增加校验
+                    // var isValid=$("")
+
+                    var ret = postData();
+                    if (ret == false) {
+                        return false;
+                    }
+
+                    if (ret.status == _SUCCESSED) {
+                        showResult();
+                    } else if (ret.status == "106") {
+                        $("#btnSub").attr("disabled", true);
+                        $("#btnSub").css("backgroud-color", "gray");
+                        alert(ret.msg);
+                    } else if (ret.status == "1061") {
+                        $("#btnSub").attr("disabled", true);
+                        $("#btnSub").css("backgroud-color", "gray");
+                        $("#btnSub").text("已结束");
+                    } else {
+                        alert("提交失败！");
+                    }
+                }
+
+                function checkPermission() {
+                    if (gcheckPms) {
+                        return true;
+                    }
+
+                    var postData = {
+                        companyCode: getParam("companyCode"),
+                        voteId: getParam("voteId"),
+                        token: getParam("token"),
+                        version: getParam("version"),
+                        fieds: getParam("fieds"),
+                        sign: getParam("sign")
+                    }
+
+                    var ret = DoAjax("scVoteAction!checkPermission.action", postData);
+
+                    ret= $.parseJSON(ret);
+                    if (ret.status == _SUCCESSED) {
+                        gcheckPms = true;
+                    }
+                   else if (ret.status == "106") {
+                        $("#btnSub").attr("disabled", true);
+                        $("#btnSub").css("backgroud-color", "gray");
+                        alert(ret.msg);
+                        if (ret.msg.indexOf('你已经投过票') !== -1) {
+                          showResult();
+                        }
+                    } else if (ret.status == "1061") {
+                        $("#btnSub").attr("disabled", true);
+                        $("#btnSub").css("backgroud-color", "gray");
+                        $("#btnSub").text("已结束");
+                    } else {
+                        $("#btnSub").attr("disabled", true);
+                        $("#btnSub").css("backgroud-color", "gray");
+                        alert("没有权限！");
+                    }
+                }
+
+                function postData() {
+                    var tmpQs = "";
+                    var isValid = true;
+                    $("body").find("ul[qid]").each(function (i, obj) {
+                        var qid = $(obj).attr("qid");
+                        var sltCnt = $(obj).find("li.check").size();
+                        if (sltCnt < 1) {
+                            alert("每个问题至少选择一项！");
+                            isValid = false;
+                            return false;
+                        }
+
+                        var tmpOps = "";
+
+                        $(obj).find("li[oid]").each(function (i, obj) {
+                            var isSlt = $(obj).hasClass("check");
+                            if (!isSlt) {
+                                return;
+                            }
+
+                            var oid = $(obj).attr("oid");
+                            var slpt = tmpOps != "" ? "," : "";
+                            tmpOps += slpt + "{\"oid\":\"" + oid + "\"}";
+                        });
+
+                        var slpt = tmpQs != "" ? "," : "";
+                        tmpQs += slpt + "{\"qid\":\"" + qid + "\",\"options\":[" + tmpOps + "]}";
+                    });
+
+                    if (!isValid) {
+                        return false;
+                    }
+
+                    var postData = {
+                        companyCode: getParam("companyCode"),
+                        voteId: getParam("voteId"),
+                        token: getParam("token"),
+                        version: getParam("version"),
+                        fieds: getParam("fieds"),
+                        sign: getParam("sign"),
+                        questions: "[" + tmpQs + "]"
+                    }
+
+                    var ret = DoAjax("scVoteAction!saveResult.action", postData);
+
+                    return $.parseJSON(ret);
+                }
+
+                var gcheckPms = false;
+
+                function bindOptionClickHandler()
+                {
+                    var isClick = true;
+                    $('li').on('touchmove', function(e){
+                        isClick = false;
+                    });
+                    $("li").on("touchstart", function() {
+                        isClick = true;
+                    });
+                    $("li").on("touchend", function() {
+                        if (isClick)
+                        {
+                            checkPermission();
+                            var maxSCnt = $(this).parent().attr("maxSCnt");
+                            var hasSCnt = $(this).parent().find("li.check").size();
+
+                            var hasSlt = $(this).hasClass("check");
+                            if (!hasSlt)
+                            {
+                                if (maxSCnt == 1 && hasSCnt > 0)
+                                {
+                                    $(this).parent().find(".check").eq(0).find('img').eq(0).show();
+                                    $(this).parent().find(".check").eq(0).find('img').eq(1).hide();
+                                    $(this).parent().find("li.check").removeClass("check");
+                                } else if (hasSCnt + 1 > maxSCnt)
+                                {
+                                    alert("该题最多只能选择" + maxSCnt + "项");
+                                    return false;
+                                }
+
+                                $(this).addClass("check");
+                                $(this).find('img').eq(0).hide();
+                                $(this).find('img').eq(1).show();
+                            } else
+                            {
+                                $(this).removeClass("check");
+                                $(this).find('img').eq(0).show();
+                                $(this).find('img').eq(1).hide();
+                            }
+                        }
+                    })
+                }
+         </script>
+       
+    </div>
+</body>
+</html>

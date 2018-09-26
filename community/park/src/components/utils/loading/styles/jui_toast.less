@@ -1,0 +1,35 @@
+.jui-toast {
+    position: fixed;
+    z-index: 9999;
+    width: 1.466667rem;
+    height: 1.466667rem;
+    top: 50%;
+    left: 50%;
+    margin-left: -0.733333rem;
+    margin-top: -0.733333rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(17,17,17,0.7);
+    text-align: center;
+    border-radius: 0.266667rem;
+    color: #FFFFFF;
+}
+.jui-icon_toast {
+    display: block;
+    &.weui-icon-success-no-circle{
+      &:before {
+          color: #FFFFFF;
+          font-size: 55px;
+      }
+    }
+    &.jui-loading{
+      width: 1.333333rem;
+      height: 1.333333rem;
+      vertical-align: baseline;
+    }
+}
+
+.jui-toast__content {
+    //margin: 0 0 15px;
+}

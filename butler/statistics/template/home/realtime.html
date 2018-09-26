@@ -1,0 +1,127 @@
+﻿
+<div style="white-space: nowrap">
+    <div  class="ui-whitespace">
+    <ul class=" ui-row-flex panel-nav ">
+        <li class="ui-col ui-flex ui-flex-pack-center panel-select-left"><div style="color:#fff">实时数据</div></li>
+        <li class="ui-col ui-flex ui-flex-pack-center" onclick='homeLocation("reports")'><div >统计报表</div></li>
+    </ul>
+    </div>
+    
+    <ul class="ui-row-flex " style="background-color:#d6dde2;color:#334455;line-height:34px;height:34px;">
+        <li class="ui-col ui-flex ui-flex-pack-start ui-whitespace"><div><b>今日实时数据</b></div></li>
+    </ul>
+    <ul class="ui-row-flex ui-border-t">
+        <li class="ui-col ui-flex ui-flex-pack-start ui-whitespace"><div>回来啦社区园区活跃用户</div></li>
+        <li class="ui-col ui-flex ui-flex-pack-end   ui-whitespace"><div class="font-green" data-bind="text:Data.instand.appActiveUserCount" module="appActiveUser"></div></li>
+    </ul>
+
+   <div  class="ui-whitespace ui-border-t  mtop" style="background-color:#fff">
+    <ul class="ui-row-flex  ">
+        <li class="ui-col ui-flex ui-flex-pack-start "><div>今日访客总量</div></li>
+        <li class="ui-col ui-flex ui-flex-pack-end "><div class="font-green" data-bind="text:Data.instand.visitorCount" module="visitor"></div></li>
+    </ul>
+         
+    <ul class="ui-row-flex ui-border-t">
+        <li class="ui-col ui-flex ui-flex-pack-start "><div>人访</div></li>
+        <li class="ui-col ui-flex ui-flex-pack-end pright ui-border-r "><div class="font-green" data-bind="text:Data.instand.peopleVisitorCount" module="peopleVisitor"></div></li>
+        <li class="ui-col ui-flex ui-flex-pack-start pleft "><div>车访</div></li>
+        <li class="ui-col ui-flex ui-flex-pack-end "><div class="font-green" data-bind="text:Data.instand.carVisitorCount" module="carVisitor"></div></li>
+    </ul>
+    <ul class="ui-row-flex ui-border-t">
+        <li class="ui-col ui-flex ui-flex-pack-start "><div>快递接收量</div></li>
+        <li class="ui-col ui-flex ui-flex-pack-end pright ui-border-r "><div class="font-green" data-bind="text:Data.instand.expressReceiveCount" module="express"></div></li>
+        <li class="ui-col ui-flex ui-flex-pack-start pleft "><div>快递未领取量</div></li>
+        <li class="ui-col ui-flex ui-flex-pack-end "><div class="font-green" data-bind="text:Data.instand.expressNoHostCount" module="noHostExpress"></div></li>
+    </ul>
+     </div>
+
+   <div  class="ui-whitespace ui-border-t  mtop" style="background-color:#fff">
+    <ul class="ui-row-flex ">
+        <li class="ui-col ui-flex ui-flex-pack-start "><div>今日总订单</div></li>
+        <li class="ui-col ui-flex ui-flex-pack-end "><div class="font-green" data-bind="text:Data.instand.totalOrderCount" module="totalOrder"></div></li>
+    </ul>
+    <ul class="ui-row-flex ui-border-t ">
+        <li class="ui-col ui-flex ui-flex-pack-start "><div>商家订单</div></li>
+        <li class="ui-col ui-flex ui-flex-pack-end pright  ui-border-r "><div class="font-green" data-bind="text:Data.instand.shopOrderCount" module="shopOrder"></div></li>
+        <li class="ui-col ui-flex ui-flex-pack-start pleft "><div>订单金额</div></li>
+        <li class="ui-col ui-flex ui-flex-pack-end"><div class="font-red" data-bind="text:'￥'+Data.instand.shopOrderTotalMoney" ></div></li>
+    </ul>
+
+    <ul class="ui-row-flex ui-border-t">
+        <li class="ui-col ui-flex ui-flex-pack-start "><div>园区订单</div></li>
+        <li class="ui-col ui-flex ui-flex-pack-end pright ui-border-r "><div class="font-green" data-bind="text:Data.instand.communityOrderCount" module="communityOrder"></div></li>
+        <li class="ui-col ui-flex ui-flex-pack-start pleft "><div>订单金额</div></li>
+        <li class="ui-col ui-flex ui-flex-pack-end "><div class="font-red" data-bind="text:'￥'+Data.instand.communityOrderTotalMoney" ></div></li>
+    </ul>
+   </div>
+
+   <div  class="ui-whitespace ui-border-t  mtop" style="background-color:#fff">
+    <ul class="ui-row-flex ">
+        <li class="ui-col ui-flex ui-flex-pack-start "><div>今日订单完成率</div></li>
+        <li class="ui-col ui-flex ui-flex-pack-end "><div class="font-green" data-bind="text:Data.instand.orderCompleteRate" module="orderCompleteRate_today"></div></li>
+    </ul>
+
+    <ul class="ui-row-flex ui-border-t">
+        <li class="ui-col ui-flex ui-flex-pack-start "><div>投诉单</div></li>
+        <li class="ui-col ui-flex ui-flex-pack-end pright ui-border-r "><div class="font-green" data-bind="text:Data.instand.complaintOrderCount" module="complaintOrder"></div></li>
+        <li class="ui-col ui-flex ui-flex-pack-start pleft"><div>表扬单</div></li>
+        <li class="ui-col ui-flex ui-flex-pack-end "><div class="font-green" data-bind="text:Data.instand.praiseOrderCount" module="praiseOrder"></div></li>
+    </ul>
+
+    <ul class="ui-row-flex ui-border-t">
+        <li class="ui-col ui-flex ui-flex-pack-start "><div>居家维修</div></li>
+        <li class="ui-col ui-flex ui-flex-pack-end pright ui-border-r "><div class="font-green" data-bind="text:Data.instand.familyServiceOrderCount" module="familyServiceOrder"></div></li>
+        <li class="ui-col ui-flex ui-flex-pack-start pleft "><div>公共维修</div></li>
+        <li class="ui-col ui-flex ui-flex-pack-end "><div class="font-green" data-bind="text:Data.instand.commonServiceOrderCount" module="commonServiceOrder"></div></li>
+    </ul>
+
+    <ul class="ui-row-flex ui-border-t">
+        <li class="ui-col ui-flex ui-flex-pack-start "><div>送水单</div></li>
+       <li class="ui-col ui-flex ui-flex-pack-end pright ui-border-r "><div class="font-green" data-bind="text:Data.instand.waterOrderCount" module="waterOrder"></div></li>
+       <li class="ui-col ui-flex ui-flex-pack-start pleft "><div></div></li>
+       <li class="ui-col ui-flex ui-flex-pack-end "><div></div></li>
+    </ul>
+   </div>
+
+
+
+    <ul class="ui-row-flex ui-border-t mtop" style="background-color:#d6dde2;color:#334455;line-height:34px;height:34px;">
+        <li class="ui-col ui-flex ui-flex-pack-start ui-whitespace"><div><b>累计统计数据</b></div></li>
+    </ul>
+
+    <div  class="ui-whitespace " style="background-color:#fff">
+    <ul class="ui-row-flex ">
+        <li class="ui-col ui-flex ui-flex-pack-start "><div>注册用户数</div></li>
+        <li class="ui-col ui-flex ui-flex-pack-end pright ui-border-r "><div class="font-green" data-bind="text:Data.statistics.registerUserCount" module="registerUser"></div></li>
+        <li class="ui-col ui-flex ui-flex-pack-start pleft "><div>注册户数</div></li>
+        <li class="ui-col ui-flex ui-flex-pack-end "><div class="font-green" data-bind="text:Data.statistics.registerAssetCount" module="registerAsset"></div></li>
+    </ul>
+
+    <ul class="ui-row-flex ui-border-t ">
+        <li class="ui-col ui-flex ui-flex-pack-start "><div>园区登记车辆数</div></li>
+        <li class="ui-col ui-flex ui-flex-pack-end "><div class="font-green" data-bind="text:Data.statistics.communitySubmitCarCount" module="submitCar"></div></li>
+    </ul>
+   </div>  
+
+
+    <div  class="ui-whitespace ui-border-t  mtop" style="background-color:#fff">
+    <ul class="ui-row-flex ">
+        <li class="ui-col ui-flex ui-flex-pack-start "><div>订单完成率</div></li>
+        <li class="ui-col ui-flex ui-flex-pack-end "><div class="font-green" data-bind="text:Data.statistics.orderCompleteRate" module="orderCompleteRate"></div></li>
+    </ul>
+
+    <ul class="ui-row-flex ui-border-t">
+        <li class="ui-col ui-flex ui-flex-pack-start "><div>订单评价满意度</div></li>
+        <li class="ui-col ui-flex ui-flex-pack-end "><div class="font-green" data-bind="text:Data.statistics.orderAppraisePassRate" module="orderAppraisePassRate"></div></li>
+    </ul>
+
+    <ul class="ui-row-flex ui-border-t">
+        <li class="ui-col ui-flex ui-flex-pack-start "><div>服务速度</div></li>
+        <li class="ui-col ui-flex ui-flex-pack-end pright ui-border-r "><div class="font-green" data-bind="text:Data.statistics.serviceSpeed" module="serviceSpeed"></div></li>
+        <li class="ui-col ui-flex ui-flex-pack-start pleft "><div>服务质量</div></li>
+        <li class="ui-col ui-flex ui-flex-pack-end "><div class="font-green" data-bind="text:Data.statistics.serviceQuality" module="serviceQuality"></div></li>
+    </ul>
+    </div>
+
+    <ul class="mtop"></ul>
+</div>

@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>商品详情</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+    <link href="../css/frozen.css" rel="stylesheet" />
+    <link href="../css/app.css?v=32s" rel="stylesheet" />
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/knockout.js"></script>
+    <script src="../js/utils.js?v=22s"></script>
+    <style>
+        .top {
+            background-size: contain;
+            background-repeat: no-repeat;
+            height: auto;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .bottom-unfill {
+            padding: 0px;
+            text-align: center;
+            margin: 0px;
+            bottom: 0px;
+            position: fixed;
+        }
+
+        .bottom-over {
+            padding: 0px;
+            text-align: center;
+            margin: 0px;
+        }
+
+        .content {
+            background-color: #f6e5d0;
+            opacity: 0.75;
+            filter: alpha(opacity=75);
+            min-height: 205px;
+            padding-left: 15px;
+            padding-right: 15px;
+            margin: 0px;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei UI';
+        }
+
+        .ui-col {
+            line-height: 34px;
+        }
+    </style>
+</head>
+<body ontouchstart="" style="background-color: #ebebeb;">
+    <!-- 埋点代码段开始 -->
+    <script type="text/javascript">
+        var _laq = _laq || [];
+        _laq.push(['_setApp', 'L0gKi7v5w8PdrfS2T5Wo']);/* LOTUSEED_APPEY 必填 */
+        _laq.push(['_setChannel', 'Your_CHANNEL']);/* 设置渠道时 可选 */
+        _laq.push(['_setVersion', '3.2']);/* 设置版本时 可选 */
+        _laq.push(['_setTitle', '订单外赠-商品详情']); /* 页面标题，必要时可以初始化设置 可选 */
+        _laq.push(['_trackError', true]); /* 设置追踪页面js异常（如果没有此项，该功能不开启） */
+        _laq.push(['_trackPageClose', true]); /* 追踪页面关闭（如果没有此项，该功能不开启 可选 */
+        _laq.push(['_onEvent', { /* 初始化触发事件设置 可选 */
+            eveId: 'Order_Product', /* 事件ID 必填 */
+            label: '订单外赠-查看商品详情' /* 事件标签名 可选*/
+        }]);
+        (function() {
+            var la = document.createElement('script');
+            la.type = 'text/javascript';
+            la.async = true;
+            la.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'js.lotuseed.com/lsd.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(la, s);
+        })();
+    </script>
+    <!-- 埋点代码结束 -->
+
+    <div style="max-width:560px;margin-left: auto;margin-right: auto;">
+
+        <ul class="ui-list ui-border-tb">
+            <!--<li class="ui-border-t" style="font-size:18px;padding-top:5px" data-bind="text:product.name"></li>-->
+            <li>
+                <div class="ui-list-img">
+                    <img style="height: 65px; width: 65px;" data-bind="attr:{src:product.coverimg}"/>
+                </div>
+                <div class="ui-list-info" style="height: 65px;">
+                    <!--<h4 class="ui-nowrap" style="font-size: 16px; color: #666666"><span style="float:left" data-bind="text:'￥：'+product.price+product.unit"></span><span style="float:right;" data-bind="text:'已售：'+product.stock"></span></h4>
+                    <p class="ui-nowrap" style="font-size: 14px; color: #aaaaaa"><s data-bind="text:'原价：'+product.originalPrice+product.unit"></s></p>-->
+                    <h4 style="font-size: 18px;" data-bind="text:product.name"></h4>
+                </div>
+            </li>
+        </ul>
+
+        <!-- ko if: product.specificationList!=null-->
+        <div class="ui-form ui-border-t" style="margin-top:16px;padding:0px 15px;">
+            <!-- ko foreach: product.specificationList -->
+            <div class="ui-form-item" data-bind="text:$data"></div>
+            <!-- /ko -->
+        </div>
+        <!-- /ko -->
+ 
+
+        <div id="content" class="ui-form ui-border-t" style="margin-top: 16px;padding:0px 15px;line-height:34px" data-bind="html:product.introduce"></div>
+
+    </div>
+
+
+    <script>
+            $(function () {
+                ko.applyBindings({ product: getProductDetail() });
+                fixImg();
+
+                $("#content").css("width", $(window).width() > 560 ? 530 : $(window).width() - 30);
+            });
+
+            function fixImg() {
+                $("#content").find("img").each(function () {
+                    $(this).load(function () {
+                        var imgWidth = $(this).width();
+                        var bodyWidth = $(window).width() - 30;
+
+                        if (imgWidth > bodyWidth) {
+                            $(this).css("background-size", "contain").css("width", bodyWidth + "px");
+                        }
+                    })
+                });
+            }
+
+
+            function getProductDetail() {
+                var jd = new JData();
+                jd.add("companyCode", "lc");
+                jd.addParams("productId");
+                jd.addParams("discountId");
+            
+
+                var ret = NewDoAjax("grant/getGrantProductBasic", jd.getJson());
+                var result = $.parseJSON(ret);
+                if (result.status == _SUCCESSED) {
+                    console.log("获取成功！");
+                    //领取成功，进入用户信息页面填写。
+                    return result.data;
+                } else {
+                    console.log("获取商品详情错误！");
+                    history.back();
+                }
+            }
+
+    </script>
+</body>
+</html>

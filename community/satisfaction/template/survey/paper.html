@@ -1,0 +1,188 @@
+﻿<style>
+    .nameTextarea{
+        height: 34px!important;
+        line-height: 34px;
+    }
+    .ui-loading-wrap p{
+        font-size: 12px;
+    }
+</style>
+<div class="ui-loading-wrap">
+    <p>正在加载中...</p>
+    <i class="ui-loading"></i>
+</div>
+
+<div id='satisPaper' style='display:none'>
+    <div  style="padding: 15px; background-color: #fff;">
+        <div style="color: #666666; font-size: 15px;line-height: 24px;word-wrap: break-word; word-break: break-all;" data-bind='html:paper.introduce'>
+            <!--尊敬的业主家人，您好！
+            <p style='text-indent: 2em;padding: 5px 0;'>为了不断提高物业服务质量，为客户提供更优质的服务，回来啦社区通过“回来啦社区APP”进行此次满意度调研，调研时间约需3-5分钟。此次调研只是针对物业服务工作进行评价，如涉及房产问题，请在建议与意见中另行告知。在调研过程中，我们不会向您索要任何费用或账号密码等，请您注意操作安全。</p>-->
+            请于适当方格内填上“√”号，有意见或建议请填在意见/建议栏内。
+            </div>
+            <!--<div data-bind="foreach:paper.questions">-->
+                <!--<div style="margin-top: 30px;font-size: 15px;color: #666666" data-bind='html:explain'></div>-->
+                <!-- 循环问题-->
+                <!-- ko foreach: paper.questions -->
+                <div  class="questions"> 
+                    <div style="margin-top: 25px;">
+                        <div data-bind="text:questionDes" style="display: inline; word-wrap: break-word; word-break: break-all; font-size: 15px; color: #666666; font-weight: 600"></div>
+                        <div style="clear: both"></div>
+                    </div>
+                    <div data-bind='visible:optionType == 1 || optionType == 2 || (optionType ==3 && isSupplementRequired == 1) ' style="color: #00c66c;font-size: 12px;"><span style="padding-right: 17px" data-bind="text:(optionType == 1 || optionType == 2 || (optionType ==3 && isSupplementRequired == 1))?'(必填题)':''"></span><span data-bind="visible:optionType != 3,text:optionType==1 ?'(单选题)':'(多选题)'"></span></div>
+                    <div class="qusContent">
+                        <ul class="ui-list-text votetable" data-bind="foreach:options,attr:{qid:id,maxscnt:maxSelectCnt,queIndex:$index()}">
+                            <li style="line-height: 44px" data-bind="attr:{oid:id,oIndex:$index()}">
+                              <span style="flex:1;-webkit-flex:1" data-bind="text:optionDes"></span>
+                              <span style="flex:0 0 52px;-webkit-flex:0 0 52px; width: 52px; display: flex;justify-content: center;align-items: center;display:-webkit-flex;-webkit-justify-content: center;-webkit-align-items: center">
+                                  <img class="paper_uncheck" src="./img/satis/unchecked_icon.png" width="22"/>
+                                  <img class="paper_check" src="./img/satis/checked_icon.png" width="22" height="22" style="display: none;border-radius: 100%;" /></span>
+                                <div style="clear: both"></div>
+                            </li>
+                        </ul>
+                        <div class="sup" data-bind="visible:isSupplement == 1,attr:{isSupplementRequired:isSupplementRequired}">
+                            <textarea data-bind="attr:{placeholder:$root.placeholder + $data.supplementPlaceholder == null? '': $data.supplementPlaceholder}"
+                                ></textarea>
+                            <div class="textarea-count">
+                                <span class="textareaInput">0</span>/<span class="textareaTotal">500</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /ko -->
+            <!--</div>-->
+    </div>
+    <div style="padding: 10px 15px">
+        <button id="btnSub" class="ui-btn-lg ui-btn-primary" onclick="saveResult(this)">
+            确认提交
+        </button>
+    </div>
+</div>
+
+<script>
+
+    function saveData() {
+        var tmpQs = "";
+        var isValid = true;
+        var questions =[];
+        $("body").find("ul[qid]").each(function (i, obj) {
+            var qid = $(obj).attr("qid");
+            var queIndex =$(obj).attr("queIndex"); //题目的index
+            var sltCnt = $(obj).find("li.check").size();
+            var opsCnt = $(obj).find("li").size();
+            var supRe = $(obj).parent().find(".sup").eq(0).attr("isSupplementRequired"); 
+            var supCont = $(obj).parent().find("textarea").eq(0).val().replace("\\", "").replace("\"", "").replace(/\r\n/g, "").replace(/\n/g, "");
+
+            // var nameReg = /[^\a-\z\A-\Z\u4E00-\u9FA5]/; 
+            // if (queIndex == 0) {
+            //     if (supCont.length < 2 || nameReg.test(supCont)) {
+            //         alert('请输入2-10位真实姓名'); 
+            //         // $( "html,body").animate({scrollTop: $( ".questions").eq(queIndex).offset().top}, 500);//定位到题目
+            //         isValid = false; 
+            //         return false;
+            //     }
+            // }
+            if ((sltCnt < 1 && opsCnt > 0) || (supRe == 1 && supCont == "")) {
+                //如果是住宅 20题 选第五个选项的时候 21题不做判断
+                console.log(queIndex == 21);
+                // if (!(voteId == 'd55a76e7-9d05-11e7-b3fe-ecf4bbbf7d00' && queIndex == 21 && $(".questions").eq(20).find("li.check").eq(0).attr('oIndex') ==5)) {
+                //     alert("您未完成全部调查，请补充完成！"); 
+                //    // $("html,body").animate({ scrollTop: $(".questions").eq(queIndex).offset().top }, 500);//定位到题目
+                //     isValid = false; 
+                //     return false;
+                // }
+            }
+
+
+            // //alert(supRe);
+
+            // if (supRe == 1 && supCont == "") {
+            //     alert("您未完成全部调查，请补充完成！");
+            //     isValid = false;
+            //     return false;
+            // }
+
+            var tmpOps = "";
+            var options=[];
+         
+            $(obj).find("li[oid]").each(function (i, obj) {
+                var isSlt = $(obj).hasClass("check");
+                if (!isSlt) {
+                    return;
+                }
+
+                var oid = $(obj).attr("oid");
+                var oIndex =$(obj).attr("oIndex"); //选项的index
+                options.push({
+                    oid:oid,
+                    index:oIndex
+                });
+                var slpt = tmpOps != "" ? "," : "";
+                tmpOps += slpt + "{\"oid\":\"" + oid + "\",\"index\": " + oIndex + "\}";
+
+            });
+            // console.log(JSON.stringify(options));
+            // console.log(tmpOps);
+            // var slpt = tmpQs != "" ? "," : "";
+            // qsStr = tmpOps != "" ? "{\"qid\":\"" + qid + "\",\"index\":" + queIndex + ",\"options\":[" + tmpOps + "]" : "{\"qid\":\"" + qid + "\",\"index\":" + queIndex + "\"";
+            // tmpQs += slpt + (supCont == "" ? "{\"qid\":\"" + qid + "\",\"index\":" + queIndex + ",\"options\":[" + tmpOps + "]}" : "{\"qid\":\"" + qid + "\",\"index\":" + queIndex + ",\"options\":[" + tmpOps + "],\"supplement\":\"" + supCont + "\"}");
+             var qsStr = { qid: qid, index: queIndex, options: options}
+             if(supCont){
+                 qsStr.supplement=supCont
+             }
+            questions.push(qsStr);
+        });
+
+        if (!isValid) {
+            return false;
+        }
+
+        //var postData = {
+        //    companyCode: getParam("companyCode"),
+        //    voteId: getParam("voteId"),
+        //    token: getParam("token"),
+        //    questions: "[" + tmpQs + "]"
+        //}
+        var voteData = new Object();
+        for (var x in postData) {
+
+        }
+        // var questions = "[" + tmpQs + "]";
+        console.log(JSON.stringify(questions));
+        $("#btnSub").attr("disabled", true);
+        var ret = SaDoAjax("/vote/general/" + voteId + "/submit", {"questions": JSON.stringify(questions)}, _NewHome, 'post');
+
+        return $.parseJSON(ret);
+
+    }
+    
+
+    function saveResult(obj) {
+        //增加校验
+        // var isValid=$("")
+        //$('.paperLoadinglayer').show();
+        var ret = saveData();
+        console.log(ret);
+        //$("#btnSub").attr("disabled", true);
+        if (ret == false) {
+
+            return false;
+        }
+
+        if (ret.status == "100") {
+            //跳转到抽奖页面
+            window.location.href = './index.html#/satisfaction/home' +
+                                  '?token=' + token +
+                                  '&companyCode=' + companyCode +
+                                  '&defCommunityId=' + defCommunityId +
+                                  '&defRoomId=' + defRoomId +
+                                  '&voteId=' + voteId;
+
+        }
+        else if (ret.status == "1061") {
+            alert("您已经参与过调查了，请勿重复参与");
+        } else {
+            alert(ret.msg);
+            $("#btnSub").attr("disabled", false);
+        }
+    }
+</script>

@@ -1,0 +1,38 @@
+﻿
+<div  class="txt">
+    <h2 style="text-align: center;font-size: 18x;padding-bottom: 5px;"><b>2017业主满意度调查温馨提示</b></h2>
+    尊敬的业主家人，您好！
+    <p> 感谢您在百忙之中抽时间完成此次满意度调查，您的调查成绩与建议、意见是我们前进的动力。为了感谢广大业主对此次满意度调查的支持与配合，在您完成调查后将有一次抽奖机会，<b>大奖为iPhone 8，惊喜奖为血压仪，另有若干现金红包</b>。同时提醒您，在此次调查中请注意以下几个事项：</p>
+    <p>1. 此次调查均采用APP线上调查模式，<b>每个房号只能一位业主（包括户主及其家人、租户）</b>参与调查，我们以首位有效完成调查的业主为调查成绩，并参与抽奖环节；</p>
+    <p>2. 参与调查的业主需在<b>调查完成当天进行抽奖</b>，如未能在当天完成抽奖将视为自动放弃抽奖资格；</p>
+    <p>3. 请参与调查的业主<b>自行完成调查表</b>，切勿将手机、账号交于他人（包括物业工作人员）进行满意度调查；</p>
+    <p>4. 所有中奖业主信息将会线下进行核实，如中奖人员非该户业主（包括户主及其家人、租户），将取消中奖资格；</p>
+    <p>5. 奖品将在调查结束后15个工作日内与中奖人员核实信息后再进行兑现，兑现方式另行通知；</p>
+    <p> 本次满意度调查解释权最终归回来啦社区！</p>
+</div>
+<!--<span id="agreement" style="font-size: 14px; vertical-align: bottom; color: #aaaaaa; padding-left: 15px;margin-top:15px;display:inline-block"><a href="javascript:selectChanged(this)" style="color: #aaaaaa;">
+    <img id="slt" style="height: 22px; width: 22px; padding-right: 10px; display: inline-block; vertical-align: middle" src="./img/unchecked.png" />我已了解上述协议</a>
+</span>-->
+<div style="padding: 10px 15px">
+    <button id="btnSub" class="ui-btn-lg ui-btn-primary">
+        我已阅读并同意
+    </button>
+</div>
+ <script>
+ 
+     function selectChanged(obj) {
+         var src = $("#slt").attr("src");
+         if (src.indexOf("unchecked") != -1) {
+             $("#slt").attr("src", "./img/checked.png");
+             $("#btnSub").attr("disabled", false);
+         } else {
+             $("#slt").attr("src", "./img/unchecked.png");
+             $("#btnSub").attr("disabled", true);
+         }
+     }
+     //调查问卷协议
+    function viewRule() {
+       window.location.href = 'satisfaction/template/survey/protocol.html'
+    }
+
+ </script>

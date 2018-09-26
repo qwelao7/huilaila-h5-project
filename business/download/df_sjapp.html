@@ -1,0 +1,308 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=640,initial-scale=0.5, minimum-scale=0.5, maximum-scale=0.5" />
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>欢迎下载下载商家助手APP</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            zoom: 1;
+            outline: none;
+        }
+
+        html, img {
+            border: 0 none;
+        }
+
+        html {
+            overflow-y: scroll;
+            overflow-x: none;
+            background-color: #f8f8f8;
+        }
+
+        body {
+            background-color: #f8f8f8;
+            font-size: 12px;
+            line-height: 1.5;
+            color: #404040;
+            font-family: "微软雅黑",sans-serif;
+            height: 100%;
+            width: 100%;
+        }
+
+        img {
+            vertical-align: middle;
+        }
+
+        a {
+            TEXT-DECORATION: none;
+        }
+
+        p, div, td {
+            word-wrap: break-word;
+        }
+
+        .wrap_pc_bg {
+            width: 100%;
+            background: url("../img/download/lc_bg.png?v1.0") repeat scroll 0 0 transparent;
+            height: 560px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wrap {
+            width: 640px;
+            margin: 0 auto;
+        }
+
+        .wrap_pc {
+            width: 960px;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .headbody {
+            padding-top: 50px;
+            overflow: hidden;
+        }
+
+        .headbody .lc_left {
+            float: left;
+            width: 300px;
+            text-align: right;
+        }
+
+        .headbody .txt_align {
+            text-align: left;
+            margin-left: 10px;
+            font-size: 24px;
+            padding-top: 12px;
+        }
+
+        .headbody label {
+            font-size: 40px;
+            font-weight: bold;
+            color: #333333;
+        }
+
+        .lc_btn {
+            margin: 35px 0 50px;
+            text-align: center;
+        }
+
+        .lc_btn a {
+            border: 2px solid #3CC6DA;
+            border-radius: 100px;
+            height: 78px;
+            width: 448px;
+            font-size: 32px;
+            color: #3CC6DA;
+            display: inline-block;
+            line-height:78px;
+            text-align: center;
+        }
+
+        .lc_text {
+            width: 640px;
+            margin: 10px auto;
+            border-top: 1px solid #d9d9d9;
+            padding: 50px 0;
+            font-size: 24px;
+            color: #666;
+        }
+
+        .lc_text li {
+            margin: 15px 0 0 30px;
+        }
+
+        .lc_img_pc {
+            position: absolute;
+            right: -64px;
+            top: 67px;
+        }
+
+        .headbody_pc {
+            padding-top: 120px;
+            overflow: hidden;
+        }
+
+        .headbody_pc .lc_left {
+            float: left;
+            text-align: right;
+        }
+
+        .headbody_pc .txt_align {
+            text-align: left;
+            margin-left: 30px;
+            font-size: 24px;
+            color: #999;
+        }
+
+        .headbody_pc label {
+            font-size: 50px;
+            font-weight: bold;
+            color: #333333;
+        }
+
+        .lc_btn_box {
+            margin-top: 60px;
+            position: relative;
+            width: 380px;
+        }
+
+        .lc_btn_box .lc_btn_pc {
+            margin-top: 50px;
+        }
+
+        .lc_btn_box a {
+            border: 0px none;
+            height: 58px;
+            width: 226px;
+            font-size: 32px;
+            color: #3CC6DA;
+            display: inline-block;
+        }
+
+        .lc_btn_box .btn_iosdown {
+            background: url("./img/dba_btn_ios.png?v1.0") no-repeat scroll 0 0 transparent;margin-bottom:15px
+        }
+
+        .lc_btn_box .btn_iosdown:hover {
+            background: url("./img/dba_btn_ioshover.png?v1.0") no-repeat scroll 0 0 transparent;
+        }
+
+        .lc_btn_box .btn_androiddown {
+            background: url("./img/dba_btn_android.png?v40") no-repeat scroll 0 0 transparent;
+        }
+
+        .lc_btn_box .btn_androiddown:hover {
+            background: url("./img/dba_btn_androidhover.png?v40") no-repeat scroll 0 0 transparent;
+        }
+
+        .lc_btn_box img {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+        }
+
+        .lc_text_pc {
+            width: 960px;
+            margin: 200px auto 50px;
+            font-size: 20px;
+            color: #1b3573;
+        }
+
+        .lc_text_pc h5 {
+            margin: 15px 0;
+            font-size: 24px;
+        }
+        .lc_text_pc p {
+            line-height:48px;
+            margin:30px 0 40px;
+        }
+        .lc_text_pc li {
+            margin: 15px 0 0 20px;
+        }
+        .lc_from_pc{
+            height:50px;
+            margin-top:100px;
+            background:#999;
+            text-align:center;
+            color:#fff;
+            line-height:48px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="lc_btn">
+        <a id="btn_down" href="javascript:;" onclick="downloadAPP();">信任下载</a>
+    </div>
+    <div class="lc_text">
+        <p>
+            商家助手APP是回来啦社区精选商家与回来啦社区业主之间相互连接的重要纽带，我们只为给商家创造更好的经营平台，一起致力于为更多的人创造美好生活。<br/>
+                1.随时随地，移动管店，实时数据尽在指尖掌控;<br/>
+                2.手机在线，便捷接单，各类订单随时一键处理；<br/>
+                3.互动反馈，至臻服务，与顾客的挚友关系从此开始；<br/>
+            商家助手带您开启智慧管理新时代。
+        </p>
+    </div>
+</div>
+<div class="wrap_pc_box" style="display:none">
+    <div class="wrap_pc_bg">
+        <img src="img/sj_qrcode.png?v1.0" alt="">
+    </div>
+    <div class="lc_text_pc">
+        <p>
+            商家助手APP是回来啦社区精选商家与回来啦社区业主之间相互连接的重要纽带，我们只为给商家创造更好的经营平台，一起致力于为更多的人创造美好生活。
+              1.随时随地，移动管店，实时数据尽在指尖掌控;
+              2.手机在线，便捷接单，各类订单随时一键处理；
+              3.互动反馈，至臻服务，与顾客的挚友关系从此开始；
+            商家助手带您开启智慧管理新时代。
+        </p>
+    </div>
+    <div class="lc_from_pc">
+        © 2018  @绿漫科技  <a href="http://www.uama.com.cn">www.uama.com.cn</a>
+    </div>
+</div>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        var ua= navigator.userAgent.toLowerCase();
+        if (!ua.match(/android|iphone|ipad|ipod|micromessenger/i)) {
+            $(".wrap").hide();
+            $(".wrap_pc_box").show();
+        }
+        else
+        {
+            if (getUrlParam()) {
+                $("#btn_down").html("立即更新");
+            }
+        }
+    });
+    function downloadAPP(){
+        var ua = navigator.userAgent.toLowerCase();
+        if (ua.match(/android/i)) {
+            if (ua.match(/micromessenger/i)) {
+                showBox1();
+            }
+            else {
+                $("#btn_down").attr("href", "https://app-admin.huilaila.net/web/app/beta/BusinessAssistantForNJDF.apk?1.3");
+            }
+        }
+        else if (ua.match(/iphone|ipad|ipod/i)) {
+
+            if (ua.match(/micromessenger/i)) {
+                showBox();
+            }
+            else {
+                location.href = 'itms-services://?action=download-manifest&url=https://app-admin.huilaila.net/web/app/beta/BusinessAssistantForNJDF.plist?1.3';
+            }
+        } else {
+
+        }
+    }
+    function showBox() {
+        alert("请点击右上角按钮选择“在Safari中打开”下载！"); return false;
+    }
+    function showBox1() {
+        alert("请点击右上角按钮选择“在浏览器中打开”下载！"); return false;
+    }
+    function getUrlParam() {
+        //匹配目标参数
+        var r = window.location.search.substr(1);
+        if (r == "u")
+        { return true; }
+        return false;
+    }
+</script>
+</body>
+</html>
