@@ -9,52 +9,52 @@
       <div class="list">
         <div class="item">
           <img src="../../../assets/images/card1.png" alt="">
-          <div class="card-info">
+          <div class="card-info" v-if="money>0">
             <em>卡内余额：</em>
-            <span>￥10000</span>
+            <span>￥{{money}}</span>
           </div>
         </div>
       </div>
       <!--<div class="btn-group">-->
-        <!--<button class="btn">充 值</button>-->
-        <!--<button class="btn" @click="activeCard">开 通</button>-->
+      <!--<button class="btn">充 值</button>-->
+      <!--<button class="btn" @click="activeCard">开 通</button>-->
       <!--</div>-->
 
       <!--会员卡详情-->
       <group class='detail' label-width="4em" title="会员卡详情" title-color="#333">
         <cell align-items="flex-start" value-align="left" class="detail-info">
           <span slot="title" class="detail-title">特权说明</span>
-          <span class="detail-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam autem consequatur dolores ea et illo incidunt, iste, nesciunt obcaecati odit pariatur quasi, rem repudiandae sed suscipit totam ullam voluptate voluptates.</span>
+          <span class="detail-desc">{{rightsDesc}}</span>
         </cell>
         <cell align-items="flex-start" value-align="left" class="detail-info">
           <span slot="title" class="detail-title">发行方</span>
-          <span class="detail-desc">宝华桃李春风</span>
+          <span class="detail-desc">{{publicPlatform}}</span>
         </cell>
         <cell align-items="flex-start" value-align="left" class="detail-info">
           <span slot="title" class="detail-title">客服电话</span>
-          <span class="detail-desc">021-12345678</span>
+          <span class="detail-desc">{{serviceHotline}}</span>
         </cell>
-        <cell align-items="flex-start" value-align="left" class="detail-info">
+        <cell align-items="flex-start" value-align="left" class="detail-info" v-if="validateDate">
           <span slot="title" class="detail-title">有效期</span>
-          <span class="detail-desc">2018-10-30</span>
+          <span class="detail-desc">{{validateDate}}</span>
         </cell>
         <cell align-items="flex-start" value-align="left" class="detail-info">
           <span slot="title" class="detail-title">获取方式</span>
-          <span class="detail-desc">购买</span>
+          <span class="detail-desc">{{getTypeDesc}}</span>
         </cell>
       </group>
 
       <div class="spacing-container"></div>
       <!--适用门店-->
       <group class="store-list" title="适用门店" title-color="#333">
-        <cell>
+        <cell v-for="store in storeList">
           <div slot="title">
-            <span class="store-title">小桃红餐厅店</span>
-            <span class="store-addr">宝华桃李春风揽月菀123号</span>
+            <span class="store-title">{{store.storeName}}</span>
+            <span class="store-addr">{{store.storeAddress}}</span>
           </div>
           <div>
             <span class="store-desc">部分商品</span>
-            <span class="store-discount">9折</span>
+            <span class="store-discount">{{store.discount}}折</span>
           </div>
         </cell>
       </group>
@@ -64,6 +64,7 @@
 </template>
 <script>
   import {ViewBox, XHeader, Cell, Group} from 'vux'
+  import {jlDate} from 'common/js/utils';
 
   export default {
     name: 'cardInfo',
@@ -75,9 +76,16 @@
     },
     data () {
       return {
-        title: 'card1',
-        showPlaceholder: false,
-        list: []
+        title: '会员卡信息',
+        storeList: [],
+        money: 0,
+        cardPic: '',
+        rightsDesc: '',
+        publicPlatform: '',
+        serviceHotline: '',
+        validateDate: '',
+        getTypeDesc: '',
+        cardInfo: []
       }
     },
     created () {
@@ -86,16 +94,30 @@
     methods: {
       getCardInfo () {
         let _this_ = this
+        let cardId = this.$route.params.cardId;
         _this_.$JHttp({
           method: 'GET',
-          url: window.baseURL + '/agent/info',
+          url: window.baseURL + '/order/memberCard/' + cardId,
           headers: {
             defCommunityId: localStorage.getItem('communityId')
           }
         }).then(res => {
           if (res.status === 100) {
-            _this_.showPlaceholder = true
-            _this_.list = res.data || []
+            console.log(res.data)
+            _this_.storeList = res.data.cardInfo.storeList;
+            _this_.rightsDesc = res.data.cardInfo.rightsDesc;
+            _this_.getTypeDesc = res.data.cardInfo.getTypeDesc;
+            _this_.publicPlatform = res.data.cardInfo.publicPlatform;
+            _this_.serviceHotline = res.data.cardInfo.serviceHotline;
+            _this_.money = res.data.userCardInfo.money;
+            if (res.data.userCardInfo.validDate) {
+              _this_.validateDate = jlDate.Dateformat(res.data.userCardInfo.validDate, 'YYYY-MM-DD')
+            }
+          } else {
+            _this_.$vux.toast.show({
+              type: 'cancel',
+              text: res.msg
+            });
           }
         }).catch(e => {
           console.log(e)

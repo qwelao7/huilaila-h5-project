@@ -1084,7 +1084,7 @@ export default new Router({
       component: resolve => require(['@/components/my/myCard/newCard'], resolve)
     },
     {
-      path: '/myCard/cardInfo/:id', // 未开通会员卡
+      path: '/myCard/cardInfo/:cardId', // 未开通会员卡
       name: '/cardInfo',
       component: resolve => require(['@/components/my/myCard/cardInfo'], resolve)
     }

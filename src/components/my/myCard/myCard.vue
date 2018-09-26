@@ -7,25 +7,18 @@
                 :left-options="{ backText: '' }" :title=title></x-header>
 
       <div class="list">
-        <div class="item">
-          <img src="../../../assets/images/card1.png" alt="">
-          <div class="card-info">
+        <div class="item" v-for="item in cardList" @click="toCardInfo(item.cardId)">
+          <img :src=item.cardPic>
+          <div class="card-info" v-if="item.money>0">
             <em>卡内余额：</em>
-            <span>￥10000</span>
+            <span>￥{{item.money}}</span>
           </div>
         </div>
-        <div class="item">
-          <img src="../../../assets/images/card2.png" alt="">
-        </div>
-
       </div>
-
-
       <div class="add-item" @click="addCard">
         <img src="../../../assets/images/add_card.png" alt="">
       </div>
     </view-box>
-
   </div>
 </template>
 <script>
@@ -40,8 +33,7 @@
     data () {
       return {
         title: '我的会员卡',
-        showPlaceholder: false,
-        list: []
+        cardList: []
       }
     },
     created () {
@@ -52,18 +44,29 @@
         let _this_ = this
         _this_.$JHttp({
           method: 'GET',
-          url: window.baseURL + '/agent/info',
+          url: window.baseURL + '/order/memberCard',
           headers: {
             defCommunityId: localStorage.getItem('communityId')
           }
         }).then(res => {
           if (res.status === 100) {
-            _this_.showPlaceholder = true
-            _this_.list = res.data || []
+            _this_.cardList = res.data
+            console.log(_this_.cardList)
+            _this_.cardList.forEach(function (item) {
+              item.cardPic = window.aliyunHome + item.cardPic
+            })
+          } else {
+            _this_.$vux.toast.show({
+              type: 'cancel',
+              text: res.msg
+            });
           }
         }).catch(e => {
           console.log(e)
         });
+      },
+      toCardInfo (cardId) {
+        this.$router.push('/myCard/cardInfo/' + cardId);
       },
       addCard () {
         this.$router.push('/myCard/newCard');

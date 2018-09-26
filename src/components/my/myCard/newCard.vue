@@ -7,14 +7,8 @@
                 :left-options="{ backText: '' }" :title=title></x-header>
 
       <div class="list">
-        <div class="item">
-          <img src="../../../assets/images/card1.png" alt="">
-          <div class="card-info">
-            <span>查看详情 ></span>
-          </div>
-        </div>
-        <div class="item">
-          <img src="../../../assets/images/card2.png" alt="">
+        <div class="item" v-for="card in list" @click="toCardInfo(card.id)">
+          <img :src=card.cardPic>
           <div class="card-info">
             <span>查看详情 ></span>
           </div>
@@ -54,7 +48,7 @@
         let _this_ = this
         _this_.$JHttp({
           method: 'GET',
-          url: window.baseURL + '/agent/info',
+          url: window.baseURL + '/order/memberCard/notOpen',
           headers: {
             defCommunityId: localStorage.getItem('communityId')
           }
@@ -62,10 +56,16 @@
           if (res.status === 100) {
             _this_.showPlaceholder = true
             _this_.list = res.data || []
+            _this_.list.forEach(function (item) {
+              item.cardPic = window.aliyunHome + item.cardPic
+            })
           }
         }).catch(e => {
           console.log(e)
         });
+      },
+      toCardInfo (cardId) {
+        this.$router.push('/myCard/cardInfo/' + cardId);
       }
     }
   }
@@ -80,9 +80,9 @@
         display: block;
         padding: 10px 15px;
         position: relative;
-        .card-info{
+        .card-info {
           position: absolute;
-          bottom:15%;
+          bottom: 15%;
           right: 15%;
           color: #fff;
         }

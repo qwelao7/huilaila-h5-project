@@ -13,7 +13,7 @@ import aliOSSUtils from './common/js/aliOSSUtils'
 import './common/js/uuid'
 import Vconsole from 'vconsole';
  /* eslint-disable no-new */
-new Vconsole();
+// new Vconsole();
 Vue.prototype.$qs = qs;
 Vue.config.productionTip = false;
 /* eslint-disable no-unused-vars */
