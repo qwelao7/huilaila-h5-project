@@ -8,7 +8,7 @@
 
       <div class="list">
         <div class="item">
-          <img src="../../../assets/images/card1.png" alt="">
+          <img :src=cardPic alt="">
           <div class="card-info" v-if="money>0">
             <em>卡内余额：</em>
             <span>￥{{money}}</span>
@@ -34,9 +34,9 @@
           <span slot="title" class="detail-title">客服电话</span>
           <span class="detail-desc">{{serviceHotline}}</span>
         </cell>
-        <cell align-items="flex-start" value-align="left" class="detail-info" v-if="validateDate">
+        <cell align-items="flex-start" value-align="left" class="detail-info" v-if="validDate">
           <span slot="title" class="detail-title">有效期</span>
-          <span class="detail-desc">{{validateDate}}</span>
+          <span class="detail-desc">{{validDate}}</span>
         </cell>
         <cell align-items="flex-start" value-align="left" class="detail-info">
           <span slot="title" class="detail-title">获取方式</span>
@@ -46,7 +46,7 @@
 
       <div class="spacing-container"></div>
       <!--适用门店-->
-      <group class="store-list" title="适用门店" title-color="#333">
+      <group class="store-list" title="适用门店" title-color="#333" v-if="storeList.length>0">
         <cell v-for="store in storeList">
           <div slot="title">
             <span class="store-title">{{store.storeName}}</span>
@@ -83,9 +83,8 @@
         rightsDesc: '',
         publicPlatform: '',
         serviceHotline: '',
-        validateDate: '',
-        getTypeDesc: '',
-        cardInfo: []
+        validDate: '',
+        getTypeDesc: ''
       }
     },
     created () {
@@ -113,9 +112,11 @@
             _this_.getTypeDesc = res.data.cardInfo.getTypeDesc;
             _this_.publicPlatform = res.data.cardInfo.publicPlatform;
             _this_.serviceHotline = res.data.cardInfo.serviceHotline;
-            _this_.money = res.data.userCardInfo.money;
-            if (res.data.userCardInfo.validDate) {
-              _this_.validateDate = jlDate.Dateformat(res.data.userCardInfo.validDate, 'YYYY-MM-DD')
+            if (res.data.userCardInfo) {
+              _this_.money = res.data.userCardInfo.money;
+              _this_.validDate = res.data.userCardInfo.validDate ? jlDate.Dateformat(res.data.userCardInfo.validDate, 'YYYY-MM-DD') : '长期有效'
+            } else {
+              _this_.validDate = res.data.cardInfo.validYears === 0 ? '长期有效' : res.data.cardInfo.validYears + '年'
             }
           } else {
             _this_.$vux.toast.show({
@@ -196,7 +197,7 @@
           color: #333;
           font-size: 13px;
           text-align: left;
-          margin-top: 4px;
+          margin-top: 5px;
         }
       }
     }
