@@ -41,6 +41,9 @@
       }
     },
     created () {
+      this.$vux.loading.show({
+        text: '加载中...'
+      })
       this.getCardList()
     },
     methods: {
@@ -53,6 +56,7 @@
             defCommunityId: localStorage.getItem('communityId')
           }
         }).then(res => {
+          this.$vux.loading.hide()
           if (res.status === 100) {
             _this_.showPlaceholder = true
             _this_.list = res.data || []

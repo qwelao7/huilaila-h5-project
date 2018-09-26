@@ -89,6 +89,9 @@
       }
     },
     created () {
+      this.$vux.loading.show({
+        text: '加载中...'
+      })
       this.getCardInfo()
     },
     methods: {
@@ -102,6 +105,7 @@
             defCommunityId: localStorage.getItem('communityId')
           }
         }).then(res => {
+          this.$vux.loading.hide()
           if (res.status === 100) {
             console.log(res.data)
             _this_.storeList = res.data.cardInfo.storeList;
