@@ -262,7 +262,7 @@
               case 15:
                 _this_.memberCardList.forEach(function (item, index) {
                   availablePayTypes.push({
-                    type: index + 3,
+                    type: index + 5,
                     money: item.money,
                     cardId: item.cardId,
                     name: item.cardName + '支付',
@@ -314,7 +314,7 @@
             // 调起支付键盘
             this.showPayKeyboard();
           }
-        } else if (type >= 3) {
+        } else if (type >= 5) {
           if (!this.account.hasPassword) { // 没有设置支付密码
             this.payBtnType = 'disabled';
             this.payBtnDisabled = true;
@@ -382,7 +382,7 @@
           this.wxPay();
         } else if (type === 2) { // 线下支付
           this.offLinePay();
-        } else if (type >= 3) { // 会员卡支付
+        } else if (type >= 5) { // 会员卡支付
           if (!this.account.hasPassword) { // 没有设置支付密码
             this.payBtnType = 'disabled';
             this.payBtnDisabled = true;
@@ -467,7 +467,7 @@
             // 调用接口出错,隐藏键盘
             _this_.payKeyboardPopShow = false;
           });
-        } else if (type >= 3) { // 会员卡支付
+        } else if (type >= 5) { // 会员卡支付
           cardData.cardId = _this_.currentPayWay.cardId
           this.$JHttp.post(window.baseURL + '/pay/getOrderMemberCardPay?' + querystring.stringify(cardData)).then((res) => {
             if (res.status === 100) {
@@ -790,7 +790,7 @@
             }
           }
         }
-        .pay-way-3, .pay-way-4, .pay-way-5, .pay-way-6, .pay-way-7, .pay-way-8, .pay-way-9, .pay-way-10 {
+        .pay-way-5, .pay-way-6, .pay-way-7, .pay-way-8, .pay-way-9, .pay-way-10, .pay-way-11, .pay-way-12, .pay-way-13, .pay-way-14, .pay-way-15 {
           .left {
             .icon {
               background-image: url('../../../assets/images/membercard_icon_payway.png');
