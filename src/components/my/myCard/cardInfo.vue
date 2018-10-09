@@ -47,7 +47,7 @@
       <div class="spacing-container"></div>
       <!--适用门店-->
       <group class="store-list" title="适用门店" title-color="#333" v-if="storeList.length>0">
-        <cell v-for="store in storeList">
+        <cell v-for="store in storeList" :link="'/shopperProductList/' + store.storeId">
           <div slot="title">
             <span class="store-title">{{store.storeName}}</span>
             <span class="store-addr">{{store.storeAddress}}</span>
@@ -108,6 +108,7 @@
           if (res.status === 100) {
             console.log(res.data)
             _this_.storeList = res.data.cardInfo.storeList;
+            _this_.cardPic = window.aliyunHome + res.data.cardInfo.cardPic;
             _this_.rightsDesc = res.data.cardInfo.rightsDesc;
             _this_.getTypeDesc = res.data.cardInfo.getTypeDesc;
             _this_.publicPlatform = res.data.cardInfo.publicPlatform;
@@ -127,6 +128,9 @@
         }).catch(e => {
           console.log(e)
         });
+      },
+      goToStore (id) {
+        this.$router.push('/shopperProductList/' + id)
       }
       // activeCard () {
       //   this.$vux.confirm.show({
