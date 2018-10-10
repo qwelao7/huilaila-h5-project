@@ -185,40 +185,40 @@
                   // 合成完最后一个,开始上传
                   if (index === len - 1) {
                     _this_.uploadBlob(blobs, 'album', undefined, undefined, function (resList) {
-                        let postData = {
-                          topicContent: content,
+                      let postData = {
+                        topicContent: content,
                         topicType: 11, // 活动相册
                         imageUrls: JSON.stringify(resList),
-                          activityId: _this_.activityPickerId
-                        };
-                        // 保存图片到业务方
-                        _this_.$JHttp({
-                          url: window.baseURL + '/socialactivity/album/add?' + querystring.stringify(postData),
-                          method: 'post',
-                          headers: {
-                            defCommunityId: _this_.communityId
-                          }
-                        }).then(res => {
-                          if (res.status === 100) {
-                            // 开始保存逻辑
-                            _this_.$vux.loading.hide();
-                            _this_.$vux.toast.show({
-                              type: 'success',
-                              text: '发布成功'
-                            });
-                            setTimeout(function () {
-                              _this_.content = '';
-                              _this_.$router.go(-1);
-                            }, 2000)
-                          } else {
-                            _this_.$vux.toast.show({
-                              type: 'cancel',
-                              text: res.msg
-                            });
-                          }
-                        }).catch(error => {
-                          console.error(error);
-                        });
+                        activityId: _this_.activityPickerId
+                      };
+                      // 保存图片到业务方
+                      _this_.$JHttp({
+                        url: window.baseURL + '/socialactivity/album/add?' + querystring.stringify(postData),
+                        method: 'post',
+                        headers: {
+                          defCommunityId: _this_.communityId
+                        }
+                      }).then(res => {
+                        if (res.status === 100) {
+                          // 开始保存逻辑
+                          _this_.$vux.loading.hide();
+                          _this_.$vux.toast.show({
+                            type: 'success',
+                            text: '发布成功'
+                          });
+                          setTimeout(function () {
+                            _this_.content = '';
+                            _this_.$router.go(-1);
+                          }, 2000)
+                        } else {
+                          _this_.$vux.toast.show({
+                            type: 'cancel',
+                            text: res.msg
+                          });
+                        }
+                      }).catch(error => {
+                        console.error(error);
+                      });
                     })
                   }
                 }
