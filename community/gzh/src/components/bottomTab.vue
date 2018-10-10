@@ -139,9 +139,11 @@
               if (res.data === true) {
                 _this.$router.push('/pub_activity')
               } else {
-                _this.$vux.toast.show({
-                  type: 'text',
-                  text: '对不起，您没有权限进行此项操作！'
+                _this.$vux.confirm.show({
+                  content: '您尚未获得本小区活动创建权限。您可以发起“组局活动”的话题，让邻居们一起来讨论您的活动创意。',
+                  onConfirm () {
+                    _this.$router.push({path: '/pub_newThings', query: {type: 2}});
+                  }
                 })
               }
             } else {

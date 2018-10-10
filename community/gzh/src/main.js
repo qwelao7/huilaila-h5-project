@@ -11,13 +11,12 @@ import VueClipboard from 'vue-clipboard2';
 import './common/js/map';
 import aliOSSUtils from './common/js/aliOSSUtils'
 import './common/js/uuid'
-// import Vconsole from 'vconsole';
+import Vconsole from 'vconsole';
  /* eslint-disable no-new */
 // new Vconsole();
 Vue.prototype.$qs = qs;
 Vue.config.productionTip = false;
 /* eslint-disable no-unused-vars */
-// import vConsole from 'vConsole'
 
 const FastClick = require('fastclick');
 // 移除移动端点击延迟
