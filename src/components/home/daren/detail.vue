@@ -112,6 +112,10 @@
           <span class="text" @click="open">确定</span>
         </div>
       </x-dialog>
+      <x-dialog class="close-mask" v-model="isClose">
+        <span>达人已关闭</span>
+        <span>如有问题请联系生活服务中心</span>
+      </x-dialog>
     </div>
   </div>
 </template>
@@ -156,6 +160,7 @@
         title: '', // 标题
         curPage: 1, // 当前页码
         isShowDialog: false,
+        isClose: false,
         showDialogStyle: {
           maxWidth: '100%',
           width: '70%',
@@ -180,7 +185,7 @@
           params.workRoomId = this.id;
         }
         this.fetchFormData(url, params, data => {
-          const { shopName, from, headPic, introduce, label, workRoomId, ownerId, ownerName, workroomPic } = data;
+          const { shopName, from, headPic, introduce, label, workRoomId, ownerId, ownerName, workroomPic, workroomStatus } = data;
           this.shopName = shopName;
           this.from = from;
           this.introduce = introduce;
@@ -191,6 +196,7 @@
           this.title = shopName;
           this.workroomPic = workroomPic; // 工作室背景图
           this.headPic = headPic;
+          this.isClose = workroomStatus === 0;
         });
       },
 
@@ -536,5 +542,9 @@
         font-size: 16px;
       }
     }
+  }
+  .close-mask /deep/ .weui-dialog {
+    background-color: transparent;
+    color: #fff;
   }
 </style>

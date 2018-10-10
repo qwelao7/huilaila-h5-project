@@ -9,7 +9,7 @@
     <div class="button-wrapper">
       <button class="select-button" :class="{active: topic.name === topicType.name}" v-for="topicType in topicTypes" @click="setTopic(topicType)">{{topicType.name}}</button>
     </div>
-    <h3 class="title">达人</h3>
+    <h3 class="title" v-show="darenTopics.length > 0">达人</h3>
     <div class="button-wrapper">
       <button class="select-button" :class="{active: topic.name === topicType.name}" v-for="topicType in darenTopics" @click="setTopic(topicType)">{{topicType.name}}</button>
     </div>

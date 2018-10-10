@@ -23,7 +23,7 @@
           <li class="first-item" v-for="(items, index) in imgLists" v-bind:class="{ onePic: isOnePic }" v-show="items.src">
             <!--<img class="previewer-demo-img" :src="items.src" alt="" @click="show(index, information)">-->
             <j-img :osskey="items.src" v-if="isOnePic" :custom-class="'previewer-demo-img'" :custom-width="345" :custom-height="200" @click.native="show(index, information)"></j-img>
-            <j-img :osskey="items.src" v-if="!isOnePic" :custom-class="'previewer-demo-img'" :custom-width="113" :custom-height="180" @click.native="show(index, information)"></j-img>
+            <j-img :osskey="items.src" v-if="!isOnePic" :custom-class="'previewer-demo-img'" :custom-width="114" :custom-height="114" @click.native="show(index, information)"></j-img>
           </li>
         </ul>
         <div v-transfer-dom>

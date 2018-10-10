@@ -14,7 +14,7 @@
              <!--alt="" @click="show(index)">-->
         <j-img v-for="(items, index) in log.picSrcList" :key="index"
                :osskey="items.src" :custom-class="['previewer-demo-img', 'previewer-demo-img-' + picIndex, (index + 1) % 3 === 0 ? 'previewer-demo-img-wrap' : '']"
-               :custom-width="113" :custom-height="113"
+               :custom-width="112" :custom-height="112"
                @click.native="show(index)"></j-img>
         <div v-transfer-dom>
           <previewer :ref="'previewer-' + picIndex" :list="log.picSrcList" :options="options">

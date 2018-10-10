@@ -60,8 +60,7 @@
       </div>
       <!--支付键盘 begin-->
       <popup v-model="payKeyboardPopShow" :hide-on-blur="hideOnBlur">
-        <pay-keyboard v-on:closeKeyboard="closePayKeyboard" ref="payKeyboard"
-                      v-on:balancePay="balancePay"></pay-keyboard>
+        <pay-keyboard v-on:closeKeyboard="closePayKeyboard" ref="payKeyboard" v-on:balancePay="balancePay"></pay-keyboard>
       </popup>
       <!--支付键盘 end-->
       <div v-transfer-dom>
@@ -96,7 +95,6 @@
   import {sha1} from '../../../common/js/sha1';
   import {JNavigator} from '../../../common/js/utils';
   import {XHeader, ViewBox, querystring, md5, XDialog, TransferDomDirective as TransferDom} from 'vux';
-
   export default {
     name: 'pay',
     components: {
