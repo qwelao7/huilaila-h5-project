@@ -136,6 +136,11 @@
             _this.$vux.loading.hide()
             console.log('res.data', res.data);
             _this.applyList = res.data.activityJoinUserList
+            _this.applyList.forEach(res => {
+              if (res.activityJoinUserPhoto) {
+                res.activityJoinUserPhoto = window.aliyunHome + res.activityJoinUserPhoto
+              }
+            })
             if (refundData !== null && refundData !== undefined && refundData !== '') {
               _this.refundData = refundData
               _this.applyList.forEach((item, index) => {
