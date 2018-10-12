@@ -56,10 +56,19 @@
                         fillable></x-number>
             </div>
           </cell-box>
-          <template v-for="item in extraInfo" v-if="extraInfo.length>0">
-            <x-input :placeholder="item.columnName" v-model="item.columnValue" required></x-input>
-          </template>
+          <!--<template v-for="item in extraInfo" v-if="extraInfo.length>0">-->
+            <!--<x-input :placeholder="item.columnName" v-model="item.columnValue" required></x-input>-->
+          <!--</template>-->
         </group>
+        <group v-if="extraInfo.length>0">
+          <cell v-for="item in extraInfo">
+            <div slot="title" class="amountDetail-title">{{item.columnName}}</div>
+            <div slot="inline-desc" class="amountDetail-info">
+              <x-input type="text" v-model="item.columnValue" required></x-input>
+            </div>
+          </cell>
+        </group>
+
         <group class="options">
           <x-textarea placeholder="如您有什么特别需求可告知我们..." :height="130" :rows="8" :cols="30" :max="500"
                       :show-counter="false" v-model="note" @on-focus="showBtn = false"
@@ -325,6 +334,13 @@
         }
         let columnTemp = []
         this.extraInfo.forEach(res => {
+          if (!res.columnValue.trim()) {
+            this.$vux.toast.show({
+              type: 'text',
+              text: '附加信息不能为空！'
+            })
+            return
+          }
           columnTemp.push(res.columnId + ':' + res.columnValue)
         })
         let params = {
@@ -735,6 +751,22 @@
       position: fixed;
       bottom: 0;
       left: 0;
+    }
+  }
+
+  .amountDetail-title {
+    font-size: 14px;
+    color: #aaa;
+  }
+
+  .amountDetail-info {
+    input {
+      border: none;
+      width: 100%;
+      height: 26px;
+      font-size: 20px;
+      margin-top: 10px;
+      line-height: 26px;
     }
   }
 </style>
