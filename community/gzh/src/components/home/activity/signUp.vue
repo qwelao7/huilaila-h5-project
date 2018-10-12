@@ -57,7 +57,7 @@
             </div>
           </cell-box>
           <!--<template v-for="item in extraInfo" v-if="extraInfo.length>0">-->
-            <!--<x-input :placeholder="item.columnName" v-model="item.columnValue" required></x-input>-->
+          <!--<x-input :placeholder="item.columnName" v-model="item.columnValue" required></x-input>-->
           <!--</template>-->
         </group>
         <group v-if="extraInfo.length>0">
@@ -339,8 +339,8 @@
               type: 'text',
               text: '附加信息不能为空！'
             })
-            return
           }
+          return
           columnTemp.push(res.columnId + ':' + res.columnValue)
         })
         let params = {
@@ -531,7 +531,7 @@
     return s;
   }
 </script>
-<style type="text/less" lang="less" scoped>
+<style type="text/less" lang="less">
   .signUp {
     height: 100%;
     background-color: #ffffff;
@@ -626,18 +626,18 @@
           background-position: center;
         }
       }
-      .options{
-        .weui-cells:before{
+      .options {
+        .weui-cells:before {
           border: none;
         }
-        span{
+        span {
           font-size: 21px;
           font-weight: bold;
         }
-        .choose{
+        .choose {
           color: #aaaaaa;
         }
-        .arrow{
+        .arrow {
           width: .35rem;
           height: .35rem;
           background: url("../../../assets/images/arrow_icon_grey32.png") center no-repeat / contain;
@@ -649,11 +649,11 @@
       padding: 20px 15px;
       display: flex;
       flex-direction: column;
-      .linkTo{
+      .linkTo {
         font-size: 12px;
         display: flex;
         flex-direction: row;
-        a{
+        a {
           color: #0DAB60;
           text-decoration: underline;
         }
@@ -681,16 +681,16 @@
         background: #f7f7f7;
         color: #869dc7;
       }
-      .signUp_next{
-        width:100%;
-        height:50px;
+      .signUp_next {
+        width: 100%;
+        height: 50px;
         line-height: 50px;
-        .activity_pic{
-          width:50%;
-          height:100%;
+        .activity_pic {
+          width: 50%;
+          height: 100%;
           float: left;
-          border-top:solid 0.5px #D8D8D8;
-          .all{
+          border-top: solid 0.5px #D8D8D8;
+          .all {
             color: #333;
             font-size: 12px;
             margin-left: 15px;
@@ -757,9 +757,13 @@
   .amountDetail-title {
     font-size: 14px;
     color: #aaa;
+    height: 30px;
+    line-height: 30px;
+    margin-left: 20px;
   }
 
   .amountDetail-info {
+    border-bottom: 1px solid #d8d8d8;
     input {
       border: none;
       width: 100%;
