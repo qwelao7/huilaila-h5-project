@@ -333,16 +333,20 @@
           return
         }
         let columnTemp = []
+        let extra = true
         this.extraInfo.forEach(res => {
           if (!res.columnValue.trim()) {
-            this.$vux.toast.show({
-              type: 'text',
-              text: '附加信息不能为空！'
-            })
+            extra = false
           }
-          return
           columnTemp.push(res.columnId + ':' + res.columnValue)
         })
+        if (!extra) {
+          this.$vux.toast.show({
+            type: 'text',
+            text: '附加信息不能为空！'
+          })
+          return
+        }
         let params = {
           activityId: this.signInfo.activityId,
           joinUserCount: this.joinPeopleAccount,
