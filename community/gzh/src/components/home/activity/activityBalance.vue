@@ -236,6 +236,16 @@
           this.deleteModalShow = true;
         } else {
           let _this_ = this;
+          let balanceData = _this_.balanceDetailList;
+          for (var i = 0; i < balanceData.length; i++) {
+            if ((balanceData[i].fee === 0 || balanceData[i].fee === '' || balanceData[i].fee === null || balanceData[i].fee === undefined) && (balanceData[i].feeDesc === '' || balanceData[i].feeDesc === null || balanceData[i].feeDesc === undefined)) {
+              balanceData.splice(i, 1)
+              i = i - 1
+            }
+            if (i === balanceData.length - 1) {
+              _this_.balanceDetailList = balanceData
+            }
+          }
           _this_.$vux.loading.show({
             text: '发布中...'
           });
@@ -260,7 +270,8 @@
                       let postData = {
                         imageUrls: JSON.stringify(resList),
                         activityId: _this_.$route.params.activityId,
-                        balanceData: JSON.stringify(_this_.balanceDetailList),
+                        // balanceData: JSON.stringify(_this_.balanceDetailList),
+                        balanceData: JSON.stringify(balanceData),
                         refundData: JSON.stringify(_this_.refundData)
                       };
                       // 保存图片到业务方
@@ -301,7 +312,7 @@
           } else {
             let params = {
               activityId: _this_.$route.params.activityId,
-              balanceData: JSON.stringify(_this_.balanceDetailList),
+              balanceData: JSON.stringify(balanceData),
               refundData: JSON.stringify(_this_.refundData),
               imgUrls: ''
             };
