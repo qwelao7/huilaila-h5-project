@@ -175,11 +175,9 @@
               }, 5000)
               let refundData = [];
               let costData = [];
-              if (JSON.parse(localStorage.getItem('refundData')).activityId == _this.$route.params.activityId) {
-                refundData = JSON.parse(localStorage.getItem('refundData')).refundData
-              }
-              if (JSON.parse(localStorage.getItem('costData')).activityId == _this.$route.params.activityId) {
-                costData = JSON.parse(localStorage.getItem('costData')).costData
+              if (JSON.parse(localStorage.getItem('activityId')) == _this.$route.params.activityId) {
+                refundData = JSON.parse(localStorage.getItem('refundData'))
+                costData = JSON.parse(localStorage.getItem('costData'))
               }
               if (refundData !== null && refundData !== undefined && refundData !== '') {
                 refundData.forEach(res => {
@@ -295,6 +293,7 @@
                             type: 'success',
                             text: '发布成功'
                           });
+                          localStorage.removeItem('activityId')
                           localStorage.removeItem('refundData')
                           localStorage.removeItem('costData')
                           localStorage.removeItem('totalRefund')
@@ -335,6 +334,7 @@
                   type: 'success',
                   text: '发布成功'
                 });
+                localStorage.removeItem('activityId')
                 localStorage.removeItem('refundData')
                 localStorage.removeItem('costData')
                 localStorage.removeItem('totalRefund')
@@ -395,6 +395,7 @@
       },
       goToRefund () {
         let _this = this
+        localStorage.setItem('activityId', JSON.stringify(_this.$route.params.activityId))
         if (_this.totalRefund > 0) {
           localStorage.setItem('totalRefund', _this.totalRefund)
           let i = _this.balanceDetailList.length
@@ -403,10 +404,7 @@
               _this.balanceDetailList.splice(i, 1)
             }
           }
-          let cost = {};
-          cost.costData = _this.balanceDetailList
-          cost.activityId = _this.$route.params.activityId
-          localStorage.setItem('costData', JSON.stringify(cost))
+          localStorage.setItem('costData', JSON.stringify(_this.balanceDetailList))
           this.$router.push('/activityRefund/' + _this.$route.params.activityId)
         }
       }
