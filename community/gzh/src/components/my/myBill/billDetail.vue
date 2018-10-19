@@ -2,13 +2,15 @@
   <div class="bill-detail commonHeader">
 
     <view-box body-padding-top="1.253333rem" body-padding-bottom="0">
-      <x-header style="width:100%;position:absolute;left:0;top:0;z-index:100" slot="header" :left-options="{ backText: '' }" :title=title></x-header>
+      <x-header style="width:100%;position:absolute;left:0;top:0;z-index:100" slot="header"
+                :left-options="{ backText: '' }" :title=title></x-header>
 
         <div v-if="info.sysUserAccountDetailId">
 
           <div class="header">
             <div class="title">
-              <span class="icon" :style="{ backgroundImage: info.type == 2 && info.specialType == 24 ? 'url(' + require('../../../assets/images/billIcon/7.png') + ')' : 'url(' + require('../../../assets/images/billIcon/' + info.type + '.png') + ')' }"></span>
+            <span class="icon"
+                  :style="{ backgroundImage: info.type == 2 && info.specialType == 24 ? 'url(' + require('../../../assets/images/billIcon/7.png') + ')' : 'url(' + require('../../../assets/images/billIcon/' + info.type + '.png') + ')' }"></span>
               <span class="name" v-text="info.billTitle || info.storeName"></span>
             </div>
             <b class="money" v-text="info.moneyChange"></b>
@@ -38,7 +40,8 @@
             </div>
           </div>
 
-          <div class="form-preview" v-if="(info.type == 2 && info.specialType == 21) || (info.type == 3 && info.specialType == 31)">
+        <div class="form-preview"
+             v-if="(info.type == 2 && info.specialType == 21) || (info.type == 3 && info.specialType == 31)">
             <b class="title">内容：</b>
             <div class="form-preview-item">
               <label class="form-preview-label">订单号：</label>
@@ -51,7 +54,8 @@
             <div class="form-preview-item" v-if="info.productList && info.productList.length > 0">
               <label class="form-preview-label">订单明细：</label>
               <span class="form-preview-value">
-                <span v-for="productItem in info.productList" v-text="productItem.productName + ' ' + productItem.itemPrice + productItem.productUnit + ' X' + productItem.itemNum"></span>
+                <span v-for="productItem in info.productList"
+                      v-text="productItem.productName + ' ' + productItem.itemPrice + productItem.productUnit + ' X' + productItem.itemNum"></span>
               </span>
             </div>
           </div>
@@ -62,7 +66,8 @@
               <label class="form-preview-label">付款单号：</label>
               <span class="form-preview-value" v-text="info.serialNumber"></span>
             </div>
-            <span class="estates-list" v-for="estatesItem in info.estatesList" v-if="info.estatesList && info.estatesList.length > 0">
+          <span class="estates-list" v-for="estatesItem in info.estatesList"
+                v-if="info.estatesList && info.estatesList.length > 0">
               <div class="form-preview-item">
                 <label class="form-preview-label">类型：</label>
                 <span class="form-preview-value" v-text="estatesItem.item"></span>
@@ -74,13 +79,15 @@
               <div class="form-preview-item" v-if="estatesItem.billDetailList && estatesItem.billDetailList.length > 0">
                 <label class="form-preview-label">缴费详情：</label>
                 <span class="form-preview-value">
-                  <span v-for="estatesItem in estatesItem.billDetailList" v-text="estatesItem.billPeriod + ' ¥' + estatesItem.totalPrice"></span>
+                  <span v-for="estatesItem in estatesItem.billDetailList"
+                        v-text="estatesItem.billPeriod + ' ¥' + estatesItem.totalPrice"></span>
                 </span>
               </div>
             </span>
           </div>
 
-          <div class="form-preview" v-if="(info.type == 2 && info.specialType == 26) || (info.type == 3 && info.specialType == 36) || (info.type == 6 && info.specialType == 63)">
+        <div class="form-preview"
+             v-if="(info.type == 2 && info.specialType == 26) || (info.type == 3 && info.specialType == 36) || (info.type == 6 && info.specialType == 63)">
             <b class="title">内容：</b>
             <div class="form-preview-item">
               <label class="form-preview-label">订单号：</label>
@@ -105,7 +112,8 @@
   </div>
 </template>
 <script>
-  import { ViewBox, XHeader } from 'vux'
+  import {ViewBox, XHeader} from 'vux'
+
   export default {
     name: 'bill-detail',
     components: {
@@ -116,7 +124,7 @@
       return {
         title: '账单详情',
         types: ['', '充值', '消费', '退款', '', '提现', '收益'],
-        payType: ['线下支付', '支付宝支付', '银联支付', '微信支付', '一网通支付', '钱包支付', '通联支付', '农行掌银支付', '', '线上支付', '回来啦社区充值卡', 'POS支付', '微信支付', '微信支付', '微信支付'],
+        payType: ['线下支付', '支付宝支付', '银联支付', '微信支付', '一网通支付', '钱包支付', '通联支付', '农行掌银支付', '', '线上支付', '回来啦社区充值卡', 'POS支付', '微信支付', '微信支付', '微信支付', '会员卡支付'],
         sysUserAccountDetailId: '',
         info: {}
       }
@@ -170,7 +178,7 @@
   }
 </script>
 <style type="text/less" lang="less" scoped>
-.bill-detail {
+  .bill-detail {
   height: 100%;
   .header {
     display: flex;
@@ -243,5 +251,5 @@
       }
     }
   }
-}
+  }
 </style>

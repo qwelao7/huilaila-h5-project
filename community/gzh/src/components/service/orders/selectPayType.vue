@@ -37,7 +37,7 @@
       <div class="pay-way-wrapper">
         <div class="title vux-1px-b">支付方式:</div>
         <ul class="pay-list" v-if="payWayList.length">
-          <li class="pay-way vux-1px-b" :class="['pay-way-' + index, payWay.class]"
+          <li class="pay-way vux-1px-b" :class="['pay-way-' + payWay.type, payWay.class]"
               v-for="(payWay, index) in payWayList">
             <div class="left">
               <span class="icon"></span>
@@ -48,6 +48,7 @@
             </div>
             <div class="right" @click="selectPayWay(payWay)">
               <span class="money" v-if="payWay.type === 0" v-text="'¥ ' + account.balance.toFixed(2)"></span>
+              <span class="money" v-if="payWay.type >=3" v-text="'¥ ' + payWay.money.toFixed(2)"></span>
               <span class="check" :class="{selected: payWay.selected}"></span>
             </div>
           </li>
@@ -125,10 +126,8 @@
         orderDetail: {
           payMoney: 0,
           productTimeOut: 15,
-          totalMoney: {
-          },
-          redpacketMoney: {
-          }
+          totalMoney: {},
+          redpacketMoney: {}
         },
         payTypes: [],
         payWayList: [{
@@ -136,6 +135,7 @@
           name: '钱包支付',
           selected: true
         }],
+        memberCardList: [],
         subIsOnlinepay: '2',
         currentPayWay: {},
         account: {
@@ -178,7 +178,7 @@
             _this_.$set(_this_.account, 'hasPassword', hasPassword);
             let balance = parseFloat(money);
             _this_.$set(_this_.account, 'balance', balance);
-            // 余额不足时,置灰余额支付并选中支付宝
+            // 余额不足时,置灰余额支付并选中微信支付
             if (_this_.account.balance < _this_.orderDetail.totalMoney.money) {
               _this_.$set(_this_.payWayList[0], 'selected', false); // 去除余额支付的选中状态
               if (_this_.payWayList.length > 1) {
@@ -223,6 +223,10 @@
             _this_.orderDetail.redpacketMoney.float = '.' + redpacketMoneys[1];
             _this_.payTypes = data.payType;
             _this_.subIsOnlinepay = data.subIsOnlinepay;
+            if (data.userCardMemberList) {
+              _this_.memberCardList = data.userCardMemberList;
+            }
+            console.log(data)
             _this_.setPayWayList();
             _this_.initAccount();
           } else {
@@ -237,6 +241,7 @@
         });
       },
       setPayWayList () {
+        let _this_ = this;
         let payTypes = this.payTypes;
         let availablePayTypes = [];
         if (payTypes && payTypes.length) {
@@ -251,6 +256,17 @@
                   tips: '推荐安装微信5.0及以上版本的用户使用',
                   selected: false
                 });
+                break;
+              case 15:
+                _this_.memberCardList.forEach(function (item, index) {
+                  availablePayTypes.push({
+                    type: index + 5,
+                    money: item.money,
+                    cardId: item.cardId,
+                    name: item.cardName + '支付',
+                    selected: false
+                  });
+                })
                 break;
             }
           });
@@ -286,6 +302,23 @@
             this.isShowPayPasswordModel = true;
           }
           if (this.account.balance < this.orderDetail.payMoney) { // 余额不足
+            this.payBtnText = '余额不足';
+            this.payBtnType = 'disabled';
+            this.payBtnDisabled = true;
+          } else {
+            this.payBtnText = '确认支付';
+            this.payBtnType = 'primary';
+            this.payBtnDisabled = false;
+            // 调起支付键盘
+            this.showPayKeyboard();
+          }
+        } else if (type >= 5) {
+          if (!this.account.hasPassword) { // 没有设置支付密码
+            this.payBtnType = 'disabled';
+            this.payBtnDisabled = true;
+            this.isShowPayPasswordModel = true;
+          }
+          if (this.currentPayWay.money < this.orderDetail.payMoney) { // 余额不足
             this.payBtnText = '余额不足';
             this.payBtnType = 'disabled';
             this.payBtnDisabled = true;
@@ -347,6 +380,20 @@
           this.wxPay();
         } else if (type === 2) { // 线下支付
           this.offLinePay();
+        } else if (type >= 5) { // 会员卡支付
+          if (!this.account.hasPassword) { // 没有设置支付密码
+            this.payBtnType = 'disabled';
+            this.payBtnDisabled = true;
+            this.isShowPayPasswordModel = true;
+            return;
+          }
+          if (this.currentPayWay.money < this.orderDetail.payMoney) { // 余额不足
+            this.payBtnText = '余额不足';
+            this.payBtnType = 'disabled';
+            this.payBtnDisabled = true;
+            return;
+          }
+          this.showPayKeyboard();
         }
       },
       // 调起支付键盘
@@ -371,7 +418,12 @@
         postData.myMoney = this.account.balance;
         postData.orderMoney = this.orderDetail.payMoney;
         postData.orderIds = orderIds;
+        let cardData = {};
+        cardData.pwd = password;
+        cardData.orderIds = orderIds;
         let _this_ = this;
+        let type = this.currentPayWay.type;
+        if (type === 0) {  // 余额支付
         this.$JHttp.post(window.baseURL + '/pay/getOrderBalancePay?' + querystring.stringify(postData)).then((res) => {
           if (res.status === 100) {
             let data = res.data;
@@ -413,6 +465,50 @@
           // 调用接口出错,隐藏键盘
           _this_.payKeyboardPopShow = false;
         });
+        } else if (type >= 5) { // 会员卡支付
+          cardData.cardId = _this_.currentPayWay.cardId
+          this.$JHttp.post(window.baseURL + '/pay/getOrderMemberCardPay?' + querystring.stringify(cardData)).then((res) => {
+            if (res.status === 100) {
+              let data = res.data;
+              let status = data.status;
+              // 隐藏键盘
+              _this_.payKeyboardPopShow = false;
+              if (status === 1) {
+                // 支付请求成功,跳转到正在支付页面
+                _this_.$vux.toast.show({
+                  type: 'success',
+                  text: '支付成功'
+                });
+                setTimeout(function () {
+                  _this_.$router.push({
+                    path: '/submitSuccess',
+                    query: {
+                      payMoney: _this_.orderDetail.payMoney
+                    }
+                  });
+                }, 2000);
+              } else {
+                // 关闭键盘
+                _this_.$refs.payKeyboard.closeKeyboard();
+                _this_.$vux.toast.show({
+                  type: 'cancel',
+                  text: data.message
+                })
+              }
+            } else {
+              // 关闭键盘
+              _this_.$refs.payKeyboard.closeKeyboard();
+              // 接口没有返回数据
+              this.$vux.toast.show({
+                type: 'cancel',
+                text: res.msg
+              });
+            }
+          }).catch(function (response) {
+            // 调用接口出错,隐藏键盘
+            _this_.payKeyboardPopShow = false;
+          });
+        }
       },
       aliPay: function () {
         // 调用支付接口
@@ -692,6 +788,14 @@
             }
           }
         }
+        .pay-way-5, .pay-way-6, .pay-way-7, .pay-way-8, .pay-way-9, .pay-way-10, .pay-way-11, .pay-way-12, .pay-way-13, .pay-way-14, .pay-way-15 {
+          .left {
+            .icon {
+              background-image: url('../../../assets/images/membercard_icon_payway.png');
+            }
+          }
+          margin-bottom: 5px;
+        }
         .pay-item-offline {
           margin-top: 5px;
         }
@@ -713,7 +817,7 @@
       }
       .btn {
         border-top: 1px solid #E5E5E5;
-        span{
+        span {
           height: 50px;
           line-height: 50px;
         }

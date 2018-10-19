@@ -10,7 +10,8 @@
 
         <div class="tab">
           <tab :line-width=2 custom-bar-width="0.533rem" active-color="#0DAB60" v-model="currentIndex">
-            <tab-item class="vux-center" :selected="index === currentIndex" v-for="(item, index) in tabs" :key="index" v-text="item.text" @on-item-click="changeTab(item, index)">
+            <tab-item class="vux-center" :selected="index === currentIndex" v-for="(item, index) in tabs" :key="index"
+                      v-text="item.text" @on-item-click="changeTab(item, index)">
             </tab-item>
           </tab>
         </div>
@@ -21,10 +22,13 @@
           <j-pull :refreshFunc="refreshData" :loadMoreFunc="loadMore">
             <div slot="jpull-list">
               <div class="list" v-if="billList[index].length > 0">
-                <div class="item" :class="{ 'border-top': hasItemBorderTop(index, subIndex) }" v-for="(item, subIndex) in billList[index]" @click="billDetail(item)">
-                  <div class="header" v-if="showHeader(index, subIndex)" v-text="handleTime(billList[index][subIndex].intime)"></div>
+                <div class="item" :class="{ 'border-top': hasItemBorderTop(index, subIndex) }"
+                     v-for="(item, subIndex) in billList[index]" @click="billDetail(item)">
+                  <div class="header" v-if="showHeader(index, subIndex)"
+                       v-text="handleTime(billList[index][subIndex].intime)"></div>
                   <div class="body">
-                    <span class="icon" :style="{ backgroundImage: item.type === 2 && item.specialType === 24 ? 'url(' + require('../../../assets/images/billIcon/7.png') + ')' : 'url(' + require('../../../assets/images/billIcon/' + item.type + '.png') + ')' }"></span>
+                    <span class="icon"
+                          :style="{ backgroundImage: item.type === 2 && item.specialType === 24 ? 'url(' + require('../../../assets/images/billIcon/7.png') + ')' : 'url(' + require('../../../assets/images/billIcon/' + item.type + '.png') + ')' }"></span>
                     <div class="info">
                       <div class="cell top">
                         <span class="left" v-text="item.moneyChange"></span>
@@ -48,7 +52,8 @@
       </div>
 
       <div>
-        <popup-picker :show-cell="false" :show.sync="popupPicker" popup-title="请选择" :data="timeData" v-model="searchMonth" @on-change="chooseTime">
+        <popup-picker :show-cell="false" :show.sync="popupPicker" popup-title="请选择" :data="timeData"
+                      v-model="searchMonth" @on-change="chooseTime">
         </popup-picker>
       </div>
 
@@ -58,8 +63,8 @@
 </template>
 <script>
   import Vue from 'vue'
-  import { ViewBox, XHeader, PopupPicker } from 'vux'
-  import { JTab, JTabItem } from 'components/base/JTab/index'
+  import {ViewBox, XHeader, PopupPicker} from 'vux'
+  import {JTab, JTabItem} from 'components/base/JTab/index'
   import JPull from 'components/base/JPull/JPull'
   export default {
     name: 'myBill',
@@ -92,7 +97,7 @@
           searchMonth: ''
         }],
         type: ['', '充值', '消费', '退款', '', '提现', '收益'],
-        payType: ['线下支付', '支付宝支付', '银联支付', '微信支付', '一网通支付', '钱包支付', '通联支付', '农行掌银支付', '', '线上支付', '回来啦社区充值卡', 'POS支付', '微信支付', '微信支付', '微信支付'],
+        payType: ['线下支付', '支付宝支付', '银联支付', '微信支付', '一网通支付', '钱包支付', '通联支付', '农行掌银支付', '', '线上支付', '回来啦社区充值卡', 'POS支付', '微信支付', '微信支付', '微信支付', '会员卡支付'],
         pageInfo: [],
         currentIndex: 0,
         currentTab: {},
@@ -272,13 +277,13 @@
         this.getBillList()
       },
       billDetail (item) {
-        this.$router.push({ path: '/billDetail', query: { sysUserAccountDetailId: item.sysUserAccountDetailId } })
+        this.$router.push({path: '/billDetail', query: {sysUserAccountDetailId: item.sysUserAccountDetailId}})
       }
     }
   }
 </script>
 <style type="text/less" lang="less" scoped>
-.myBill {
+  .myBill {
   height: 100%;
   .bill-list-wrapper {
     height: 100%;
@@ -368,5 +373,5 @@
       }
     }
   }
-}
+  }
 </style>
