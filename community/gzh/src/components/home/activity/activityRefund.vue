@@ -127,7 +127,11 @@
     methods: {
       getApplyUser () {
         let _this = this;
-        let refundData = JSON.parse(localStorage.getItem('refundData'))
+        let refund = JSON.parse(localStorage.getItem('refundData'))
+        let refundData = []
+        if (refund.activityId == this.$route.params.activityId) {
+          refundData = refund.refundData
+        }
         _this.$JHttp({
           method: 'get',
           url: window.baseURL + '/socialactivity/refundUserList/?activityId=' + this.$route.params.activityId
@@ -205,7 +209,10 @@
         }
       },
       refundConfirm () {
-        localStorage.setItem('refundData', JSON.stringify(this.refundData))
+        let refund = {};
+        refund.refundData = this.refundData
+        refund.activityId = this.$route.params.activityId
+        localStorage.setItem('refundData', JSON.stringify(refund))
         console.log(localStorage.getItem('refundData'))
         this.$router.push('/activityBalance/' + this.$route.params.activityId)
       }

@@ -173,8 +173,14 @@
               setTimeout(function () {
                 _this.showInfo = false
               }, 5000)
-              let refundData = JSON.parse(localStorage.getItem('refundData'))
-              let costData = JSON.parse(localStorage.getItem('costData'))
+              let refundData = [];
+              let costData = [];
+              if (JSON.parse(localStorage.getItem('refundData')).activityId == _this.$route.params.activityId) {
+                refundData = JSON.parse(localStorage.getItem('refundData')).refundData
+              }
+              if (JSON.parse(localStorage.getItem('costData')).activityId == _this.$route.params.activityId) {
+                costData = JSON.parse(localStorage.getItem('costData')).costData
+              }
               if (refundData !== null && refundData !== undefined && refundData !== '') {
                 refundData.forEach(res => {
                   if (parseFloat(res.fee) > 0) {
@@ -397,7 +403,10 @@
               _this.balanceDetailList.splice(i, 1)
             }
           }
-          localStorage.setItem('costData', JSON.stringify(_this.balanceDetailList))
+          let cost = {};
+          cost.costData = _this.balanceDetailList
+          cost.activityId = _this.$route.params.activityId
+          localStorage.setItem('costData', JSON.stringify(cost))
           this.$router.push('/activityRefund/' + _this.$route.params.activityId)
         }
       }
