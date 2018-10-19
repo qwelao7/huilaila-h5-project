@@ -392,6 +392,9 @@
         })
         _this.totalExpense = toDecimal2(expense)
         _this.totalRefund = toDecimal2(_this.totalIncome - _this.totalExpense)
+        _this.refundData = [];
+        _this.refundCount = 0;
+        _this.localStorage.removeItem('refundData')
       },
       goToRefund () {
         let _this = this
