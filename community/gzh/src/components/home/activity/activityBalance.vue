@@ -240,6 +240,13 @@
           this.deleteModalShow = true;
         } else {
           let _this_ = this;
+          if (toDecimal2(_this_.totalIncome) !== (toDecimal2(_this_.totalExpense) + toDecimal2(_this_.totalRefund))) {
+            _this_.$vux.toast.show({
+              type: 'cancel',
+              text: '请核对您的退款金额'
+            });
+            return
+          }
           let balanceData = _this_.balanceDetailList;
           for (var i = 0; i < balanceData.length; i++) {
             if ((balanceData[i].fee === 0 || balanceData[i].fee === '' || balanceData[i].fee === null || balanceData[i].fee === undefined) && (balanceData[i].feeDesc === '' || balanceData[i].feeDesc === null || balanceData[i].feeDesc === undefined)) {
