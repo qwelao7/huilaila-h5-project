@@ -173,8 +173,12 @@
               setTimeout(function () {
                 _this.showInfo = false
               }, 5000)
-              let refundData = JSON.parse(localStorage.getItem('refundData'))
-              let costData = JSON.parse(localStorage.getItem('costData'))
+              let refundData = [];
+              let costData = [];
+              if (JSON.parse(localStorage.getItem('activityId')) === _this.$route.params.activityId) {
+                refundData = JSON.parse(localStorage.getItem('refundData'))
+                costData = JSON.parse(localStorage.getItem('costData'))
+              }
               if (refundData !== null && refundData !== undefined && refundData !== '') {
                 refundData.forEach(res => {
                   if (parseFloat(res.fee) > 0) {
@@ -236,6 +240,30 @@
           this.deleteModalShow = true;
         } else {
           let _this_ = this;
+          let refundTemp = JSON.parse(localStorage.getItem('refundData'))
+          let refundTep = 0;
+          if (refundTemp) {
+            refundTemp.forEach((item, index) => {
+              refundTep += toDecimal2(item.fee);
+            })
+          }
+          if (refundTep !== _this_.totalRefund) {
+            _this_.$vux.toast.show({
+              type: 'cancel',
+              text: '请确认您的退款金额'
+            });
+            return
+          }
+          let balanceData = _this_.balanceDetailList;
+          for (var i = 0; i < balanceData.length; i++) {
+            if ((balanceData[i].fee === 0 || balanceData[i].fee === '' || balanceData[i].fee === null || balanceData[i].fee === undefined) && (balanceData[i].feeDesc === '' || balanceData[i].feeDesc === null || balanceData[i].feeDesc === undefined)) {
+              balanceData.splice(i, 1)
+              i = i - 1
+            }
+            if (i === balanceData.length - 1) {
+              _this_.balanceDetailList = balanceData
+            }
+          }
           _this_.$vux.loading.show({
             text: '发布中...'
           });
@@ -260,7 +288,8 @@
                       let postData = {
                         imageUrls: JSON.stringify(resList),
                         activityId: _this_.$route.params.activityId,
-                        balanceData: JSON.stringify(_this_.balanceDetailList),
+                        // balanceData: JSON.stringify(_this_.balanceDetailList),
+                        balanceData: JSON.stringify(balanceData),
                         refundData: JSON.stringify(_this_.refundData)
                       };
                       // 保存图片到业务方
@@ -278,6 +307,7 @@
                             type: 'success',
                             text: '发布成功'
                           });
+                          localStorage.removeItem('activityId')
                           localStorage.removeItem('refundData')
                           localStorage.removeItem('costData')
                           localStorage.removeItem('totalRefund')
@@ -301,7 +331,7 @@
           } else {
             let params = {
               activityId: _this_.$route.params.activityId,
-              balanceData: JSON.stringify(_this_.balanceDetailList),
+              balanceData: JSON.stringify(balanceData),
               refundData: JSON.stringify(_this_.refundData),
               imgUrls: ''
             };
@@ -318,6 +348,7 @@
                   type: 'success',
                   text: '发布成功'
                 });
+                localStorage.removeItem('activityId')
                 localStorage.removeItem('refundData')
                 localStorage.removeItem('costData')
                 localStorage.removeItem('totalRefund')
@@ -375,9 +406,16 @@
         })
         _this.totalExpense = toDecimal2(expense)
         _this.totalRefund = toDecimal2(_this.totalIncome - _this.totalExpense)
+        if (_this.totalRefund < 0) {
+          _this.totalRefund = 0
+        }
+        _this.refundData = [];
+        _this.refundCount = 0;
+        localStorage.removeItem('refundData')
       },
       goToRefund () {
         let _this = this
+        localStorage.setItem('activityId', JSON.stringify(_this.$route.params.activityId))
         if (_this.totalRefund > 0) {
           localStorage.setItem('totalRefund', _this.totalRefund)
           let i = _this.balanceDetailList.length

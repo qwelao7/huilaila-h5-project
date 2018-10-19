@@ -120,14 +120,19 @@
         text: '加载中'
       });
       this.communityId = localStorage.getItem('communityId');
+      if (JSON.parse(localStorage.getItem('activityId')) === this.$route.params.activityId) {
       this.totalRefund = toDecimal2(localStorage.getItem('totalRefund'))
+      }
       console.log('待退款金额', this.totalRefund)
       this.getApplyUser()
     },
     methods: {
       getApplyUser () {
         let _this = this;
-        let refundData = JSON.parse(localStorage.getItem('refundData'))
+        let refundData = [];
+        if (JSON.parse(localStorage.getItem('activityId')) === _this.$route.params.activityId) {
+          refundData = JSON.parse(localStorage.getItem('refundData'))
+        }
         _this.$JHttp({
           method: 'get',
           url: window.baseURL + '/socialactivity/refundUserList/?activityId=' + this.$route.params.activityId
@@ -136,6 +141,11 @@
             _this.$vux.loading.hide()
             console.log('res.data', res.data);
             _this.applyList = res.data.activityJoinUserList
+            _this.applyList.forEach(res => {
+              if (res.activityJoinUserPhoto) {
+                res.activityJoinUserPhoto = window.aliyunHome + res.activityJoinUserPhoto
+              }
+            })
             if (refundData !== null && refundData !== undefined && refundData !== '') {
               _this.refundData = refundData
               _this.applyList.forEach((item, index) => {

@@ -25,7 +25,7 @@
             <div slot="title" class="amountDetail-title">总退款金额 (元)：{{balanceInfo.totalRefund}}</div>
           </cell>
         </group>
-        <div class="imgList">
+        <div class="imgList" v-if="imgList&&imgList.length">
           <ul>
             <li class="first-item" v-for="(items, index) in imgList"
                 v-bind:class="{ onePic: isOne }" style="">

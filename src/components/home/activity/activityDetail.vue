@@ -70,7 +70,7 @@
                   </div>
                 </cell-box>
               </group>
-              <group>
+              <group v-if="detailObj.activityStatus>2">
                 <cell-box is-link class="accountList" @click.native="goToBalance"
                           v-if="detailObj.isBalanced===1||detailObj.userRole===1">
                   <div>
