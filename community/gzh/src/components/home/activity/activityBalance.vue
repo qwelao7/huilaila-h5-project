@@ -240,10 +240,17 @@
           this.deleteModalShow = true;
         } else {
           let _this_ = this;
-          if (toDecimal2(_this_.totalIncome) !== (toDecimal2(_this_.totalExpense) + toDecimal2(_this_.totalRefund))) {
+          let refundTemp = JSON.parse(localStorage.getItem('refundData'))
+          let refundTep = 0;
+          if (refundTemp) {
+            refundTemp.forEach((item, index) => {
+              refundTep += toDecimal2(item.fee);
+            })
+          }
+          if (refundTep !== _this_.totalRefund) {
             _this_.$vux.toast.show({
               type: 'cancel',
-              text: '请核对您的退款金额'
+              text: '请确认您的退款金额'
             });
             return
           }
@@ -399,9 +406,12 @@
         })
         _this.totalExpense = toDecimal2(expense)
         _this.totalRefund = toDecimal2(_this.totalIncome - _this.totalExpense)
+        if (_this.totalRefund < 0) {
+          _this.totalRefund = 0
+        }
         _this.refundData = [];
         _this.refundCount = 0;
-        _this.localStorage.removeItem('refundData')
+        localStorage.removeItem('refundData')
       },
       goToRefund () {
         let _this = this
