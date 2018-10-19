@@ -175,7 +175,7 @@
               }, 5000)
               let refundData = [];
               let costData = [];
-              if (JSON.parse(localStorage.getItem('activityId')) == _this.$route.params.activityId) {
+              if (JSON.parse(localStorage.getItem('activityId')) === _this.$route.params.activityId) {
                 refundData = JSON.parse(localStorage.getItem('refundData'))
                 costData = JSON.parse(localStorage.getItem('costData'))
               }

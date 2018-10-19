@@ -120,7 +120,7 @@
         text: '加载中'
       });
       this.communityId = localStorage.getItem('communityId');
-      if (localStorage.getItem('activityId') == this.$route.params.activityId) {
+      if (localStorage.getItem('activityId') === this.$route.params.activityId) {
         this.totalRefund = toDecimal2(localStorage.getItem('totalRefund'))
       }
       console.log('待退款金额', this.totalRefund)
@@ -130,7 +130,7 @@
       getApplyUser () {
         let _this = this;
         let refundData = [];
-        if (localStorage.getItem('activityId') == this.$route.params.activityId) {
+        if (localStorage.getItem('activityId') === this.$route.params.activityId) {
           refundData = JSON.parse(localStorage.getItem('refundData'))
         }
         _this.$JHttp({
