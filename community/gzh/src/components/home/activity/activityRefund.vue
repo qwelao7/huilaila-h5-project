@@ -153,7 +153,7 @@
               })
               let refundTemp = 0
               _this.refundData.forEach(res => {
-                refundTemp += parseFloat(res.fe 1e)
+                refundTemp += parseFloat(res.fee)
               })
               refundTemp = toDecimal2(refundTemp)
               if (refundTemp === _this.totalRefund) {
