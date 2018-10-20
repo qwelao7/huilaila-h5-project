@@ -3,8 +3,7 @@
     <view-box ref="viewBox" body-padding-top="1.253333rem" body-padding-bottom="1.333333rem">
       <x-header
         slot="header"
-        :left-options="{backText: '',preventGoBack:'true'}"
-        @on-click-back="clickBack()"
+        :left-options="{backText: ''}"
         title="活动结算"
         style="width:100%;position:absolute;left:0;top:0;z-index:100">
       </x-header>
@@ -26,7 +25,7 @@
             <div slot="title" class="amountDetail-title">总退款金额 (元)：{{balanceInfo.totalRefund}}</div>
           </cell>
         </group>
-        <div class="imgList" v-if="imgList&&imgList.length">
+        <div class="imgList"  v-if="imgList&&imgList.length">
           <ul>
             <li class="first-item" v-for="(items, index) in imgList"
                 v-bind:class="{ onePic: isOne }" style="">
@@ -181,9 +180,6 @@
       },
       show (index) {
         this.$refs.previewer.show(index);
-      },
-      clickBack () {
-        this.$router.push('/activityDetail/' + this.$route.params.activityId)
       }
       // goBack () {
       //   this.$router.push('/activityDetail/' + this.$route.params.activityId)
