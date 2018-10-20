@@ -247,7 +247,9 @@
               refundTep += toDecimal2(item.fee);
             })
           }
-          if (refundTep !== _this_.totalRefund) {
+          console.log('temp', refundTemp)
+          console.log('tep', refundTep)
+          if (refundTep !== toDecimal2(_this_.totalRefund)) {
             _this_.$vux.toast.show({
               type: 'cancel',
               text: '请确认您的退款金额'
