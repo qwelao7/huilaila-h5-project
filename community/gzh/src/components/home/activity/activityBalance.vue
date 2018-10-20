@@ -244,13 +244,13 @@
           let refundTep = 0;
           if (refundTemp) {
             refundTemp.forEach((item, index) => {
-              refundTep += toDecimal2(item.fee);
+              refundTep += parseFloat(item.fee);
             })
           }
           console.log('temp', refundTemp)
           console.log('tep', refundTep)
           console.log('total', _this_.totalRefund)
-          if (refundTep !== toDecimal2(_this_.totalRefund)) {
+          if (refundTep !== parseFloat(_this_.totalRefund)) {
             _this_.$vux.toast.show({
               type: 'cancel',
               text: '请确认您的退款金额'
