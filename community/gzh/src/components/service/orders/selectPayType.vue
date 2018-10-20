@@ -60,7 +60,8 @@
       </div>
       <!--支付键盘 begin-->
       <popup v-model="payKeyboardPopShow" :hide-on-blur="hideOnBlur">
-        <pay-keyboard v-on:closeKeyboard="closePayKeyboard" ref="payKeyboard" v-on:balancePay="balancePay"></pay-keyboard>
+        <pay-keyboard v-on:closeKeyboard="closePayKeyboard" ref="payKeyboard"
+                      v-on:balancePay="balancePay"></pay-keyboard>
       </popup>
       <!--支付键盘 end-->
       <div v-transfer-dom>
@@ -95,6 +96,7 @@
   import {sha1} from '../../../common/js/sha1';
   import {JNavigator} from '../../../common/js/utils';
   import {XHeader, ViewBox, querystring, md5, XDialog, TransferDomDirective as TransferDom} from 'vux';
+
   export default {
     name: 'pay',
     components: {
@@ -170,7 +172,7 @@
         this.currentPayWay = this.payWayList[0];
         // 调取查询账户基础信息接口
         let _this_ = this;
-        this.$JHttp.get(window.baseURL + '/treasure/getMyMoney').then((res) => {
+        _this_.$JHttp.get(window.baseURL + '/treasure/getMyMoney').then((res) => {
           if (res.status === 100) {
             let data = res.data;
             let money = data.money;
@@ -424,47 +426,47 @@
         let _this_ = this;
         let type = this.currentPayWay.type;
         if (type === 0) {  // 余额支付
-        this.$JHttp.post(window.baseURL + '/pay/getOrderBalancePay?' + querystring.stringify(postData)).then((res) => {
-          if (res.status === 100) {
-            let data = res.data;
-            let status = data.status;
-            // 隐藏键盘
-            _this_.payKeyboardPopShow = false;
-            if (status === 1) {
-              // 支付请求成功,跳转到正在支付页面
-              _this_.$vux.toast.show({
-                type: 'success',
-                text: '支付成功'
-              });
-              setTimeout(function () {
-                _this_.$router.push({
-                  path: '/submitSuccess',
-                  query: {
-                    payMoney: _this_.orderDetail.payMoney
-                  }
+          this.$JHttp.post(window.baseURL + '/pay/getOrderBalancePay?' + querystring.stringify(postData)).then((res) => {
+            if (res.status === 100) {
+              let data = res.data;
+              let status = data.status;
+              // 隐藏键盘
+              _this_.payKeyboardPopShow = false;
+              if (status === 1) {
+                // 支付请求成功,跳转到正在支付页面
+                _this_.$vux.toast.show({
+                  type: 'success',
+                  text: '支付成功'
                 });
-              }, 2000);
+                setTimeout(function () {
+                  _this_.$router.push({
+                    path: '/submitSuccess',
+                    query: {
+                      payMoney: _this_.orderDetail.payMoney
+                    }
+                  });
+                }, 2000);
+              } else {
+                // 关闭键盘
+                _this_.$refs.payKeyboard.closeKeyboard();
+                _this_.$vux.toast.show({
+                  type: 'cancel',
+                  text: data.message
+                })
+              }
             } else {
               // 关闭键盘
               _this_.$refs.payKeyboard.closeKeyboard();
-              _this_.$vux.toast.show({
+              // 接口没有返回数据
+              this.$vux.toast.show({
                 type: 'cancel',
-                text: data.message
-              })
+                text: res.msg
+              });
             }
-          } else {
-            // 关闭键盘
-            _this_.$refs.payKeyboard.closeKeyboard();
-            // 接口没有返回数据
-            this.$vux.toast.show({
-              type: 'cancel',
-              text: res.msg
-            });
-          }
-        }).catch(function (response) {
-          // 调用接口出错,隐藏键盘
-          _this_.payKeyboardPopShow = false;
-        });
+          }).catch(function (response) {
+            // 调用接口出错,隐藏键盘
+            _this_.payKeyboardPopShow = false;
+          });
         } else if (type >= 5) { // 会员卡支付
           cardData.cardId = _this_.currentPayWay.cardId
           this.$JHttp.post(window.baseURL + '/pay/getOrderMemberCardPay?' + querystring.stringify(cardData)).then((res) => {
