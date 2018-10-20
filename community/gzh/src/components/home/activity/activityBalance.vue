@@ -247,9 +247,6 @@
               refundTep += parseFloat(item.fee);
             })
           }
-          console.log('temp', refundTemp)
-          console.log('tep', refundTep)
-          console.log('total', _this_.totalRefund)
           if (refundTep !== parseFloat(_this_.totalRefund)) {
             _this_.$vux.toast.show({
               type: 'cancel',
