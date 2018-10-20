@@ -32,7 +32,7 @@
         </cell>
         <cell align-items="flex-start" value-align="left" class="detail-info">
           <span slot="title" class="detail-title">客服电话</span>
-          <span class="detail-desc">{{serviceHotline}}</span>
+          <a class="detail-desc" :href="'tel:'+ serviceHotline">{{serviceHotline}}</a>
         </cell>
         <cell align-items="flex-start" value-align="left" class="detail-info" v-if="validDate">
           <span slot="title" class="detail-title">有效期</span>
