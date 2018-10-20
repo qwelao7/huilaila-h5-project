@@ -3,8 +3,7 @@
     <view-box ref="viewBox" body-padding-top="1.253333rem" body-padding-bottom="1.333333rem">
       <x-header
         slot="header"
-        :left-options="{backText: ''}"
-        left-options.preventGoBack="true"
+        :left-options="{backText: '',preventGoBack:'true'}"
         @on-click-back="clickBack()"
         title="活动结算"
         style="width:100%;position:absolute;left:0;top:0;z-index:100">
