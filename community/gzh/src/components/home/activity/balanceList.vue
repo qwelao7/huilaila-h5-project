@@ -25,7 +25,7 @@
             <div slot="title" class="amountDetail-title">总退款金额 (元)：{{balanceInfo.totalRefund}}</div>
           </cell>
         </group>
-        <div class="imgList"  v-if="imgList&&imgList.length">
+        <div class="imgList" v-if="imgList&&imgList.length">
           <ul>
             <li class="first-item" v-for="(items, index) in imgList"
                 v-bind:class="{ onePic: isOne }" style="">
@@ -122,6 +122,7 @@
         },
         balanceInfo: {},
         refund: 0,
+        fromUrl: {},
         options: {
           getThumbBoundsFn (index) {
             // find thumbnail element
@@ -140,11 +141,17 @@
         imgList: []
       }
     },
+    beforeRouteEnter (to, from, next) {
+      console.log('from', from)
+      next();
+      this.fromUrl = from
+    },
     created () {
       this.$vux.loading.show({
         text: '加载中'
       });
       this.getInformation();
+      console.log('fromUrl', this.fromUrl)
     },
     methods: {
       getInformation () {
