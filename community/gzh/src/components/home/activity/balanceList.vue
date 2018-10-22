@@ -149,16 +149,15 @@
       console.log('from', from)
 
       console.log('leftOptions', this.leftOptions)
-      next(() => {
-        this.fromUrl = from
-        console.log('fromUrl', this.fromUrl)
+      next(vm => {
+        vm.fromUrl = from
         if (from.name === '/activityBalance') {
-          this.leftOptions = {
+          vm.leftOptions = {
             backText: '',
             preventGoBack: 'true'
           }
         } else {
-          this.leftOptions = {
+          vm.leftOptions = {
             backText: ''
           }
         }
