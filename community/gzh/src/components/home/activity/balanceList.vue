@@ -159,6 +159,7 @@
           backText: ''
         }
       }
+      console.log('leftOptions', this.leftOptions)
     },
     created () {
       this.$vux.loading.show({
