@@ -124,7 +124,7 @@
         balanceInfo: {},
         refund: 0,
         leftOptions: {
-          backText: '',
+          backText: ''
         },
         fromUrl: {},
         options: {
