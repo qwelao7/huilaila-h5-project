@@ -147,19 +147,22 @@
     },
     beforeRouteEnter (to, from, next) {
       console.log('from', from)
-      this.fromUrl = from
-      console.log('fromUrl', this.fromUrl)
-      if (from.name === '/activityBalance') {
-        this.leftOptions = {
-          backText: '',
-          preventGoBack: 'true'
-        }
-      } else {
-        this.leftOptions = {
-          backText: ''
-        }
-      }
+
       console.log('leftOptions', this.leftOptions)
+      next(() => {
+        this.fromUrl = from
+        console.log('fromUrl', this.fromUrl)
+        if (from.name === '/activityBalance') {
+          this.leftOptions = {
+            backText: '',
+            preventGoBack: 'true'
+          }
+        } else {
+          this.leftOptions = {
+            backText: ''
+          }
+        }
+      });
     },
     created () {
       this.$vux.loading.show({
