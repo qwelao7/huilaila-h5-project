@@ -147,8 +147,6 @@
     },
     beforeRouteEnter (to, from, next) {
       console.log('from', from)
-
-      console.log('leftOptions', this.leftOptions)
       next(vm => {
         vm.fromUrl = from
         if (from.name === '/activityBalance') {
