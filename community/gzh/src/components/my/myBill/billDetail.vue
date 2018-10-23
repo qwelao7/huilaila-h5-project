@@ -39,14 +39,14 @@
             <span class="form-preview-value" v-text="handleMoney(info.money)"></span>
           </div>
           <div class="form-preview-item"
-               v-if="info.type == 1 && info.specialType == 15">
+               v-if="info.remarks && info.type == 1 && info.specialType == 15">
             <label class="form-preview-label">充值原因：</label>
-            <span class="form-preview-value" v-text="info.returnBackReason"></span>
+            <span class="form-preview-value" v-text="info.remarks"></span>
           </div>
           <div class="form-preview-item"
-               v-if="info.type == 2 && info.specialType == 27">
+               v-if="info.remarks && info.type == 2 && info.specialType == 27">
             <label class="form-preview-label">扣款原因：</label>
-            <span class="form-preview-value" v-text="info.returnBackReason"></span>
+            <span class="form-preview-value" v-text="info.remarks"></span>
           </div>
         </div>
 
