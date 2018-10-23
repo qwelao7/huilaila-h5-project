@@ -91,6 +91,7 @@
         activityPickerId: 0,
         activityList: [],
         activityInfo: [],
+        imgBlobs: [],
         showSelect: true
       }
     },
@@ -218,93 +219,148 @@
           let len = localIds.length;
           /* 传了图片 */
           if (len) {
-            let blobs = [];
-            localIds.forEach(function (localId, index) {
-              _this_.$wechat.getLocalImgData({
-                localId: localId, // 图片的localID
-                success: function (res) {
-                  let localData = res.localData; // localData是图片的base64数据，可以用img标签显示
-                  if (JNavigator.isAndroid()) {
-                    localData = 'data:image/jgp;base64,' + localData;
+            localIds.forEach(function (imgId, index) {
+              if (_this_.isApp) {
+                //
+                _this_.upLoadPic(imgId, len, index)
+              } else {
+                _this_.$wechat.getLocalImgData({
+                  localId: imgId, // 图片的localID
+                  success: function (res) {
+                    let localData = res.localData; // localData是图片的base64数据，可以用img标签显示
+                    if (JNavigator.isAndroid()) {
+                      localData = 'data:image/jgp;base64,' + localData;
+                    }
+                    _this_.upLoadPic(localData, len, index)
                   }
-                  let file = File.dataURItoBlob(localData);
-                  // _this_.uploadData.append('files', file.blob, file.fileName); // blob对象,自己手动加上文件名
-                  blobs.push(file);
-                  // 合成完最后一个,开始上传
-                  if (index === len - 1) {
-                    _this_.uploadBlob(blobs, 'album', undefined, undefined, function (resList) {
-                      let postData = {
-                        topicContent: content,
-                        topicType: 11, // 活动相册
-                        imageUrls: JSON.stringify(resList),
-                        activityId: _this_.activityPickerId
-                      };
-                      // 保存图片到业务方
-                      _this_.$JHttp({
-                        url: window.baseURL + '/socialactivity/album/add?' + querystring.stringify(postData),
-                        method: 'post',
-                        headers: {
-                          defCommunityId: _this_.communityId
-                        }
-                      }).then(res => {
-                        if (res.status === 100) {
-                          // 开始保存逻辑
-                          _this_.$vux.loading.hide();
-                          _this_.$vux.toast.show({
-                            type: 'success',
-                            text: '发布成功'
-                          });
-                          setTimeout(function () {
-                            _this_.content = '';
-                            _this_.$router.go(-1);
-                          }, 2000)
-                        } else {
-                          _this_.$vux.toast.show({
-                            type: 'cancel',
-                            text: res.msg
-                          });
-                        }
-                      }).catch(error => {
-                        console.error(error);
-                      });
-                    })
-                  }
-                }
-              });
-            });
+                });
+              }
+            })
+
+            // let blobs = [];
+            // localIds.forEach(function (localId, index) {
+            //   _this_.$wechat.getLocalImgData({
+            //     localId: localId, // 图片的localID
+            //     success: function (res) {
+            //       let localData = res.localData; // localData是图片的base64数据，可以用img标签显示
+            //       if (JNavigator.isAndroid()) {
+            //         localData = 'data:image/jgp;base64,' + localData;
+            //       }
+            //       let file = File.dataURItoBlob(localData);
+            //       // _this_.uploadData.append('files', file.blob, file.fileName); // blob对象,自己手动加上文件名
+            //       blobs.push(file);
+            //       // 合成完最后一个,开始上传
+            //       if (index === len - 1) {
+            //         _this_.uploadBlob(blobs, 'album', undefined, undefined, function (resList) {
+            //           let postData = {
+            //             topicContent: content,
+            //             topicType: 11, // 活动相册
+            //             imageUrls: JSON.stringify(resList),
+            //             activityId: _this_.activityPickerId
+            //           };
+            //           // 保存图片到业务方
+            //           _this_.$JHttp({
+            //             url: window.baseURL + '/socialactivity/album/add?' + querystring.stringify(postData),
+            //             method: 'post',
+            //             headers: {
+            //               defCommunityId: _this_.communityId
+            //             }
+            //           }).then(res => {
+            //             if (res.status === 100) {
+            //               // 开始保存逻辑
+            //               _this_.$vux.loading.hide();
+            //               _this_.$vux.toast.show({
+            //                 type: 'success',
+            //                 text: '发布成功'
+            //               });
+            //               setTimeout(function () {
+            //                 _this_.content = '';
+            //                 _this_.$router.go(-1);
+            //               }, 2000)
+            //             } else {
+            //               _this_.$vux.toast.show({
+            //                 type: 'cancel',
+            //                 text: res.msg
+            //               });
+            //             }
+            //           }).catch(error => {
+            //             console.error(error);
+            //           });
+            //         })
+            //       }
+            //     }
+            //   });
+            // });
           } else {
             let params = {
               topicContent: content,
               topicType: 11,
               activityId: _this_.activityPickerId
             };
-            _this_.$JHttp({
-              method: 'post',
-              url: window.baseURL + '/socialactivity/album/add?' + querystring.stringify(params),
-              headers: {
-                defCommunityId: _this_.communityId
-              }
-            }).then(res => {
-              _this_.$vux.loading.hide();
-              if (res.status === 100) {
-                _this_.$vux.toast.show({
-                  type: 'success',
-                  text: '发布成功'
-                });
-                _this_.content = '';
-                _this_.$router.push('/albumList/' + _this_.activityPickerId)
-              } else {
-                _this_.$vux.toast.show({
-                  type: 'cancel',
-                  text: res.msg
-                })
-              }
-            }).catch(e => {
-              console.error(e)
-            })
+            _this_.pubAlbum(params)
           }
         }
       },
+
+
+      upLoadPic (data, length, key) {
+        let _this = this;
+        let file = File.dataURItoBlob(data);
+        _this.imgBlobs.push(file);
+        // 合成完最后一个,开始上传
+        if (key === length - 1) {
+          _this.uploadBlob(_this.imgBlobs, 'album', undefined, undefined, function (resList) {
+            let params = {
+              topicContent: content,
+              topicType: 11, // 活动相册
+              imageUrls: JSON.stringify(resList),
+              activityId: _this.activityPickerId
+            };
+            _this.pubAlbum(params)
+          });
+        }
+      },
+
+
+      pubAlbum (params) {
+        let _this = this;
+        _this.$JHttp({
+          method: 'post',
+          url: window.baseURL + '/socialactivity/album/add?' + querystring.stringify(params),
+          headers: {
+            defCommunityId: _this.communityId
+          }
+        }).then(res => {
+          if (res.status === 100) {
+            _this.$vux.toast.show({
+              type: 'success',
+              text: '发布成功'
+            })
+            setTimeout(function () {
+              _this.content = '';
+              _this.$router.go(-1);
+            }, 2000)
+            // 代表在app打开的
+            // if (_this.isApp === '1') {
+            //   if (window.WebViewJavascriptBridge) {
+            //     // 通知客户端,活动发布成功了
+            //     window.WebViewJavascriptBridge.callHandler('_app_post_activity_success');
+            //   }
+            // } else {
+            // _this.$router.go(-1)
+            // }
+          } else {
+            _this.$vux.toast.show({
+              type: 'cancel',
+              text: res.msg
+            })
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      },
+
+
       activityChange () {
         this.activityPickerId = parseInt(this.activityPicker)
       }
