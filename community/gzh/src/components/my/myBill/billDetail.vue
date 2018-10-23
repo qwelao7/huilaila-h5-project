@@ -5,67 +5,67 @@
       <x-header style="width:100%;position:absolute;left:0;top:0;z-index:100" slot="header"
                 :left-options="{ backText: '' }" :title=title></x-header>
 
-        <div v-if="info.sysUserAccountDetailId">
+      <div v-if="info.sysUserAccountDetailId">
 
-          <div class="header">
-            <div class="title">
+        <div class="header">
+          <div class="title">
             <span class="icon"
                   :style="{ backgroundImage: info.type == 2 && info.specialType == 24 ? 'url(' + require('../../../assets/images/billIcon/7.png') + ')' : 'url(' + require('../../../assets/images/billIcon/' + info.type + '.png') + ')' }"></span>
-              <span class="name" v-text="info.billTitle || info.storeName"></span>
-            </div>
-            <b class="money" v-text="info.moneyChange"></b>
-            <span class="tips" v-text="info.type == 3 ? '退款成功' : '交易成功'"></span>
+            <span class="name" v-text="info.billTitle || info.storeName"></span>
           </div>
+          <b class="money" v-text="info.moneyChange"></b>
+          <span class="tips" v-text="info.type == 3 ? '退款成功' : '交易成功'"></span>
+        </div>
 
-          <div class="form-preview">
-            <div class="form-preview-item">
-              <label class="form-preview-label">类型：</label>
-              <span class="form-preview-value" v-text="handleTypes(info)"></span>
-            </div>
-            <div class="form-preview-item">
-              <label class="form-preview-label">时间：</label>
-              <span class="form-preview-value" v-text="info.intime"></span>
-            </div>
-            <div class="form-preview-item">
-              <label class="form-preview-label" v-text="info.type == 2 ? '支付方式：' : '来源：'"></label>
-              <span class="form-preview-value" v-text="handlePayType(info)"></span>
-            </div>
-            <div class="form-preview-item" v-if="info.returnBackReason">
-              <label class="form-preview-label">退款原因：</label>
-              <span class="form-preview-value" v-text="info.returnBackReason"></span>
-            </div>
-            <div class="form-preview-item" v-if="!((info.type == 2 || info.type == 3) && info.moneyType !== 5)">
-              <label class="form-preview-label">交易后余额：</label>
-              <span class="form-preview-value" v-text="handleMoney(info.money)"></span>
-            </div>
+        <div class="form-preview">
+          <div class="form-preview-item">
+            <label class="form-preview-label">类型：</label>
+            <span class="form-preview-value" v-text="handleTypes(info)"></span>
           </div>
+          <div class="form-preview-item">
+            <label class="form-preview-label">时间：</label>
+            <span class="form-preview-value" v-text="info.intime"></span>
+          </div>
+          <div class="form-preview-item">
+            <label class="form-preview-label" v-text="info.type == 2 ? '支付方式：' : '来源：'"></label>
+            <span class="form-preview-value" v-text="handlePayType(info)"></span>
+          </div>
+          <div class="form-preview-item" v-if="info.returnBackReason">
+            <label class="form-preview-label">退款原因：</label>
+            <span class="form-preview-value" v-text="info.returnBackReason"></span>
+          </div>
+          <div class="form-preview-item" v-if="!((info.type == 2 || info.type == 3) && info.moneyType !== 5)">
+            <label class="form-preview-label">交易后余额：</label>
+            <span class="form-preview-value" v-text="handleMoney(info.money)"></span>
+          </div>
+        </div>
 
         <div class="form-preview"
              v-if="(info.type == 2 && info.specialType == 21) || (info.type == 3 && info.specialType == 31)">
-            <b class="title">内容：</b>
-            <div class="form-preview-item">
-              <label class="form-preview-label">订单号：</label>
-              <span class="form-preview-value" v-text="info.orderNo"></span>
-            </div>
-            <div class="form-preview-item">
-              <label class="form-preview-label">门店名称：</label>
-              <span class="form-preview-value" v-text="info.storeName"></span>
-            </div>
-            <div class="form-preview-item" v-if="info.productList && info.productList.length > 0">
-              <label class="form-preview-label">订单明细：</label>
-              <span class="form-preview-value">
+          <b class="title">内容：</b>
+          <div class="form-preview-item">
+            <label class="form-preview-label">订单号：</label>
+            <span class="form-preview-value" v-text="info.orderNo"></span>
+          </div>
+          <div class="form-preview-item">
+            <label class="form-preview-label">门店名称：</label>
+            <span class="form-preview-value" v-text="info.storeName"></span>
+          </div>
+          <div class="form-preview-item" v-if="info.productList && info.productList.length > 0">
+            <label class="form-preview-label">订单明细：</label>
+            <span class="form-preview-value">
                 <span v-for="productItem in info.productList"
                       v-text="productItem.productName + ' ' + productItem.itemPrice + productItem.productUnit + ' X' + productItem.itemNum"></span>
               </span>
-            </div>
           </div>
+        </div>
 
-          <div class="form-preview" v-if="info.type == 2 && info.specialType == 24">
-            <b class="title">内容：</b>
-            <div class="form-preview-item">
-              <label class="form-preview-label">付款单号：</label>
-              <span class="form-preview-value" v-text="info.serialNumber"></span>
-            </div>
+        <div class="form-preview" v-if="info.type == 2 && info.specialType == 24">
+          <b class="title">内容：</b>
+          <div class="form-preview-item">
+            <label class="form-preview-label">付款单号：</label>
+            <span class="form-preview-value" v-text="info.serialNumber"></span>
+          </div>
           <span class="estates-list" v-for="estatesItem in info.estatesList"
                 v-if="info.estatesList && info.estatesList.length > 0">
               <div class="form-preview-item">
@@ -84,28 +84,28 @@
                 </span>
               </div>
             </span>
-          </div>
+        </div>
 
         <div class="form-preview"
              v-if="(info.type == 2 && info.specialType == 26) || (info.type == 3 && info.specialType == 36) || (info.type == 6 && info.specialType == 63)">
-            <b class="title">内容：</b>
-            <div class="form-preview-item">
-              <label class="form-preview-label">订单号：</label>
-              <span class="form-preview-value" v-text="info.orderNo"></span>
-            </div>
-            <div class="form-preview-item">
-              <label class="form-preview-label">活动名称：</label>
-              <span class="form-preview-value" v-text="info.activityName"></span>
-            </div>
-            <div class="form-preview-item">
-              <label class="form-preview-label">报名明细：</label>
-              <span class="form-preview-value">
+          <b class="title">内容：</b>
+          <div class="form-preview-item">
+            <label class="form-preview-label">订单号：</label>
+            <span class="form-preview-value" v-text="info.orderNo"></span>
+          </div>
+          <div class="form-preview-item">
+            <label class="form-preview-label">活动名称：</label>
+            <span class="form-preview-value" v-text="info.activityName"></span>
+          </div>
+          <div class="form-preview-item">
+            <label class="form-preview-label">报名明细：</label>
+            <span class="form-preview-value">
                 <span v-text="info.joinMoney + '元/人' + ' X' + info.applyUserCount"></span>
               </span>
-            </div>
           </div>
-
         </div>
+
+      </div>
 
     </view-box>
 
@@ -124,7 +124,7 @@
       return {
         title: '账单详情',
         types: ['', '充值', '消费', '退款', '', '提现', '收益'],
-        payType: ['线下支付', '支付宝支付', '银联支付', '微信支付', '一网通支付', '钱包支付', '通联支付', '农行掌银支付', '', '线上支付', '回来啦社区充值卡', 'POS支付', '微信支付', '微信支付', '微信支付', '会员卡支付'],
+        payType: ['线下支付', '支付宝支付', '银联支付', '微信支付', '一网通支付', '钱包支付', '通联支付', '农行掌银支付', '', '线上支付', '回来啦社区充值卡', 'POS支付', '微信支付', '微信支付', '微信支付', '会员卡支付', '', '', '', '', '', '', '微信支付', '微信支付'],
         sysUserAccountDetailId: '',
         info: {}
       }
@@ -179,77 +179,77 @@
 </script>
 <style type="text/less" lang="less" scoped>
   .bill-detail {
-  height: 100%;
-  .header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #333333;
-    margin: 0 15px;
-    .title {
+    height: 100%;
+    .header {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      .icon {
-        width: 22px;
-        height: 22px;
-        margin: 15px 10px 20px 0;
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: cover;
-      }
-      .name {
-        font-size: 15px;
-      }
-    }
-    .money {
-      font-size: 27px;
-    }
-    .tips {
-      font-size: 12px;
-      margin-bottom: 19px;
-    }
-  }
-  .form-preview {
-    position: relative;
-    background-color: #ffffff;
-    line-height: 21px;
-    font-size: 15px;
-    color: #333333;
-    margin: 0 15px;
-    padding: 15px 0;
-    border-top: 1px dashed #AAAAAA;
-    .title {
-      font-size: 18px;
+      justify-content: center;
       color: #333333;
-      margin-bottom: 15px;
+      margin: 0 15px;
+      .title {
+        display: flex;
+        align-items: center;
+        .icon {
+          width: 22px;
+          height: 22px;
+          margin: 15px 10px 20px 0;
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: cover;
+        }
+        .name {
+          font-size: 15px;
+        }
+      }
+      .money {
+        font-size: 27px;
+      }
+      .tips {
+        font-size: 12px;
+        margin-bottom: 19px;
+      }
     }
-    .estates-list {
-      &:not(:last-child) {
-        padding-bottom: 15px;
+    .form-preview {
+      position: relative;
+      background-color: #ffffff;
+      line-height: 21px;
+      font-size: 15px;
+      color: #333333;
+      margin: 0 15px;
+      padding: 15px 0;
+      border-top: 1px dashed #AAAAAA;
+      .title {
+        font-size: 18px;
+        color: #333333;
         margin-bottom: 15px;
-        border-bottom: 0.026667rem dashed #AAAAAA;
       }
-    }
-    .form-preview-item {
-      overflow: hidden;
-      &:not(:last-child) {
-        margin-bottom: 10px;
+      .estates-list {
+        &:not(:last-child) {
+          padding-bottom: 15px;
+          margin-bottom: 15px;
+          border-bottom: 0.026667rem dashed #AAAAAA;
+        }
       }
-      .form-preview-label {
-        float: left;
-        min-width: 76px;
-        text-align: left;
-        /*text-align-last: justify;*/
-      }
-      .form-preview-value {
-        display: block;
+      .form-preview-item {
         overflow: hidden;
-        word-break: normal;
-        word-wrap: break-word;
-        text-align: right;
+        &:not(:last-child) {
+          margin-bottom: 10px;
+        }
+        .form-preview-label {
+          float: left;
+          min-width: 76px;
+          text-align: left;
+          /*text-align-last: justify;*/
+        }
+        .form-preview-value {
+          display: block;
+          overflow: hidden;
+          word-break: normal;
+          word-wrap: break-word;
+          text-align: right;
+        }
       }
     }
-  }
   }
 </style>
