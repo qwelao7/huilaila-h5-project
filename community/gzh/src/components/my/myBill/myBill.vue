@@ -66,6 +66,7 @@
   import {ViewBox, XHeader, PopupPicker} from 'vux'
   import {JTab, JTabItem} from 'components/base/JTab/index'
   import JPull from 'components/base/JPull/JPull'
+
   export default {
     name: 'myBill',
     components: {
@@ -97,7 +98,7 @@
           searchMonth: ''
         }],
         type: ['', '充值', '消费', '退款', '', '提现', '收益'],
-        payType: ['线下支付', '支付宝支付', '银联支付', '微信支付', '一网通支付', '钱包支付', '通联支付', '农行掌银支付', '', '线上支付', '回来啦社区充值卡', 'POS支付', '微信支付', '微信支付', '微信支付', '会员卡支付'],
+        payType: ['线下支付', '支付宝支付', '银联支付', '微信支付', '一网通支付', '钱包支付', '通联支付', '农行掌银支付', '', '线上支付', '回来啦社区充值卡', 'POS支付', '微信支付', '微信支付', '微信支付', '会员卡支付', '', '', '', '', '', '', '微信支付', '微信支付'],
         pageInfo: [],
         currentIndex: 0,
         currentTab: {},
@@ -284,94 +285,94 @@
 </script>
 <style type="text/less" lang="less" scoped>
   .myBill {
-  height: 100%;
-  .bill-list-wrapper {
     height: 100%;
-    overflow: hidden;
-    .tab {
-      height: 44px;
-      padding: 0 20px;
-      margin-bottom: 20px;
-    }
-    .content {
+    .bill-list-wrapper {
       height: 100%;
-      .list {
+      overflow: hidden;
+      .tab {
+        height: 44px;
         padding: 0 20px;
-        .item {
-          .header {
-            background-color: #F2F2F2;
-            padding: 1.5px 0 1.5px 9.5px;
-          }
-          .body {
-            display: flex;
-            align-items: center;
-            padding: 17.5px 0;
-            .icon {
-              margin-right: 15px;
-              min-width: 35px;
-              width: 35px;
-              height: 35px;
-              background-repeat: no-repeat;
-              background-position: center center;
-              background-size: cover;
+        margin-bottom: 20px;
+      }
+      .content {
+        height: 100%;
+        .list {
+          padding: 0 20px;
+          .item {
+            .header {
+              background-color: #F2F2F2;
+              padding: 1.5px 0 1.5px 9.5px;
             }
-            .info {
-              width: 280px;
-              .cell {
-                display: flex;
-                justify-content: space-between;
-                .left {
-                  flex: 1;
-                  overflow: hidden;
-                  text-overflow: ellipsis;
-                  white-space: nowrap
-                }
-                .right {
-                  white-space: nowrap;
-                  text-align: right;
-                }
+            .body {
+              display: flex;
+              align-items: center;
+              padding: 17.5px 0;
+              .icon {
+                margin-right: 15px;
+                min-width: 35px;
+                width: 35px;
+                height: 35px;
+                background-repeat: no-repeat;
+                background-position: center center;
+                background-size: cover;
               }
-              .top {
-                color: #333333;
-                margin-bottom: 8px;
-              }
-              .bottom {
-                color: #AAAAAA;
+              .info {
+                width: 280px;
+                .cell {
+                  display: flex;
+                  justify-content: space-between;
+                  .left {
+                    flex: 1;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap
+                  }
+                  .right {
+                    white-space: nowrap;
+                    text-align: right;
+                  }
+                }
+                .top {
+                  color: #333333;
+                  margin-bottom: 8px;
+                }
+                .bottom {
+                  color: #AAAAAA;
+                }
               }
             }
-          }
-          &.border-top {
-            border-top: 0.5px solid #D8D8D8;
+            &.border-top {
+              border-top: 0.5px solid #D8D8D8;
+            }
           }
         }
       }
+      .placeholder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 95.5px;
+        img {
+          width: 150px;
+          height: 150px;
+          margin-bottom: 10px;
+        }
+        p {
+          color: #AAAAAA;
+          font-size: 15px;
+        }
+        .button-Service {
+          margin-top: 10px;
+          width: 150px;
+          height: 35px;
+          line-height: 35px;
+          color: #FFFFFF;
+          text-align: center;
+          background: #FF6648;
+          border-radius: 67px;
+        }
+      }
     }
-    .placeholder {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin-top: 95.5px;
-      img {
-        width: 150px;
-        height: 150px;
-        margin-bottom: 10px;
-      }
-      p {
-        color: #AAAAAA;
-        font-size: 15px;
-      }
-      .button-Service {
-        margin-top: 10px;
-        width: 150px;
-        height: 35px;
-        line-height: 35px;
-        color: #FFFFFF;
-        text-align: center;
-        background: #FF6648;
-        border-radius: 67px;
-      }
-    }
-  }
   }
 </style>
