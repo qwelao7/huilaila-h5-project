@@ -19,13 +19,22 @@
         <x-textarea :height="130" :max="500" :show-counter="false" :rows="8" :cols="30" placeholder="说点什么吧~"
                     v-model="content"></x-textarea>
       </group>
-      <ul class="chooseImg">
+      <ul class="chooseImg" v-show="!isApp">
         <li v-for="(localId, index) in localIds">
           <img :src="localId" @click.prevent="showDeletePop(index)" alt="">
         </li>
         <li class="add" @click="chooseImages" v-show="localIds.length < 9"></li>
       </ul>
-
+      <ul class="chooseImg" v-show="isApp">
+        <li v-for="(localId, index) in localIds">
+          <img :src="localId" @click="showDeletePop(index)" alt="">
+        </li>
+        <li class="addInApp" @click="chooseImages" v-show="localIds.length < 9">
+          <label for="imgInApp"></label>
+          <form><input type="file" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" multiple
+                       id="imgInApp" class="uploadImg" @change="chooseImg_app"></form>
+        </li>
+      </ul>
       <div v-transfer-dom>
         <actionsheet :menus="menus" @on-click-menu-menu="deleteImg" v-model="showDeleteMenu" show-cancel></actionsheet>
       </div>
@@ -61,6 +70,7 @@
     },
     data () {
       return {
+        isApp: '',
         content: '',
         localIds: [],
         showDeleteMenu: false,
@@ -85,6 +95,7 @@
       }
     },
     created () {
+      this.isApp = localStorage.getItem('isApp');
       this.uploadData.append('type', 'nei');
       this.communityId = localStorage.getItem('communityId');
       this.getActivity()
@@ -137,6 +148,43 @@
             _this_.localIds = _this_.localIds.concat(res.localIds); // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
           }
         });
+      },
+      chooseImg_app (e) {
+        let files = e.target.files || e.dataTransfer.files;
+        if (!files.length) return;
+        this.createImage(files);
+      },
+      createImage (file) {
+        if (typeof FileReader === 'undefined') {
+//          alert('您的浏览器不支持图片上传，请升级您的浏览器')
+          this.$vux.toast.show({
+            type: 'text',
+            text: '您的浏览器不支持图片上传，请升级您的浏览器'
+          })
+          return false
+        }
+        let _this = this
+        let leng = file.length
+        let totaLength = leng + _this.localIds.length
+        if (totaLength > 9) {
+          _this.$vux.toast.show({
+            type: 'text',
+            text: '最多只能选择9张图片哦~~'
+          })
+          return
+        }
+        for (let i = 0; i < leng; i++) {
+          let reader = new FileReader()
+          reader.readAsDataURL(file[i])
+          reader.onload = function (e) {
+//            if (_this.imgList.length && _this.imgList.length > 9) {
+//              console.log(222, _this.imgList.length)
+//            } else {
+//              _this.imgList.push(e.target.result)
+//            }
+            _this.localIds.push(e.target.result)
+          }
+        }
       },
       showDeletePop (index) {
         this.showDeleteMenu = true;
@@ -306,6 +354,30 @@
         background-position: center center;
         background-repeat: no-repeat;
         background-size: contain;
+      }
+      .addInApp {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 103px;
+        height: 103px;
+        position: relative;
+        label {
+          width: 103px;
+          height: 103px;
+          background-image: url("../../assets/images/addpic-210.png");
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: contain;
+        }
+        .uploadImg {
+          position: absolute;
+          left: 0;
+          top: 0;
+          clip: rect(0px, 0px, 0px, 0px);
+          width: 100%;
+          height: 5.706667rem;
+        }
       }
     }
     .delete-wrapper {

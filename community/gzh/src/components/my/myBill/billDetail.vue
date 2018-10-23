@@ -41,7 +41,7 @@
         </div>
 
         <div class="form-preview"
-             v-if="(info.type == 2 && info.specialType == 21) || (info.type == 3 && info.specialType == 31)">
+             v-if="(info.type == 2 && info.specialType == 21) || (info.type == 3 && info.specialType == 31)|| (info.type == 3 && info.specialType == 37)">
           <b class="title">内容：</b>
           <div class="form-preview-item">
             <label class="form-preview-label">订单号：</label>
