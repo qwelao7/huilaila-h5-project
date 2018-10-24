@@ -292,7 +292,7 @@
             // });
           } else {
             let params = {
-              topicContent: content,
+              topicContent: _this_.content.trim(),
               topicType: 11,
               activityId: _this_.activityPickerId
             };
