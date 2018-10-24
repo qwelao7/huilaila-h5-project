@@ -204,7 +204,7 @@
           this.deleteModalShow = true;
         } else {
           let _this_ = this;
-          let content = this.content.trim();
+          let content = _this_.content.trim();
           if (!content) {
             this.$vux.toast.show({
               type: 'cancel',
@@ -236,7 +236,6 @@
                 });
               }
             })
-
             // let blobs = [];
             // localIds.forEach(function (localId, index) {
             //   _this_.$wechat.getLocalImgData({
@@ -301,8 +300,6 @@
           }
         }
       },
-
-
       upLoadPic (data, length, key) {
         let _this = this;
         let file = File.dataURItoBlob(data);
@@ -320,8 +317,6 @@
           });
         }
       },
-
-
       pubAlbum (params) {
         let _this = this;
         _this.$JHttp({
@@ -359,8 +354,6 @@
           console.log(err)
         })
       },
-
-
       activityChange () {
         this.activityPickerId = parseInt(this.activityPicker)
       }

@@ -326,7 +326,6 @@
           let len = localIds.length;
           /* 传了图片 */
           if (len) {
-
             localIds.forEach(function (imgId, index) {
               if (_this_.isApp) {
                 //
@@ -344,8 +343,6 @@
                 });
               }
             })
-
-
             // let blobs = [];
             // localIds.forEach(function (localId, index) {
             //   _this_.$wechat.getLocalImgData({
@@ -403,7 +400,6 @@
             //     }
             //   });
             // });
-
           } else {
             let params = {
               activityId: _this_.$route.params.activityId,
@@ -415,8 +411,6 @@
           }
         }
       },
-
-
       upLoadPic (data, length, key) {
         let _this = this;
         let balanceData = _this.balanceDetailList;
@@ -445,8 +439,6 @@
           });
         }
       },
-
-
       pubBalance (params) {
         let _this = this;
         _this.$JHttp({
@@ -487,8 +479,6 @@
           console.log(err)
         })
       },
-
-
       addDetail () {
         let _this = this
         let newDetail = {}
