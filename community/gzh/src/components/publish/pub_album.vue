@@ -292,7 +292,7 @@
             // });
           } else {
             let params = {
-              topicContent: _this_.content.trim(),
+              topicContent: content,
               topicType: 11,
               activityId: _this_.activityPickerId
             };
@@ -308,7 +308,7 @@
         if (key === length - 1) {
           _this.uploadBlob(_this.imgBlobs, 'album', undefined, undefined, function (resList) {
             let params = {
-              topicContent: content,
+              topicContent: _this.content.trim(),
               topicType: 11, // 活动相册
               imageUrls: JSON.stringify(resList),
               activityId: _this.activityPickerId
