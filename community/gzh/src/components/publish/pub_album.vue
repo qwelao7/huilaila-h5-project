@@ -327,6 +327,7 @@
           }
         }).then(res => {
           if (res.status === 100) {
+            _this.$vux.loading.hide();
             _this.$vux.toast.show({
               type: 'success',
               text: '发布成功'
