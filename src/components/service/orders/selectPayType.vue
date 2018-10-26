@@ -60,7 +60,8 @@
       </div>
       <!--支付键盘 begin-->
       <popup v-model="payKeyboardPopShow" :hide-on-blur="hideOnBlur">
-        <pay-keyboard v-on:closeKeyboard="closePayKeyboard" ref="payKeyboard" v-on:balancePay="balancePay"></pay-keyboard>
+        <pay-keyboard v-on:closeKeyboard="closePayKeyboard" ref="payKeyboard"
+                      v-on:balancePay="balancePay"></pay-keyboard>
       </popup>
       <!--支付键盘 end-->
       <div v-transfer-dom>
@@ -170,7 +171,7 @@
         this.currentPayWay = this.payWayList[0];
         // 调取查询账户基础信息接口
         let _this_ = this;
-        this.$JHttp.get(window.baseURL + '/treasure/getMyMoney').then((res) => {
+        _this_.$JHttp.get(window.baseURL + '/treasure/getMyMoney').then((res) => {
           if (res.status === 100) {
             let data = res.data;
             let money = data.money;

@@ -3,7 +3,8 @@
     <view-box ref="viewBox" body-padding-top="1.253333rem" body-padding-bottom="1.333333rem">
       <x-header
         slot="header"
-        :left-options="{backText: ''}"
+        :left-options="leftOptions"
+        @on-click-back="goBack"
         title="活动结算"
         style="width:100%;position:absolute;left:0;top:0;z-index:100">
       </x-header>
@@ -122,6 +123,10 @@
         },
         balanceInfo: {},
         refund: 0,
+        leftOptions: {
+          backText: ''
+        },
+        fromUrl: {},
         options: {
           getThumbBoundsFn (index) {
             // find thumbnail element
@@ -139,6 +144,22 @@
         },
         imgList: []
       }
+    },
+    beforeRouteEnter (to, from, next) {
+      console.log('from', from)
+      next(vm => {
+        vm.fromUrl = from
+        if (from.name === '/activityBalance') {
+          vm.leftOptions = {
+            backText: '',
+            preventGoBack: 'true'
+          }
+        } else {
+          vm.leftOptions = {
+            backText: ''
+          }
+        }
+      });
     },
     created () {
       this.$vux.loading.show({
@@ -180,10 +201,10 @@
       },
       show (index) {
         this.$refs.previewer.show(index);
+      },
+      goBack () {
+        this.$router.push('/activityDetail/' + this.$route.params.activityId)
       }
-      // goBack () {
-      //   this.$router.push('/activityDetail/' + this.$route.params.activityId)
-      // }
     }
   }
 

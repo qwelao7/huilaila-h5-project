@@ -41,12 +41,27 @@
           </cell>
         </group>
         <div class="spacing-container"></div>
-        <ul class="chooseImg">
+
+
+        <ul class="chooseImg" v-show="!isApp">
           <li v-for="(localId, index) in localIds">
             <img :src="localId" @click.prevent="showDeletePop(index)" alt="">
           </li>
           <li class="add" @click="chooseImages" v-show="localIds.length < 9"></li>
         </ul>
+
+        <ul class="chooseImg" v-show="isApp">
+          <li v-for="(localId, index) in localIds">
+            <img :src="localId" @click="showDeletePop(index)" alt="">
+          </li>
+          <li class="addInApp" @click="chooseImages" v-show="localIds.length < 9">
+            <label for="imgInApp"></label>
+            <form><input type="file" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" multiple
+                         id="imgInApp" class="uploadImg" @change="chooseImg_app"></form>
+          </li>
+        </ul>
+
+
         <div v-transfer-dom>
           <actionsheet :menus="menus" @on-click-menu-menu="deleteImg" v-model="showDeleteMenu"
                        show-cancel></actionsheet>
@@ -113,8 +128,10 @@
     },
     data () {
       return {
+        isApp: '',
         content: '',
         localIds: [],
+        imgBlobs: [],
         showDeleteMenu: false,
         currentIndex: 0,
         uploadData: new FormData(),
@@ -148,6 +165,7 @@
       this.$vux.loading.show({
         text: '加载中'
       });
+      this.isApp = localStorage.getItem('isApp');
       this.uploadData.append('type', 'nei');
       this.communityId = localStorage.getItem('communityId');
       this.getActivity()
@@ -224,6 +242,43 @@
           }
         });
       },
+      chooseImg_app (e) {
+        let files = e.target.files || e.dataTransfer.files;
+        if (!files.length) return;
+        this.createImage(files);
+      },
+      createImage (file) {
+        if (typeof FileReader === 'undefined') {
+//          alert('您的浏览器不支持图片上传，请升级您的浏览器')
+          this.$vux.toast.show({
+            type: 'text',
+            text: '您的浏览器不支持图片上传，请升级您的浏览器'
+          })
+          return false
+        }
+        let _this = this
+        let leng = file.length
+        let totaLength = leng + _this.localIds.length
+        if (totaLength > 9) {
+          _this.$vux.toast.show({
+            type: 'text',
+            text: '最多只能选择9张图片哦~~'
+          })
+          return
+        }
+        for (let i = 0; i < leng; i++) {
+          let reader = new FileReader()
+          reader.readAsDataURL(file[i])
+          reader.onload = function (e) {
+//            if (_this.imgList.length && _this.imgList.length > 9) {
+//              console.log(222, _this.imgList.length)
+//            } else {
+//              _this.imgList.push(e.target.result)
+//            }
+            _this.localIds.push(e.target.result)
+          }
+        }
+      },
       showDeletePop (index) {
         this.showDeleteMenu = true;
         this.currentIndex = index;
@@ -244,16 +299,19 @@
           let refundTep = 0;
           if (refundTemp) {
             refundTemp.forEach((item, index) => {
-              refundTep += toDecimal2(item.fee);
+              refundTep += parseFloat(item.fee);
             })
           }
-          if (refundTep !== _this_.totalRefund) {
+          if (refundTep !== parseFloat(_this_.totalRefund)) {
             _this_.$vux.toast.show({
               type: 'cancel',
               text: '请确认您的退款金额'
             });
             return
           }
+          _this_.$vux.loading.show({
+            text: '发布中...'
+          });
           let balanceData = _this_.balanceDetailList;
           for (var i = 0; i < balanceData.length; i++) {
             if ((balanceData[i].fee === 0 || balanceData[i].fee === '' || balanceData[i].fee === null || balanceData[i].fee === undefined) && (balanceData[i].feeDesc === '' || balanceData[i].feeDesc === null || balanceData[i].feeDesc === undefined)) {
@@ -264,70 +322,84 @@
               _this_.balanceDetailList = balanceData
             }
           }
-          _this_.$vux.loading.show({
-            text: '发布中...'
-          });
           let localIds = this.localIds;
           let len = localIds.length;
           /* 传了图片 */
           if (len) {
-            let blobs = [];
-            localIds.forEach(function (localId, index) {
+            localIds.forEach(function (imgId, index) {
+              if (_this_.isApp) {
+                //
+                _this_.upLoadPic(imgId, len, index)
+              } else {
               _this_.$wechat.getLocalImgData({
-                localId: localId, // 图片的localID
+                  localId: imgId, // 图片的localID
                 success: function (res) {
                   let localData = res.localData; // localData是图片的base64数据，可以用img标签显示
                   if (JNavigator.isAndroid()) {
                     localData = 'data:image/jgp;base64,' + localData;
                   }
-                  let file = File.dataURItoBlob(localData);
-                  blobs.push(file);
-                  // 合成完最后一个,开始上传
-                  if (index === len - 1) {
-                    _this_.uploadBlob(blobs, 'activityBalance', undefined, undefined, function (resList) {
-                      let postData = {
-                        imageUrls: JSON.stringify(resList),
-                        activityId: _this_.$route.params.activityId,
-                        // balanceData: JSON.stringify(_this_.balanceDetailList),
-                        balanceData: JSON.stringify(balanceData),
-                        refundData: JSON.stringify(_this_.refundData)
-                      };
-                      // 保存图片到业务方
-                      _this_.$JHttp({
-                        url: window.baseURL + '/socialactivity/addBalance?' + querystring.stringify(postData),
-                        method: 'post',
-                        headers: {
-                          defCommunityId: _this_.communityId
+                    _this_.upLoadPic(localData, len, index)
                         }
-                      }).then(res => {
-                        if (res.status === 100) {
-                          // 开始保存逻辑
-                          _this_.$vux.loading.hide();
-                          _this_.$vux.toast.show({
-                            type: 'success',
-                            text: '发布成功'
-                          });
-                          localStorage.removeItem('activityId')
-                          localStorage.removeItem('refundData')
-                          localStorage.removeItem('costData')
-                          localStorage.removeItem('totalRefund')
-                          setTimeout(function () {
-                            _this_.$router.push('/balanceList/' + _this_.$route.params.activityId);
-                          }, 2000)
-                        } else {
-                          _this_.$vux.toast.show({
-                            type: 'cancel',
-                            text: res.msg
                           });
                         }
-                      }).catch(error => {
-                        console.error(error);
-                      });
                     })
-                  }
-                }
-              });
-            });
+            // let blobs = [];
+            // localIds.forEach(function (localId, index) {
+            //   _this_.$wechat.getLocalImgData({
+            //     localId: localId, // 图片的localID
+            //     success: function (res) {
+            //       let localData = res.localData; // localData是图片的base64数据，可以用img标签显示
+            //       if (JNavigator.isAndroid()) {
+            //         localData = 'data:image/jgp;base64,' + localData;
+            //       }
+            //       let file = File.dataURItoBlob(localData);
+            //       blobs.push(file);
+            //       // 合成完最后一个,开始上传
+            //       if (index === len - 1) {
+            //         _this_.uploadBlob(blobs, 'activityBalance', undefined, undefined, function (resList) {
+            //           let postData = {
+            //             imageUrls: JSON.stringify(resList),
+            //             activityId: _this_.$route.params.activityId,
+            //             // balanceData: JSON.stringify(_this_.balanceDetailList),
+            //             balanceData: JSON.stringify(balanceData),
+            //             refundData: JSON.stringify(_this_.refundData)
+            //           };
+            //           // 保存图片到业务方
+            //           _this_.$JHttp({
+            //             url: window.baseURL + '/socialactivity/addBalance?' + querystring.stringify(postData),
+            //             method: 'post',
+            //             headers: {
+            //               defCommunityId: _this_.communityId
+            //             }
+            //           }).then(res => {
+            //             if (res.status === 100) {
+            //               // 开始保存逻辑
+            //               _this_.$vux.loading.hide();
+            //               _this_.$vux.toast.show({
+            //                 type: 'success',
+            //                 text: '发布成功'
+            //               });
+            //               localStorage.removeItem('activityId')
+            //               localStorage.removeItem('refundData')
+            //               localStorage.removeItem('costData')
+            //               localStorage.removeItem('totalRefund')
+            //               setTimeout(function () {
+            //                 _this_.$router.push('/balanceList/' + _this_.$route.params.activityId);
+            //               }, 2000)
+            //             } else {
+            //               _this_.$vux.toast.show({
+            //                 type: 'cancel',
+            //                 text: res.msg
+            //               });
+            //             }
+            //           }).catch(error => {
+            //             console.error(error);
+            //           });
+            //         })
+            //       }
+            //     }
+            //   });
+            // });
           } else {
             let params = {
               activityId: _this_.$route.params.activityId,
@@ -335,37 +407,78 @@
               refundData: JSON.stringify(_this_.refundData),
               imgUrls: ''
             };
-            _this_.$JHttp({
+            _this_.pubBalance(params)
+          }
+        }
+      },
+      upLoadPic (data, length, key) {
+        let _this = this;
+        let balanceData = _this.balanceDetailList;
+        for (var i = 0; i < balanceData.length; i++) {
+          if ((balanceData[i].fee === 0 || balanceData[i].fee === '' || balanceData[i].fee === null || balanceData[i].fee === undefined) && (balanceData[i].feeDesc === '' || balanceData[i].feeDesc === null || balanceData[i].feeDesc === undefined)) {
+            balanceData.splice(i, 1)
+            i = i - 1
+          }
+          if (i === balanceData.length - 1) {
+            _this.balanceDetailList = balanceData
+          }
+        }
+        let file = File.dataURItoBlob(data);
+        _this.imgBlobs.push(file);
+        // 合成完最后一个,开始上传
+        if (key === length - 1) {
+          _this.uploadBlob(_this.imgBlobs, 'album', undefined, undefined, function (resList) {
+            let params = {
+              imageUrls: JSON.stringify(resList),
+              activityId: _this.$route.params.activityId,
+              // balanceData: JSON.stringify(_this_.balanceDetailList),
+              balanceData: JSON.stringify(balanceData),
+              refundData: JSON.stringify(_this.refundData)
+            };
+            _this.pubBalance(params)
+          });
+        }
+      },
+      pubBalance (params) {
+        let _this = this;
+        _this.$JHttp({
               method: 'post',
               url: window.baseURL + '/socialactivity/addBalance?' + querystring.stringify(params),
               headers: {
-                defCommunityId: _this_.communityId
+            defCommunityId: _this.communityId
               }
             }).then(res => {
-              _this_.$vux.loading.hide();
               if (res.status === 100) {
-                _this_.$vux.toast.show({
+            _this.$vux.loading.hide();
+            _this.$vux.toast.show({
                   type: 'success',
                   text: '发布成功'
-                });
+            })
                 localStorage.removeItem('activityId')
                 localStorage.removeItem('refundData')
                 localStorage.removeItem('costData')
                 localStorage.removeItem('totalRefund')
                 setTimeout(function () {
-                  _this_.$router.push('/balanceList/' + _this_.$route.params.activityId);
+              _this.$router.push('/balanceList/' + _this.$route.params.activityId);
                 }, 2000)
+            // 代表在app打开的
+            // if (_this.isApp === '1') {
+            //   if (window.WebViewJavascriptBridge) {
+            //     // 通知客户端,活动发布成功了
+            //     window.WebViewJavascriptBridge.callHandler('_app_post_activity_success');
+            //   }
+            // } else {
+            // _this.$router.go(-1)
+            // }
               } else {
-                _this_.$vux.toast.show({
+            _this.$vux.toast.show({
                   type: 'cancel',
                   text: res.msg
                 })
               }
-            }).catch(e => {
-              console.error(e)
+        }).catch(err => {
+          console.log(err)
             })
-          }
-        }
       },
       addDetail () {
         let _this = this
@@ -496,6 +609,30 @@
         background-position: center center;
         background-repeat: no-repeat;
         background-size: contain;
+      }
+      .addInApp {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 103px;
+        height: 103px;
+        position: relative;
+        label {
+          width: 103px;
+          height: 103px;
+          background-image: url("../../../assets/images/addpic-210.png");
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: contain;
+        }
+        .uploadImg {
+          position: absolute;
+          left: 0;
+          top: 0;
+          clip: rect(0px, 0px, 0px, 0px);
+          width: 100%;
+          height: 5.706667rem;
+        }
       }
     }
     .delete-wrapper {

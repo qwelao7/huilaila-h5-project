@@ -4,7 +4,7 @@
       <div slot="jpull-list">
         <div class="swiperBanner" v-if="imgLists.length">
           <div class="swiper">
-            <swiper :list="imgLists" loop auto height="4.266667rem" dots-class="custom-bottom" dots-position="right" :show-desc-mask="false"></swiper>
+            <swiper :list="imgLists" loop auto height="5.12rem" dots-class="custom-bottom" dots-position="right" :show-desc-mask="false"></swiper>
           </div>
           <!--菜单栏-->
           <!--<div class="list-under-swiper">

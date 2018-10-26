@@ -38,10 +38,20 @@
             <label class="form-preview-label">交易后余额：</label>
             <span class="form-preview-value" v-text="handleMoney(info.money)"></span>
           </div>
+          <div class="form-preview-item"
+               v-if="info.remarks && info.type == 1 && info.specialType == 15">
+            <label class="form-preview-label">充值原因：</label>
+            <span class="form-preview-value" v-text="info.remarks"></span>
+          </div>
+          <div class="form-preview-item"
+               v-if="info.remarks && info.type == 2 && info.specialType == 27">
+            <label class="form-preview-label">扣款原因：</label>
+            <span class="form-preview-value" v-text="info.remarks"></span>
+          </div>
         </div>
 
         <div class="form-preview"
-             v-if="(info.type == 2 && info.specialType == 21) || (info.type == 3 && info.specialType == 31)">
+             v-if="(info.type == 2 && info.specialType == 21) || (info.type == 3 && info.specialType == 31)|| (info.type == 3 && info.specialType == 37)">
           <b class="title">内容：</b>
           <div class="form-preview-item">
             <label class="form-preview-label">订单号：</label>
@@ -124,7 +134,7 @@
       return {
         title: '账单详情',
         types: ['', '充值', '消费', '退款', '', '提现', '收益'],
-        payType: ['线下支付', '支付宝支付', '银联支付', '微信支付', '一网通支付', '钱包支付', '通联支付', '农行掌银支付', '', '线上支付', '回来啦社区充值卡', 'POS支付', '微信支付', '微信支付', '微信支付', '会员卡支付'],
+        payType: ['线下支付', '支付宝支付', '银联支付', '微信支付', '一网通支付', '钱包支付', '通联支付', '农行掌银支付', '', '线上支付', '回来啦社区充值卡', 'POS支付', '微信支付', '微信支付', '微信支付', '会员卡支付', '', '', '', '', '', '', '微信支付', '微信支付'],
         sysUserAccountDetailId: '',
         info: {}
       }
