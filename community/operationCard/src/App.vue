@@ -114,7 +114,12 @@
         _this_.$JHttp.get(window.homeURL + '/card/home?' + postDataStr).then((res) => {
           if (res.data.status === 100) {
             let data = res.data.data;
-            let dataList = data.resultList;
+            let tmpData = data.resultList;
+            let dataList = [];
+            if (tmpData && tmpData.length) {
+              tmpData.forEach(function (item) {
+              if (item.cardDetailType !== 1) {dataList.push(item);}});
+            }
             if (dataList && dataList.length) {
               _this_.ajaxTime = dataList[0].requestTime;
               _this_.cardList = _this_.chunk(dataList, 10);
@@ -145,9 +150,7 @@
         }
       },
       pageJump: function (skipData, skipType) {
-        if (skipType === 4) {
-          return;
-        }
+        if (skipType === 4) {return;}
         if (window.WebViewJavascriptBridge) {
           // alert('我要跳转了');
           window.WebViewJavascriptBridge.callHandler('_app_page_jump', skipData);
