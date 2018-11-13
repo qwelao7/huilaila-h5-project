@@ -6,7 +6,7 @@ import iframe from '../components/iframe.vue';
 import secKill from '../components/secKill.vue';
 import recommendShop from '../components/recommendShop.vue';
 var cardType = [
-  { code: 1, name: '物业缴费', component: common, btnName: ['立即缴费', '点击查看'] },
+  // { code: 1, name: '物业缴费', component: common, btnName: ['立即缴费', '点击查看'] },
   { code: 2, name: '我的快递', component: common, btnName: ['点击领取', '点击查看'] },
   { code: 3, name: '访客通行', component: common, btnName: ['查看通行证', '再次邀请'] },
   { code: 4, name: '我的活动', component: common, btnName: ['点击签到', '点击查看'] },
