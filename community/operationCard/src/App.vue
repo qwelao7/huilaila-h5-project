@@ -206,12 +206,12 @@
         let newList = [];
         d.forEach(function (list) {
           let cardinfo = getCardType(list.cardDetailType);
-          if (cardinfo) {
-            list.componentName = cardinfo.component;
-            list.btnName = list.cardStatus > 0 ? cardinfo.btnName[list.cardStatus - 1] : cardinfo.btnName;
-            list.cardName = cardinfo.name;
-            newList.push(list);
-          }
+          // if (cardinfo) {
+          list.componentName = cardinfo.component;
+          list.btnName = list.cardStatus > 0 ? cardinfo.btnName[list.cardStatus - 1] : cardinfo.btnName;
+          list.cardName = cardinfo.name;
+          newList.push(list);
+          // }
         });
         return newList;
       }
