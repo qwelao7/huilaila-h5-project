@@ -66,7 +66,6 @@
   import {ViewBox, XHeader, PopupPicker} from 'vux'
   import {JTab, JTabItem} from 'components/base/JTab/index'
   import JPull from 'components/base/JPull/JPull'
-
   export default {
     name: 'myBill',
     components: {

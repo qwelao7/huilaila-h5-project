@@ -96,7 +96,6 @@
   import {sha1} from '../../../common/js/sha1';
   import {JNavigator} from '../../../common/js/utils';
   import {XHeader, ViewBox, querystring, md5, XDialog, TransferDomDirective as TransferDom} from 'vux';
-
   export default {
     name: 'pay',
     components: {
