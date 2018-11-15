@@ -27,6 +27,10 @@
             <span>报名费：</span>
             <span>￥{{information.joinMoney}}元/人</span>
           </li>
+          <li v-if="information.limitCount> 0">
+            <span>活动名额：</span>
+            <span>{{information.limitCount}}人</span>
+          </li>
           <li class="a_content" v-if="information.activityType === 0"><p class="activityContent">{{information.content}}</p></li>
           <!--<li><div class="activityContent">{{information.content}}</div></li>-->
         </ul>
@@ -333,7 +337,7 @@
             if (value.activityStatus === 2) {
               let params = {
                 joinOtherCommunity: value.joinOtherCommunity,
-                communityId: value.communityId
+                activityId: value.activityId
               }
               let _this = this;
               _this.$JHttp({

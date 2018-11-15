@@ -1,11 +1,23 @@
 <template>
   <div class="service commonHeader">
-    <view-box ref="viewBox" body-padding-top="0" body-padding-bottom="1.306667rem">
+    <view-box ref="viewBox" body-padding-top="1.253333rem" body-padding-bottom="1.306667rem">
+      <x-header
+        slot="header"
+        :left-options="{showBack: false}"
+        title="slot:overwrite-title"
+        style="width:100%;position:absolute;left:0;top:0;z-index:100;">
+        <a slot="right" @click="showMessage" class="right"><i class="messageIcon"></i></a>
+        <div class="overwrite-title-demo" slot="overwrite-title" @click="chooseAddress">
+          <i class="positionIcon"></i>
+          <span v-text="communityName"></span>
+        </div>
+      </x-header>
       <div class="banner">
         <j-pull :refreshFunc="refreshData" :scrollFunc="onScroll" :loadMoreFunc="loadMore">
           <div slot="jpull-list">
             <div class="swiper" v-show="focusArr.length">
-              <swiper :list="focusArr" loop auto height="4.266667rem" dots-class="custom-bottom" dots-position="right" :show-desc-mask="false"></swiper>
+              <swiper :list="focusArr" loop auto height="4.266667rem" dots-class="custom-bottom" dots-position="right"
+                      :show-desc-mask="false"></swiper>
             </div>
             <div class="businessApp">
               <grid :cols="4" :show-lr-borders="false" :show-vertical-dividers="false">
@@ -66,21 +78,54 @@
 </template>
 
 <script>
-  import {ViewBox, XDialog, XHeader, Swiper, SwiperItem, Grid, GridItem, Tab, TabItem, TransferDom, Badge, querystring} from 'vux'
+  import {
+    ViewBox,
+    XDialog,
+    XHeader,
+    Swiper,
+    SwiperItem,
+    Grid,
+    GridItem,
+    Tab,
+    TabItem,
+    TransferDom,
+    Badge,
+    querystring
+  } from 'vux'
   import bottomTab from '../components/bottomTab'
   import JPull from './base/JPull/JPull'
   import cart from './service/shoppingCart'
   import newGoods from './service/hotAndNew/new'
   import GoodsList from '../components/service/goodsList'
   import hotGoods from './service/hotAndNew/hot'
+
   export default {
     name: 'Service',
     directives: {
       TransferDom
     },
-    components: { ViewBox, XDialog, XHeader, bottomTab, Swiper, SwiperItem, Grid, GridItem, JPull, Tab, TabItem, Badge, querystring, cart, GoodsList, newGoods, hotGoods },
+    components: {
+      ViewBox,
+      XDialog,
+      XHeader,
+      bottomTab,
+      Swiper,
+      SwiperItem,
+      Grid,
+      GridItem,
+      JPull,
+      Tab,
+      TabItem,
+      Badge,
+      querystring,
+      cart,
+      GoodsList,
+      newGoods,
+      hotGoods
+    },
     data () {
       return {
+        communityName: '',
         index: 0,
         curPage: 1,
         pageSize: 4,
@@ -111,6 +156,8 @@
       }
     },
     created () {
+      let communityName = localStorage.getItem('communityName');
+      this.communityName = communityName;
       this.communityId = localStorage.getItem('communityId')
       this.getApplication()
       // this.getNew()
@@ -121,6 +168,7 @@
       next(vm => {
         if (vm.communityId !== localStorage.getItem('communityId')) {
           vm.communityId = localStorage.getItem('communityId')
+          vm.communityName = localStorage.getItem('communityName');
           vm.refreshData()
         }
       })
@@ -311,7 +359,7 @@
       toLabelProductList (item) {
         this.$router.push({
           path: '/labelProductList/' + item.labelId,
-          query: { subName: item.labelName }
+          query: {subName: item.labelName}
         })
       },
       toRecommendTopic () {
@@ -326,6 +374,12 @@
             storeIds: storeId
           }
         })
+      },
+      chooseAddress () {
+        this.$router.push('/changeCommunity');
+      },
+      showMessage () {
+        this.$router.push('/message');
       },
       getImgList (val) {
         let obj1 = {};
@@ -346,30 +400,66 @@
   }
 </script>
 <style type="text/less" lang="less" scoped>
-  .service{
+  .overwrite-title-demo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    line-height: 100%;
+    justify-content: center;
+    .positionIcon {
+      display: inline-block;
+      /*flex: 1;*/
+      width: 20px;
+      height: 34px;
+      background-image: url("../assets/images/address_icon_32black.png");
+      background-position: center center;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    span {
+      display: inline-block;
+      height: 40px;
+      line-height: 40px;
+      max-width: 220px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 18px;
+      color: #333333;
+      margin-left: 3px;
+    }
+  }
+
+  .messageIcon {
+    width: 28px;
+    height: 28px;
+    background: url("../assets/images/message_icon_black.png") center / cover;
+  }
+
+  .service {
     height: 100%;
     width: 100%;
     /*background-color: #f7f7f7;*/
     position: relative;
-    .banner{
+    .banner {
       height: 100%;
-      .businessApp{
+      .businessApp {
         background-color: #ffffff;
       }
-      .recommendTopic{
+      .recommendTopic {
         margin-top: 26px;
         padding: 0 15px;
-        .title{
-          div{
+        .title {
+          div {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            p{
+            p {
               font-size: 21px;
               color: #333333;
               font-weight: 400;
             }
-            i{
+            i {
               display: block;
               width: 18px;
               height: 18px;
@@ -378,31 +468,31 @@
               background-size: cover;
             }
           }
-          p{
+          p {
             margin-top: 5px;
             font-size: 12px;
             color: #aaaaaa;
           }
         }
-        .content{
+        .content {
           margin-top: 20px;
-          div{
+          div {
             width: 100%;
             height: 147px;
             border-radius: 10px;
             margin-bottom: 20px;
           }
-          img{
+          img {
             width: 100%;
             height: 100%;
             border-radius: 10px;
           }
         }
       }
-      .hotAndNew{
+      .hotAndNew {
         margin-top: 20px;
         padding: 0 15px;
-        .chooseBar{
+        .chooseBar {
           color: #ffffff;
           background-color: #0DAB60;
         }
@@ -435,7 +525,7 @@
         }
       }
     }
-    .shoppingCart{
+    .shoppingCart {
       position: fixed;
       right: 18.5px;
       bottom: 84px;

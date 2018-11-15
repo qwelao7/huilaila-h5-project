@@ -1,5 +1,4 @@
 /**
- * Created By muxi on 2017/6/10
  * 支付键盘需要的字母和数字映射集
  */
 let lineOne = [

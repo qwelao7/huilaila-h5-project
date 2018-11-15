@@ -1,6 +1,7 @@
 <template>
   <div class="signUpPeople commonHeader">
-    <view-box ref="viewBox" body-padding-top="1.253333rem" body-padding-bottom="1.333333rem"><!--1.333333rem-->
+    <view-box ref="viewBox" body-padding-top="1.253333rem" :body-padding-bottom="showBtn ? '1.333333rem' : '0'">
+      <!--1.333333rem-->
       <x-header
         slot="header"
         :left-options="{backText: ''}"
@@ -43,12 +44,12 @@
                     </div>
                   </div>
                   <div class="apply-extra"
-                       v-if="item.columnList.length>0 && applyUserListInformation.needUserDetail">
+                       v-if="item.columnList.length>0">
                     <template v-for="column in item.columnList">
                       <p>{{column.columnName}}:{{column.columnValue}}</p>
                     </template>
                   </div>
-                  <template v-if="item.joinUserList.length>0" v-for="itm in item.joinUserList">
+                  <template v-if="item.joinUserList.length>0 && applyUserListInformation.needUserDetail" v-for="itm in item.joinUserList">
                     <div class="signUpPeople_informaton apply-user">
                       <div class="left">
                         <div class="signUpPeople_pic">

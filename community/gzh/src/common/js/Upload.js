@@ -1,8 +1,4 @@
 /**
- * Created by fulin.liu on 2018/2/1.
- */
-
-/**
  * 将以base64的图片url数据转换为Blob
  * @param urlData
  * 用url方式表示的base64图片数据

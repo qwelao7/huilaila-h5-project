@@ -1,6 +1,4 @@
-/**
- * Created by fulin.liu on 2018/7/28.
- */
+
 // Cookie
 // https://github.com/MoeKit/cookie
 // -------------

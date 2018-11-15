@@ -1,17 +1,17 @@
 <template>
   <div class="my commonHeader">
-    <view-box body-padding-top="1.253333rem" body-padding-bottom="1.306667rem">
-      <x-header
-        slot="header"
-        :left-options="{showBack: false}"
-        title="slot:overwrite-title"
-        style="width:100%;position:absolute;left:0;top:0;z-index:100;">
-        <a slot="right" @click="showMessage" class="right"><i class="messageIcon"></i></a>
-        <div class="overwrite-title-demo" slot="overwrite-title" @click="chooseAddress">
-          <i class="positionIcon"></i>
-          <span v-text="communityName"></span>
-        </div>
-      </x-header>
+    <view-box body-padding-top="0" body-padding-bottom="1.306667rem">
+      <!--<x-header-->
+        <!--slot="header"-->
+        <!--:left-options="{showBack: false}"-->
+        <!--title="slot:overwrite-title"-->
+        <!--style="width:100%;position:absolute;left:0;top:0;z-index:100;">-->
+        <!--<a slot="right" @click="showMessage" class="right"><i class="messageIcon"></i></a>-->
+        <!--<div class="overwrite-title-demo" slot="overwrite-title" @click="chooseAddress">-->
+          <!--<i class="positionIcon"></i>-->
+          <!--<span v-text="communityName"></span>-->
+        <!--</div>-->
+      <!--</x-header>-->
       <div>
         <div class="myInfo">
           <div class="modifyInfo" @click="toInfo(personalInfo.avatar)">
@@ -115,7 +115,7 @@
     },
     data () {
       return {
-        communityName: '',
+        // communityName: '',
         personalInfo: {
           userId: '',
           nickName: '',
@@ -142,8 +142,8 @@
       } else {
 //        localStorage.setItem('communityId', '9e1afefa-2548-11e5-901d-ac853da49bf6')
 //        localStorage.setItem('communityName', '测试：绿漫实验园')
-        let communityName = localStorage.getItem('communityName');
-        this.communityName = communityName;
+//         let communityName = localStorage.getItem('communityName');
+//         this.communityName = communityName;
         this.getPersonalInfo();
         this.getTreasure();
         this.getBonus();
@@ -300,12 +300,12 @@
           console.error(error);
         })
       },
-      chooseAddress () {
-        this.$router.push('/changeCommunity');
-      },
-      showMessage () {
-        this.$router.push('/message');
-      },
+      // chooseAddress () {
+      //   this.$router.push('/changeCommunity');
+      // },
+      // showMessage () {
+      //   this.$router.push('/message');
+      // },
       toInfo (key) {
         this.$router.push('/personInfo');
       },

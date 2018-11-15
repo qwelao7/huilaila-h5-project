@@ -28,7 +28,21 @@
           <span v-if="!position" @click="rePosition">定位失败，请点击重试</span>
         </div>
       </div>
+      <div class="allPosition" v-if="showAll" @click="selectAll">
+        <span>全部小区</span>
+      </div>
       <div class="communityList" v-show="showCommunityList">
+        <!--<checker-->
+        <!--v-model="all"-->
+        <!--selected-item-class="selected" class="communities">-->
+        <!--<checker-item-->
+        <!--key="-1"-->
+        <!--class="li"-->
+        <!--value="全部">-->
+        <!--&lt;!&ndash;@on-item-click="choose(items)"&ndash;&gt;-->
+        <!--全部-->
+        <!--</checker-item>-->
+        <!--</checker>-->
         <div v-for="item in comList">
           <div class="city" ref="cityNameBox">
             <span>{{item.cityName}}</span>
@@ -41,7 +55,8 @@
               :key="index"
               class="li"
               :value="items.key"
-              @on-item-click="choose(items)">{{items.value}}</checker-item>
+              @on-item-click="choose(items)">{{items.value}}
+            </checker-item>
           </checker>
         </div>
       </div>
@@ -53,9 +68,10 @@
   </div>
 </template>
 <script>
-  import { mapActions } from 'vuex';
+  import {mapActions} from 'vuex';
   import {initialAxios} from '../../main';
-  import { XHeader, Search, Group, Checker, CheckerItem, ViewBox } from 'vux';
+  import {XHeader, Search, Group, Checker, CheckerItem, ViewBox} from 'vux';
+
   export default {
     name: 'chooseCommunity',
     components: {
@@ -77,6 +93,7 @@
         showChoose: false,
         position: '',
         fromPath: '',
+        showAll: false,
         showCommunityList: true
       }
     },
@@ -87,6 +104,9 @@
       next(vm => {
         // 通过 `vm` 访问组件实例
         vm.fromPath = from.path;
+        if (vm.fromPath === '/life/recommend' || vm.fromPath === '/life/topic' || vm.fromPath === '/life/activity' || vm.fromPath === '/life/daren' || vm.fromPath === '/life/group') {
+          vm.showAll = true
+        }
       })
     },
     mounted () {
@@ -174,16 +194,26 @@
             localStorage.setItem('areaCode', item.areaCode);
             localStorage.setItem('longitude', item.longitude);
             localStorage.setItem('latitude', item.latitude);
+            localStorage.setItem('community_all', 0)
             // 更新头部信息
             initialAxios();
-            _this_.$router.push('/')
+            _this_.$router.go(-1)
           }
         }).catch(e => {
           console.log(e)
         });
       },
+      selectAll () {
+        localStorage.setItem('community_all', 1)
+        initialAxios();
+        this.$router.go(-1)
+      },
       getCityPosition () {
         let _this = this;
+        /**
+         *没有选择全部，则定位到默认小区
+         */
+        if (parseFloat(localStorage.getItem('community_all')) === 0) {
         if (window.AMap) {
           setTimeout(function () {
             window.AMap.service('AMap.CitySearch', function () {
@@ -208,6 +238,7 @@
             })
           }, 500)
         }
+        }
       },
       rePosition () {
         this.getCityPosition()
@@ -216,25 +247,25 @@
   }
 </script>
 <style type="text/less" lang="less" scoped>
-  .chooseCommunity{
+  .chooseCommunity {
     height: 100%;
     background-color: #ffffff;
-    .currentPosition{
+    .currentPosition {
       background-color: #ffffff;
       padding: 0 15px;
       padding-top: 15px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      span{
+      span {
         font-size: 15px;
         color: #333333;
       }
-      .position{
+      .position {
         display: flex;
         align-items: center;
         font-size: 15px;
-        i{
+        i {
           margin-right: 6px;
           width: 16px;
           height: 16px;
@@ -242,10 +273,22 @@
         }
       }
     }
-    .communityList{
+    .allPosition {
+      background-color: #ffffff;
+      padding: 15px;
+      padding-bottom: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      span {
+        font-size: 15px;
+        color: #333333;
+      }
+    }
+    .communityList {
       padding: 0 15px;
       padding-top: 15px;
-      .city{
+      .city {
         background-color: #f2f2f2;
         font-size: 15px;
         color: #333333;
@@ -253,10 +296,10 @@
         line-height: 24px;
         padding-left: 10px;
       }
-      .communities{
+      .communities {
         display: flex;
         flex-direction: column;
-        .li{
+        .li {
           display: flex;
           justify-content: space-between;
           align-items: center;
@@ -264,16 +307,16 @@
           border-bottom: 0.5px solid #D8D8D8;
           font-size: 14px;
         }
-        .li:last-child{
+        .li:last-child {
           border-bottom: none;
         }
-        .selected{
-          background: url("../../assets/images/check_icon_orange32.png") right no-repeat ;
+        .selected {
+          background: url("../../assets/images/check_icon_orange32.png") right no-repeat;
           background-size: 16px 16px
         }
       }
     }
-    .noContent{
+    .noContent {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -281,16 +324,16 @@
       margin-top: 124px;
       margin-bottom: 248px;
       z-index: 999;
-      img{
+      img {
         width: 150px;
         height: 150px;
       }
-      p{
+      p {
         margin-top: 10px;
         color: #aaaaaa;
         font-size: 15px;
       }
-      span{
+      span {
         width: 150px;
         height: 35px;
         margin-top: 20px;

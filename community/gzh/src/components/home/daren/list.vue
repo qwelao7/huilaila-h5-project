@@ -1,18 +1,20 @@
 <template>
   <div class="commonHeader">
     <div class="commonHeader">
-      <j-pull :refreshFunc="refresh" :loadMoreFunc="loadMore" :style="{height: isServe ? 'calc(100% - 1.173rem)' : '100%'}">
+      <j-pull :refreshFunc="refresh" :loadMoreFunc="loadMore"
+              :style="{height: isServe ? 'calc(100% - 1.173rem)' : '100%'}">
         <div slot="jpull-list">
           <div v-if="isServe">
             <ul class="daren" v-show="list.length > 0">
               <li v-for="item in list" @click="goDetial(item)">
-                <img v-if="!item.workRoomIcon" src="../../../assets/images/studio_Illustration_200.png" alt="">
-                <j-img v-if="item.workRoomIcon" :osskey="item.workRoomIcon" :custom-width="100" :custom-height="100"></j-img>
+                <img v-if="!item.groupIcon" src="../../../assets/images/studio_Illustration_200.png" alt="">
+                <j-img v-if="item.groupIcon" :osskey="item.groupIcon" :custom-width="100"
+                       :custom-height="100"></j-img>
                 <div class="info">
-                  <p class="title">{{item.workRoomName}}</p>
-                  <p class="brief" style="-webkit-box-orient: vertical;">{{item.introduce}}</p>
+                  <p class="title">{{item.groupTitle}}</p>
+                  <p class="brief" style="-webkit-box-orient: vertical;">{{item.groupIntro}}</p>
                   <p class="tags">
-                    <span>#{{item.workRoomTag}}</span>
+                    <span>#{{item.groupTag}}</span>
                   </p>
                 </div>
               </li>
@@ -32,12 +34,13 @@
     <a v-if="applyBtnVisible" class="bottom-btn" @click="apply">申请成为达人</a>
     </div>
   </div>
-  
+
 </template>
 <script>
   import {querystring, TransferDom} from 'vux'
   import JPull from '../../base/JPull/JPull'
   import JImg from 'components/common/img/jImg'
+
   export default {
     name: 'topicList',
     directives: {
@@ -54,6 +57,7 @@
         hasToken: false, // 是否token值，用来判断是否是游客
         isServe: true,
         curPage: 1,
+        pageSize: 10,
         hasMore: true,
         communityId: ''
       }
@@ -68,6 +72,7 @@
     },
     created () {
       this.communityId = localStorage.getItem('communityId')
+      this.community_all = localStorage.getItem('community_all')
       this.hasToken = Boolean(localStorage.getItem('token'));
       this.getData();
     },
@@ -81,6 +86,10 @@
           vm.hasToken = Boolean(localStorage.getItem('token'))
           vm.refresh()
         }
+        if (vm.community_all !== localStorage.getItem('community_all')) {
+          vm.community_all = localStorage.getItem('community_all')
+          vm.refresh()
+        }
       })
     },
     methods: {
@@ -90,51 +99,56 @@
         this.getData(loaded);
       },
       loadMore (loaded) {
-        this.curPage ++;
+        this.curPage++;
         this.getData(loaded);
       },
       getData (loaded) {
+        let that = this;
         let params = {
-          defCommunityId: localStorage.getItem('communityId'),
-          companyCode: window.commonConfig.companyCode,
-          // companyCode: 'lc',
-          token: localStorage.getItem('token'),
-          type: 2,
           curPage: this.curPage,
-          maxRow: 0,
-          row: 20
+          pageSize: this.pageSize
         }
         this.$vux.loading.show({text: '加载中'});
         this.$JHttp({
-          method: 'post',
-          url: `${window.oldBaseURL}/scNeighborGroupActionV36!queryWorkRoomList.action`,
-          data: params,
-          transformRequest: [function (data) {
-            let ret = '';
-            for (let it in data) {
-              ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-            }
-            return ret
-          }],
+          method: 'get',
+          //   url: `${window.oldBaseURL}/scNeighborGroupActionV36!queryWorkRoomList.action`,
+          //   data: params,
+          //   transformRequest: [function (data) {
+          //     let ret = '';
+          //     for (let it in data) {
+          //       ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+          //     }
+          //     return ret
+          //   }],
+          //   headers: {
+          //     'Content-Type': 'application/x-www-form-urlencoded'
+          //   }
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
+            defCommunityId: localStorage.getItem('communityId'),
+            communityAll: localStorage.getItem('community_all')
+          },
+          url: window.baseURL + '/index/workroom?' + querystring.stringify(params)
         })
         .then(res => {
+            that.$vux.loading.hide();
+            console.log(res.data)
+            that.hasMore = res.data.data.pageResult.hasMore;
           if (loaded) loaded(this.hasMore);
           if (res.data) {
-            this.isServe = res.data.isServe === 1;
-            if (this.isServe) {
-              this.isDaren = res.data.isOpenWorkRoom === '1'; // 是否开通达人
-              if (res.data.page) {
-                this.list = [...this.list, ...res.data.page.resultList];
-                this.hasMore = res.data.page.maxPage > res.data.page.curPage;
+              that.isServe = res.data.isOpenWorkRoomSubject === true;
+              that.isDaren = res.data.isApplyWorkRoom === true; // 是否开通达人
+              if (res.data.data.resultList) {
+                that.list = [...that.list, ...res.data.data.resultList];
               }
+              that.list.forEach(item => {
+                if (item.groupIcon) {
+                  item.groupIcon = window.aliyunImgUrl + item.groupIcon
             }
+              })
           }
-          this.$vux.loading.hide();
-        }).catch(e => {
-          this.$vux.loading.hide();
+          })
+          .catch(() => {
+            that.$vux.loading.hide();
         })
       },
       apply () {
@@ -142,57 +156,58 @@
         this.$router.push({path: '/darenApply', query: {title: '申请达人'}});
       },
       goDetial (item) {
-        this.$router.push({path: '/darenDetail', query: {id: item.workRoomId}})
+        this.$router.push({path: '/darenDetail', query: {id: item.id}})
       }
     }
   }
 </script>
 <style type="text/less" lang="less" scoped>
-  ul.daren{
+  ul.daren {
     padding: 0 15px;
     padding-top: 20px;
     background-color: #fff;
-    li{
+    li {
       display: flex;
       margin-bottom: 20px;
-      &:last-child{
+      &:last-child {
         margin-bottom: 0;
       }
-      &>img{
+      & > img {
         width: 100px;
         height: 100px;
         min-width: 100px;
       }
-      .info{
+      .info {
         margin-left: 10px;
-        .title{
+        .title {
           font-size: 18px;
           line-height: 25px;
-          margin-top:8px;
+          margin-top: 8px;
           margin-bottom: 17px;
           font-family: 'pingfang_scmedium pingfang_scregular'
         }
-        .brief{
+        .brief {
           font-size: 12px;
           line-height: 17.5px;
           margin-bottom: 10px;
-          overflow : hidden;
+          overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
           -webkit-line-clamp: 1;
           word-break: break-all;
         }
-        .tags{
+        .tags {
           font-size: 12px;
           line-height: 17.5px;
         }
-        span{
+        span {
           display: inline;
         }
       }
     }
   }
-  .bottom-btn{
+
+  .bottom-btn {
     font-size: 15px;
     text-align: center;
     line-height: 44px;
@@ -206,11 +221,13 @@
     z-index: 500;
     color: #333;
   }
-  .commonHeader{
+
+  .commonHeader {
     position: relative;
     height: 100%;
   }
-  .serve-close{
+
+  .serve-close {
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -1,6 +1,18 @@
 <template>
-  <div class="community">
-    <view-box ref="communityBody" body-padding-top="0" :body-padding-bottom="paddingBtm">
+  <div class="community commonHeader">
+    <!--<view-box ref="communityBody" body-padding-top="0" :body-padding-bottom="paddingBtm">-->
+    <view-box ref="communityBody" body-padding-top="1.253333rem" :body-padding-bottom="paddingBtm">
+      <x-header
+        slot="header"
+        :left-options="{showBack: false}"
+        title="slot:overwrite-title"
+        style="width:100%;position:absolute;left:0;top:0;z-index:100;">
+        <a slot="right" @click="showMessage" class="right"><i class="messageIcon"></i></a>
+        <div class="overwrite-title-demo" slot="overwrite-title" @click="chooseAddress">
+          <i class="positionIcon"></i>
+          <span v-text="communityName"></span>
+        </div>
+      </x-header>
       <div class="picList" v-if="imgList.length > 0">
         <div class="showPic" v-if="index === 0" v-for="(item, index) in imgList">
           <img class="previewer-demo-img" :src="item.src" @click="show(index)" alt="">
@@ -20,7 +32,8 @@
       <div v-show="!pullDown">
         <div class="list-under-swiper">
           <grid :cols="4">
-            <grid-item :label="item.name" v-for="item in list" v-if="item.visible" :key="item.id" @on-item-click="onItemClick(item)">
+            <grid-item :label="item.name" v-for="item in list" v-if="item.visible" :key="item.id"
+                       @on-item-click="onItemClick(item)">
               <img slot="icon" :src="item.icon">
             </grid-item>
           </grid>
@@ -47,7 +60,7 @@
       </div>
       <bottomTab v-show="!pullDown" slot="bottom"></bottomTab>
     </view-box>
-<!--     <x-dialog class="delete-wrapper" v-model="deleteModalShow" :dialog-style="deleteDialogStyle" hide-on-blur>
+    <!--     <x-dialog class="delete-wrapper" v-model="deleteModalShow" :dialog-style="deleteDialogStyle" hide-on-blur>
       <span class="delete-info vux-1px-b">敬请期待!</span>
       <div class="operate-wrapper">
         <span class="text vux-1px-r" @click="deleteModalShow = false">确定</span>
@@ -65,7 +78,7 @@
 </template>
 <script>
   //  import {Grid, GridItem, Group, Cell} from 'vux'
-  import {Grid, GridItem, ViewBox, XDialog, Previewer, TransferDom} from 'vux'
+  import {XHeader, Grid, GridItem, ViewBox, XDialog, Previewer, TransferDom} from 'vux'
   import bannerPic from './community/picList'
   import comCard from './community/comCard'
   import bottomTab from '../components/bottomTab'
@@ -114,6 +127,7 @@
       TransferDom
     },
     components: {
+      XHeader,
       Previewer,
       bottomTab,
       Grid,
@@ -125,6 +139,7 @@
     },
     data () {
       return {
+        communityName: '',
         isEmpty: true,
         list: [],
         pullDown: false,
@@ -160,6 +175,8 @@
       }
     },
     created () {
+      let communityName = localStorage.getItem('communityName');
+      this.communityName = communityName;
       this.getBuildList();
       this.getAppList();
     },
@@ -359,6 +376,12 @@
           this.paddingBtm = '0'
         }
       },
+      chooseAddress () {
+        this.$router.push('/changeCommunity');
+      },
+      showMessage () {
+        this.$router.push('/message');
+      },
       goToBind () {
         this.$router.push('/Login')
       }
@@ -366,6 +389,42 @@
   }
 </script>
 <style type="text/less" lang="less" scoped>
+  .overwrite-title-demo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    line-height: 100%;
+    justify-content: center;
+    .positionIcon {
+      display: inline-block;
+      /*flex: 1;*/
+      width: 20px;
+      height: 34px;
+      background-image: url("../assets/images/address_icon_32black.png");
+      background-position: center center;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    span {
+      display: inline-block;
+      height: 40px;
+      line-height: 40px;
+      max-width: 220px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 18px;
+      color: #333333;
+      margin-left: 3px;
+    }
+  }
+
+  .messageIcon {
+    width: 28px;
+    height: 28px;
+    background: url("../assets/images/message_icon_black.png") center / cover;
+  }
+
   .community {
     height: 100%;
     width: 100%;

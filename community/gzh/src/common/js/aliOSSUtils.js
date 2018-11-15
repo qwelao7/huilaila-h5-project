@@ -1,6 +1,3 @@
-/**
- * Created by fulin.liu on 2018/7/28.
- */
 import OSS from 'ali-oss';
 import Cookie from './cookie'
 import {jlDate, JString} from './utils'

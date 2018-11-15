@@ -1,7 +1,4 @@
 /**
- * Created by muxi on 2017/10/10.
- */
-/**
  * webapp中h5的定位函数
  * @author muxi
  * @date 2017/05/02 16:09

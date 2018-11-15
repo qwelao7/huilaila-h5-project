@@ -68,6 +68,27 @@
             </div>
           </cell>
         </group>
+        <div class="spacing-container"></div>
+
+
+        <group class="sessionList" v-if="sessionVList.length>0">
+          <p class="title">活动场次</p>
+          <checker type="radio" v-model="selectedSession" selected-item-class="selected-item-class"
+                   default-item-class="default-item-class" disabled-item-class="disabled-item-class" radio-required>
+            <checker-item :value="item" v-for="(item, index) in sessionVList" :disabled="item.disabled"
+                          @on-item-click="sessionClick">
+              <cell>
+                <div slot="icon">
+                  <checkIcon :value.sync="item.selected"></checkIcon>
+                </div>
+                <span class="secTitle" slot="title">{{item.title}}</span>
+                <span class="secAmount" slot="after-title">剩余名额：<em>{{item.leftCount}}</em></span>
+                <span slot="inline-desc">{{item.content}}</span>
+              </cell>
+            </checker-item>
+          </checker>
+        </group>
+
 
         <group class="options">
           <x-textarea placeholder="如您有什么特别需求可告知我们..." :height="130" :rows="8" :cols="30" :max="500"
@@ -143,9 +164,13 @@
     ViewBox,
     Group,
     CellBox,
+    Cell,
     XTextarea,
     XButton,
     XInput,
+    Checker,
+    CheckerItem,
+    CheckIcon,
     XNumber,
     Popup,
     Radio,
@@ -165,8 +190,12 @@
       ViewBox,
       Group,
       CellBox,
+      Cell,
       XTextarea,
       XInput,
+      Checker,
+      CheckerItem,
+      CheckIcon,
       XNumber,
       XButton,
       Popup,
@@ -181,9 +210,11 @@
         ApplyInfo: JSON.parse(localStorage.getItem('setApplyInfo')) || [],
         joinUserIds: [],
         showApply: {},
+        sessionVList: [],
         showDetail: false,
         showMoneyDetail: false,
         showPayWay: false,
+        selectedSession: null,
         PaySelection: [
 //          {
 //            icon: wallet,
@@ -281,6 +312,18 @@
           if (res.status === 100) {
             _this.$vux.loading.hide();
             _this.signInfo = res.data;
+            if (res.data.sessionVList) {
+              res.data.sessionVList.forEach((item, index) => {
+                _this.sessionVList[index] = item
+                _this.sessionVList[index].selected = false
+                if (item.leftCount > 0) {
+                  _this.sessionVList[index].disabled = false
+                } else {
+                  _this.sessionVList[index].disabled = true
+                }
+              })
+              console.log(_this.sessionVList)
+            }
 //            if (_this.signInfo.joinMoney > 0 && _this.ApplyInfo.length > 0) {
 //              _this.payMoney = toDecimal2(_this.signInfo.joinMoney * _this.ApplyInfo.length)
 //            }
@@ -332,6 +375,13 @@
           })
           return
         }
+        if (this.sessionVList.length && !this.selectedSession) {
+          this.$vux.toast.show({
+            type: 'text',
+            text: '请选择场次！'
+          })
+          return
+        }
         let columnTemp = []
         let extra = true
         this.extraInfo.forEach(res => {
@@ -361,6 +411,9 @@
           } else {
             params.wxPayCallType = 1
           }
+        }
+        if (this.selectedSession) {
+          params.sessionId = this.selectedSession.id
         }
         console.log(111, params)
         this.$vux.loading.show({
@@ -512,6 +565,16 @@
         }).catch(e => {
           console.log(e)
         })
+      },
+      sessionClick (value, disabled) {
+        this.sessionVList.forEach(item => {
+          if (value.id === item.id) {
+            item.selected = true
+          } else {
+            item.selected = false
+          }
+        })
+        console.log(this.selectedSession.id)
       }
     }
   }
@@ -775,6 +838,32 @@
       font-size: 20px;
       margin-top: 10px;
       line-height: 26px;
+    }
+  }
+
+  .sessionList {
+    .title {
+      margin: 0 15px;
+      padding: 15px 0;
+      border-bottom: 1px solid #d8d8d8;
+    }
+    .default-item-class {
+      display: block;
+      border-bottom: 1px solid #f5f5f5;
+    }
+    .disabled-item-class {
+      background-color: #f5f5f5;
+    }
+    .secTitle {
+      display: block;
+    }
+    .secAmount {
+      display: block;
+      float: right;
+      em {
+        display: inline-block;
+        color: #0DAB60;
+      }
     }
   }
 </style>

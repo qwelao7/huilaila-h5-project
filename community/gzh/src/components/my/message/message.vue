@@ -45,7 +45,7 @@
     data () {
       return {
         leftOptions: {
-          preventGoBack: true,
+          // preventGoBack: true,
           backText: ''
         },
         selectedTab: 0,

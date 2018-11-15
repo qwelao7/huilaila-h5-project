@@ -1,6 +1,7 @@
 <template>
   <div class="activityDetail commonHeader">
-    <view-box ref="viewBox" :body-padding-top="(isApp && !headerRight.showMore) ? '0rem' : '1.253333rem'" body-padding-bottom="1.333333rem">
+    <view-box ref="viewBox" :body-padding-top="(isApp && !headerRight.showMore) ? '0rem' : '1.253333rem'"
+              body-padding-bottom="1.333333rem">
       <x-header
         slot="header"
         v-if="!isApp || headerRight.showMore"
@@ -38,12 +39,22 @@
                     <span>活动地点：</span>
                     <span>{{detailObj.activityAddress}}</span>
                   </li>
+                  <li v-if="detailObj.joinAmount > 0">
+                    <span>活动名额：</span>
+                    <span>{{detailObj.joinAmount}}人</span>
+                  </li>
                   <li v-if="detailObj.joinMoney > 0">
                     <span>报名费：</span>
                     <span>{{detailObj.joinMoney}}元/人</span>
                   </li>
                 </ul>
                 <p v-html="detailObj.content"></p>
+                <div v-if="detailObj.haveSession === 1">
+                  <p style="font-weight: bold">活动场次：</p>
+                  <ul v-for="item in detailObj.sessionVList">
+                    <li>{{item.title}}(报名人数：<em>{{item.leftCount}}/{{item.limitCount}}</em>)</li>
+                  </ul>
+                </div>
               </div>
               <div class="bannerImg" v-show="imgList.length">
                 <!--<img :src="detailObj.bannerPic" alt="">-->
@@ -51,8 +62,10 @@
                   <ul>
                     <li v-for="(item, index) in imgList" :class="{onePic: isOne}">
                       <!--<img class="previewer-demo-img" :src="item.src" alt="" @click="show(index)">-->
-                      <j-img :osskey="item.src" v-if="isOne" :custom-class="'previewer-demo-img'" :custom-width="345" :custom-height="200" @click.native="show(index)"></j-img>
-                      <j-img :osskey="item.src" v-if="!isOne" :custom-class="'previewer-demo-img'" :custom-width="105" :custom-height="105" @click.native="show(index)"></j-img>
+                      <j-img :osskey="item.src" v-if="isOne" :custom-class="'previewer-demo-img'" :custom-width="345"
+                             :custom-height="200" @click.native="show(index)"></j-img>
+                      <j-img :osskey="item.src" v-if="!isOne" :custom-class="'previewer-demo-img'" :custom-width="105"
+                             :custom-height="105" @click.native="show(index)"></j-img>
                     </li>
                   </ul>
                   <div v-transfer-dom v-if="imgList">
@@ -215,6 +228,7 @@
     XDialog,
     querystring
   } from 'vux'
+
   const scope = 'snsapi_base' // snsapi_userinfo
   export default {
     name: 'activityDetail',
@@ -511,7 +525,7 @@
           } else if (status === 2) {
             let params = {
               joinOtherCommunity: val.joinOtherCommunity,
-              communityId: val.communityId
+              activityId: val.activityId
             }
             let _this = this;
             _this.$JHttp({
@@ -913,6 +927,11 @@
             }
             span:last-child {
               flex: 1;
+            }
+            em {
+              font-size: 15px;
+              color: #869DC7;
+              word-break: break-all;
             }
           }
         }

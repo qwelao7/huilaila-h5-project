@@ -1,6 +1,3 @@
-/**
- * Created by muxi on 2017/7/11.
- */
 /*
  *
  * A JavaScript implementation of the Secure Hash Algorithm, SHA-1, as defined

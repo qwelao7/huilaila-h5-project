@@ -19,7 +19,8 @@
             <div class="joinPeople">
               <p class="joinTit">参与人</p>
               <group class="peopleList">
-                <cell v-for="(item, index) in applyDetail.joinUserDetailList" :key="index" :is-link="true" @click.native="onClickQrCode(item, applyDetail)">
+                <cell v-for="(item, index) in applyDetail.joinUserDetailList" :key="index" :is-link="true"
+                      @click.native="onClickQrCode(item, applyDetail)">
                   <div slot="title" class="userTitle">
                     <span>{{item.joinUserName}}</span>
                     <span>{{item.joinUserPhone}}</span>
@@ -62,7 +63,8 @@
           <span class="cancel">取消报名</span>
           <span>{{applyDetail.applyEndDate}} 前可取消</span>
         </div>
-        <div class="needPay" @click="goPay(applyDetail)" v-if="applyDetail.payRemainTime && applyDetail.payStatus === 1">
+        <div class="needPay" @click="goPay(applyDetail)"
+             v-if="applyDetail.payRemainTime && applyDetail.payStatus === 1">
           <span class="cancel">去支付（¥{{payFee}}）</span>
           <span>请在{{applyDetail.payRemainTime}}分钟内支付</span>
         </div>
@@ -114,6 +116,11 @@
                   <span>活动开始时间：</span>
                   <span>{{applyDetail.startDate}}</span>
                 </li>
+                <li
+                  v-show="qrItem.sessionTitle!== '' && qrItem.sessionTitle!== null && qrItem.sessionTitle!== undefined">
+                  <span>活动场次：</span>
+                  <span>{{qrItem.sessionTitle}} {{qrItem.sessionContent}}</span>
+                </li>
                 <li v-show="applyDetail.joinMoney > 0">
                   <span>报名费：</span>
                   <span>¥{{applyDetail.joinMoney}}/人</span>
@@ -140,8 +147,9 @@
   </div>
 </template>
 <script>
-  import { XHeader, ViewBox, Group, Cell, TransferDom, Popup, Qrcode, querystring, XDialog } from 'vux'
+  import {XHeader, ViewBox, Group, Cell, TransferDom, Popup, Qrcode, querystring, XDialog} from 'vux'
   import JPull from '../../base/JPull/JPull'
+
   export default {
     name: 'signDetail',
     directives: {
@@ -308,7 +316,8 @@
               console.log(e)
             })
           },
-          onCancel () {}
+          onCancel () {
+          }
         })
       },
       toDetail (key) {
@@ -432,6 +441,7 @@
       }
     }
   }
+
   function toDecimal2 (x) {
     var f = parseFloat(x);
     if (isNaN(f)) {
@@ -457,12 +467,12 @@
         top: 44px;
       }
     }
-    .weui-dialog{
+    .weui-dialog {
       width: 216px;
       height: 200px;
       border-radius: 10px;
       box-shadow: 1px 1px 4px 0;
-      .cancelBanner{
+      .cancelBanner {
         width: 120px;
         margin: 0 auto;
         height: 100%;
@@ -470,17 +480,17 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        .big{
+        .big {
           font-size: 15px;
           color: #000000;
           font-weight: 600;
         }
-        .small{
+        .small {
           margin-top: 10px;
           font-size: 12px;
           color: #aaaaaa;
         }
-        img{
+        img {
           width: 57.5px;
           height: 57.5px;
         }
@@ -490,39 +500,39 @@
   }
 </style>
 <style type="text/less" lang="less" scoped>
-  .signDetail{
+  .signDetail {
     background-color: #f7f7f7;
     height: 100%;
-    .title{
+    .title {
       margin: 10px 0;
       background-color: #ffffff;
       padding: 15px;
-      .weui-cell{
+      .weui-cell {
         padding: 0;
       }
-      img{
+      img {
         width: 30px;
         height: 30px;
         margin-right: 10px;
       }
     }
-    .joinTit{
+    .joinTit {
       font-size: 15px;
       padding: 15px;
     }
-    .joinPeople{
+    .joinPeople {
       background-color: #ffffff;
-      .peopleList{
-        .weui-cell{
+      .peopleList {
+        .weui-cell {
           padding: 15px;
         }
-        .userTitle{
-          span{
+        .userTitle {
+          span {
             font-size: 15px;
             display: inline-block;
           }
         }
-        i{
+        i {
           width: 16px;
           height: 16px;
           background-image: url("../../../assets/images/user_icon_32black.png");
@@ -531,7 +541,7 @@
           background-size: contain;
           margin-right: 15px;
         }
-        .qrcode{
+        .qrcode {
           width: 21px;
           height: 21px;
           background-image: url("../../../assets/images/QRcode_icon_fitment.png");
@@ -540,41 +550,41 @@
           background-size: contain;
           margin-right: 10px;
         }
-        .check{
+        .check {
           color: #FF6648;
           font-size: 15px;
         }
       }
     }
-    .joinDetail{
+    .joinDetail {
       background: #ffffff;
       margin-top: 10px;
       padding: 0 15px;
-      p{
+      p {
         border-bottom: 0.5px solid #D8D8D8;
         padding: 15px 0;
       }
-      ul{
+      ul {
         padding: 15px 0;
-        li{
+        li {
           display: flex;
           align-items: flex-start;
           padding-bottom: 10px;
           font-size: 15px;
-          span:last-child{
+          span:last-child {
             flex: 1;
             margin-left: 5px;
             white-space: normal;
             word-break: break-all;
           }
         }
-        .ps{
+        .ps {
          padding-bottom: 0;
           padding-top: 5px;
         }
       }
     }
-    .bottom{
+    .bottom {
       position: fixed;
       bottom: 0;
       left: 0;
@@ -586,26 +596,26 @@
       /*align-items: center;*/
       justify-content: space-between;
       background-color: #aaaaaa;
-      div{
+      div {
         height: 50px;
         /*line-height: 50px;*/
       }
-      span{
+      span {
         font-size: 14px;
         color: #ffffff;
         text-align: center;
       }
-      .cancel{
+      .cancel {
         font-size: 18px;
         /*background-color: #0DAB60;*/
       }
-      .outTime{
+      .outTime {
         height: 50px;
         line-height: 50px;
         font-size: 18px;
       }
     }
-    .needPay{
+    .needPay {
       background-color: #0DAB60;
     }
   }

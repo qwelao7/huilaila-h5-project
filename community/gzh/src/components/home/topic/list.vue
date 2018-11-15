@@ -23,12 +23,13 @@
         </div>
       </div>
     </j-pull>
-    
+
   </div>
 </template>
 <script>
   import {querystring, TransferDom, XDialog, ViewBox, XHeader, Group, CellBox, Badge} from 'vux'
   import JPull from '../../base/JPull/JPull'
+
   export default {
     name: 'topicList',
     directives: {
@@ -51,6 +52,7 @@
     },
     created () {
       this.communityId = localStorage.getItem('communityId')
+      this.community_all = localStorage.getItem('community_all')
       this.getData();
     },
     beforeRouteEnter (to, from, next) {
@@ -58,6 +60,10 @@
         vm.$emit('changeIndex', 1)
         if (vm.communityId !== localStorage.getItem('communityId')) {
           vm.communityId = localStorage.getItem('communityId')
+          vm.refresh()
+        }
+        if (vm.community_all !== localStorage.getItem('community_all')) {
+          vm.community_all = localStorage.getItem('community_all')
           vm.refresh()
         }
       })
@@ -75,7 +81,8 @@
           method: 'get',
           url: `${window.baseURL}/neighbor/topic/home`,
           headers: {
-            defCommunityId: localStorage.getItem('communityId')
+            defCommunityId: localStorage.getItem('communityId'),
+            communityAll: localStorage.getItem('community_all')
           }
         }).then(res => {
           this.list = res.data;
@@ -92,61 +99,62 @@
   }
 </script>
 <style type="text/less" lang="less" scoped>
-  .commonHeader{
+  .commonHeader {
     height: 100%;
   }
-  ul.topic-list{
+
+  ul.topic-list {
     background: #fff;
-    padding:　0.533rem .4rem;
-    li{
-      &:first-child{
+    padding: 　0 .533rem .4rem;
+    li {
+      &:first-child {
         margin-top: 0;
       }
-      &:last-child{
+      &:last-child {
         margin-bottom: 0;
       }
       height: 2.133rem;
       display: flex;
       margin: 0.533rem 0;
-      &>img{
+      & > img {
         width: 1.653rem;
         height: 1.653rem;
         align-self: center;
       }
-      .wrapper{
+      .wrapper {
         margin-left: .48rem;
         width: 100%;
       }
-      .head{
+      .head {
         width: 100%;
         height: .666rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
         margin-top: .213rem;
-        .title{
+        .title {
           color: #333;
           font-size: .48rem;
           line-height: .666rem;
         }
-        img{
+        img {
           width: .32rem;
           height: .32rem;
         }
-        .number{
+        .number {
           font-size: .32rem;
           color: #333;
           height: .4rem;
           line-height: .4rem;
           margin-left: .2rem;
         }
-        .number-wrapper{
+        .number-wrapper {
           display: flex;
           justify-content: flex-start;
           align-items: center;
         }
       }
-      .basic-info{
+      .basic-info {
         width: 100%;
         font-size: .32rem;
         color: #333;
@@ -155,6 +163,7 @@
       }
     }
   }
+
   .placeholder {
     display: flex;
     flex-direction: column;

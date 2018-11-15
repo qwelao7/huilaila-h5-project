@@ -1,6 +1,4 @@
-/**
- * Created by fulin.liu on 2018/8/2.
- */
+
 /*
  * Generate a random uuid.
  *

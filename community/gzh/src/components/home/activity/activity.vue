@@ -68,6 +68,7 @@
       this.getData();
       this.isApp = localStorage.getItem('isApp')
       this.communityId = localStorage.getItem('communityId')
+      this.community_all = localStorage.getItem('community_all')
     },
     beforeRouteEnter (to, from, next) {
       next(vm => {
@@ -76,6 +77,10 @@
           if (vm.communityId !== localStorage.getItem('communityId')) {
             vm.communityId = localStorage.getItem('communityId')
             vm.refreshData()
+          }
+          if (vm.community_all !== localStorage.getItem('community_all')) {
+            vm.community_all = localStorage.getItem('community_all')
+            vm.refresh()
           }
         }
       })
@@ -103,7 +108,8 @@
           method: 'get',
           url: window.baseURL + '/socialactivity/getActivityList?' + querystring.stringify(params),
           headers: {
-            defCommunityId: localStorage.getItem('communityId')
+            defCommunityId: localStorage.getItem('communityId'),
+            communityAll: parseFloat(localStorage.getItem('community_all'))
           }
         }).then(res => {
           if (loaded) {

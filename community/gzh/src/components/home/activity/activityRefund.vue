@@ -216,7 +216,6 @@
       }
     }
   }
-
   function toDecimal2 (x) {
     var f = parseFloat(x);
     if (isNaN(f)) {

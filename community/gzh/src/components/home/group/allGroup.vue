@@ -12,14 +12,14 @@
           <div slot="jpull-list">
             <ul class="group-banner" v-if="groupList.length > 0">
               <li v-for="item in groupList">
-                <div class="avatar"><img :src="item.neighborClubIcon" alt=""></div>
+                <div class="avatar"><img :src="item.groupIcon" alt=""></div>
                 <div class="introduce">
                   <div class="namePart">
-                    <span class="name">{{item.neighborClubName}}</span>
+                    <span class="name">{{item.groupTitle}}</span>
                     <span class="join" @click="joinUs(item)">加入</span>
                   </div>
                   <div class="content">
-                    <span>{{item.introduce}}</span>
+                    <span>{{item.groupIntro}}</span>
                   </div>
                 </div>
               </li>
@@ -64,8 +64,9 @@
   </div>
 </template>
 <script>
-  import { ViewBox, XHeader, XTextarea, Group, XDialog, TransferDomDirective as TransferDom, querystring } from 'vux'
+  import {ViewBox, XHeader, XTextarea, Group, XDialog, TransferDomDirective as TransferDom, querystring} from 'vux'
   import JPull from '../../base/JPull/JPull'
+
   export default {
     name: 'pub_newThings',
     directives: {
@@ -110,7 +111,7 @@
         this.getData(loaded)
       },
       loadMore (loaded) {
-        this.curPage ++
+        this.curPage++
         this.getData(loaded)
       },
       getData (loaded) {
@@ -119,28 +120,29 @@
           text: '加载中'
         });
         let params = {
-          groupType: 2,
           curPage: _this.curPage,
-          row: _this.pageSize,
-          companyCode: window.commonConfig.companyCode,
-          token: localStorage.getItem('token'),
-          defCommunityId: localStorage.getItem('communityId')
+          pageSize: _this.pageSize
         };
         _this.$JHttp({
           method: 'get',
-          url: window.oldBaseURL + '/scNeighborGroupActionV36!queryGoodNeighborClubList.action?' + querystring.stringify(params)
+          headers: {
+            defCommunityId: localStorage.getItem('communityId'),
+            communityAll: parseFloat(localStorage.getItem('community_all'))
+          },
+          url: window.baseURL + '/index/socialgroup?' + querystring.stringify(params)
         }).then(res => {
           if (loaded) {
             loaded(_this.hasMore)
           }
           _this.$vux.loading.hide();
-          if (res.status === '100') {
-            if (res.data.maxPage > res.data.curPage) {
-              _this.hasMore = true
-            } else {
-              _this.hasMore = false
-            }
+          if (res.status === 100) {
+            _this.hasMore = res.data.pageResult.hasMore
             _this.groupList = _this.groupList.concat(res.data.resultList)
+            _this.groupList.forEach(item => {
+              if (item.groupIcon) {
+                item.groupIcon = window.aliyunImgUrl + item.groupIcon
+            }
+            })
           } else {
             _this.$vux.toast.show({
               type: 'cancel',
@@ -154,7 +156,7 @@
       joinUs (item) {
         // 显示弹窗
         this.showHideOnBlur = true;
-        this.title = item.neighborClubName;
+        this.title = item.groupTitle;
         this.qqNum = item.qqGroupNum;
         this.wxNum = item.ownerWeixinNum;
         this.notes = item.notes;
@@ -197,61 +199,62 @@
   }
 </script>
 <style type="text/less" lang="less" scoped>
-  .group-popup{
+  .group-popup {
     height: 100%;
-    .noContent{
+    .noContent {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       margin-top: 142.5px;
       margin-bottom: 284.5px;
-      img{
+      img {
         width: 150px;
         height: 150px;
       }
-      p{
+      p {
         margin-top: 10px;
         color: #aaaaaa;
         font-size: 15px;
       }
     }
   }
-  .group-banner{
-    padding:0 15px;
-    li{
-      width:100%;
+
+  .group-banner {
+    padding: 0 15px;
+    li {
+      width: 100%;
       display: flex;
       margin-top: 20px;
       justify-content: space-between;
       align-items: flex-start;
-      .avatar{
+      .avatar {
         width: 100px;
         height: 100px;
         overflow: hidden;
         display: flex;
         align-items: center;
       }
-      .introduce{
+      .introduce {
         margin-left: 10px;
         margin-top: 15px;
         flex: 1;
-        .namePart{
+        .namePart {
           display: flex;
           justify-content: space-between;
-          span{
+          span {
             display: block;
           }
-          .name{
+          .name {
             font-size: 18px;
             color: #333333;
             font-weight: 400;
             width: 150px;
             overflow: hidden;
-            text-overflow:ellipsis;
+            text-overflow: ellipsis;
             white-space: nowrap;
           }
-          .join{
+          .join {
             width: 78px;
             text-align: center;
             height: 23px;
@@ -262,9 +265,9 @@
             border-radius: 50px;
           }
         }
-        .content{
+        .content {
           margin-top: 16px;
-          span{
+          span {
             display: block;
             font-size: 12px;
             color: #333333;

@@ -4,7 +4,8 @@
       <div slot="jpull-list">
         <div class="swiperBanner" v-if="imgLists.length">
           <div class="swiper">
-            <swiper :list="imgLists" loop auto height="5.12rem" dots-class="custom-bottom" dots-position="right" :show-desc-mask="false"></swiper>
+            <swiper :list="imgLists" loop auto height="5.12rem" dots-class="custom-bottom" dots-position="right"
+                    :show-desc-mask="false"></swiper>
           </div>
           <!--菜单栏-->
           <!--<div class="list-under-swiper">
@@ -46,11 +47,12 @@
   </div>
 </template>
 <script>
-  import { Swiper, SwiperItem, Scroller, Spinner, Grid, GridItem, ViewBox, TransferDom, XDialog, querystring } from 'vux'
+  import {Swiper, SwiperItem, Scroller, Spinner, Grid, GridItem, ViewBox, TransferDom, XDialog, querystring} from 'vux'
   import activityList from '../../common/activityCard'
   import activityCardOne from '../../common/activityCardOne'
   import comCard from '../../community/comCard'
   import JPull from '../../base/JPull/JPull'
+
   export default {
     name: 'recommend',
     directives: {
@@ -97,7 +99,7 @@
     beforeRouteEnter (to, from, next) {
       next(vm => {
         vm.$emit('changeIndex', 0)
-        if (vm.communityId !== localStorage.getItem('communityId')) {
+        if (vm.communityId !== localStorage.getItem('communityId') || parseFloat(localStorage.getItem('community_all')) === 1) {
           vm.communityId = localStorage.getItem('communityId')
           vm.refreshData()
         }
@@ -110,7 +112,8 @@
           method: 'get',
           url: window.baseURL + '/index/carousel',
           headers: {
-            defCommunityId: localStorage.getItem('communityId')
+            defCommunityId: localStorage.getItem('communityId'),
+            communityAll: parseFloat(localStorage.getItem('community_all'))
           }
         }).then(res => {
           if (res.status === 100) {
@@ -142,7 +145,8 @@
           method: 'get',
           url: window.baseURL + '/home/recommendSubjects',
           headers: {
-            defCommunityId: localStorage.getItem('communityId')
+            defCommunityId: localStorage.getItem('communityId'),
+            communityAll: parseFloat(localStorage.getItem('community_all'))
           }
         }).then(res => {
           if (loaded) {
@@ -167,7 +171,8 @@
         that.$JHttp({
           method: 'get',
           headers: {
-            defCommunityId: localStorage.getItem('communityId')
+            defCommunityId: localStorage.getItem('communityId'),
+            communityAll: parseFloat(localStorage.getItem('community_all'))
           },
 //          url: window.baseURL + '/neighbor/list?' + querystring.stringify(params)
           url: window.baseURL + '/recommend/index?' + querystring.stringify(params)
@@ -286,50 +291,50 @@
   }
 </script>
 <style type="text/less" lang="less" scoped>
-  .recommend{
+  .recommend {
     height: 100%;
     background-color: #f7f7fa;
-    .swiperBanner{
-      .list-under-swiper{
+    .swiperBanner {
+      .list-under-swiper {
         background-color: #ffffff;
-        .weui-grids{
+        .weui-grids {
           padding: 14px 0 20px 0;
-          .weui-grid{
+          .weui-grid {
             padding: 0;
-            .weui-grid__label{
+            .weui-grid__label {
               font-size: 12px;
             }
           }
-          .weui-grid:before, .weui-grid:after{
+          .weui-grid:before, .weui-grid:after {
             border: none;
           }
         }
-        .weui-grids:before, .weui-grids:after{
+        .weui-grids:before, .weui-grids:after {
           border: none;
         }
       }
     }
-    .activityBanner{
+    .activityBanner {
       /*margin-top: 10px;*/
       /*background-color: #ffffff;*/
     }
-    .noContent{
+    .noContent {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       margin-top: 124px;
       margin-bottom: 248px;
-      img{
+      img {
         width: 150px;
         height: 150px;
       }
-      p{
+      p {
         margin-top: 10px;
         color: #aaaaaa;
         font-size: 15px;
       }
-      span{
+      span {
         width: 150px;
         height: 35px;
         margin-top: 20px;
