@@ -757,6 +757,7 @@
           height: 100%;
           float: left;
           border-top: solid 0.5px #D8D8D8;
+          background-color: #fff;
           .all {
             color: #333;
             font-size: 12px;

@@ -52,7 +52,9 @@
                 <div v-if="detailObj.haveSession === 1">
                   <p style="font-weight: bold">活动场次：</p>
                   <ul v-for="item in detailObj.sessionVList">
-                    <li>{{item.title}}(报名人数：<em>{{item.leftCount}}/{{item.limitCount}}</em>)</li>
+                    <li>{{item.title}}(报名人数：<div class="em">{{parseFloat(item.limitCount) -
+                      parseFloat(item.leftCount)}}/{{item.limitCount}}</div>)
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -928,8 +930,8 @@
             span:last-child {
               flex: 1;
             }
-            em {
-              font-size: 15px;
+            .em {
+              display: inline;
               color: #869DC7;
               word-break: break-all;
             }

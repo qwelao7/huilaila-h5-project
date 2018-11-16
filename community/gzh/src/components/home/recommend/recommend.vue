@@ -3,7 +3,7 @@
     <j-pull :refreshFunc="refreshData" :loadMoreFunc="loadMore">
       <div slot="jpull-list">
         <div class="swiperBanner" v-if="imgLists.length">
-          <div class="swiper">
+          <div class="swiper" v-if="communityAll=== 0">
             <swiper :list="imgLists" loop auto height="5.12rem" dots-class="custom-bottom" dots-position="right"
                     :show-desc-mask="false"></swiper>
           </div>
@@ -88,11 +88,13 @@
           padding: '0.533333rem 0 0 0',
           borderRadius: '0.533333rem'
         },
-        communityId: ''
+        communityId: '',
+        communityAll: ''
       }
     },
     created () {
       this.communityId = localStorage.getItem('communityId')
+      this.communityAll = localStorage.getItem('community_all')
       this.getCarousel();
       this.getRecommend();
     },
@@ -108,6 +110,8 @@
     methods: {
       getCarousel (loaded) {
         let _this = this;
+        if (parseFloat(localStorage.getItem('community_all')) === 1) {
+        } else {
         _this.$JHttp({
           method: 'get',
           url: window.baseURL + '/index/carousel',
@@ -140,24 +144,25 @@
         }).catch(e => {
           console.log(e)
         });
+        }
         //  获取中间菜单栏
-        _this.$JHttp({
-          method: 'get',
-          url: window.baseURL + '/home/recommendSubjects',
-          headers: {
-            defCommunityId: localStorage.getItem('communityId'),
-            communityAll: parseFloat(localStorage.getItem('community_all'))
-          }
-        }).then(res => {
-          if (loaded) {
-            loaded()
-          }
-          if (res.status === 100) {
-            _this.list = res.data.list;
-          }
-        }).catch(err => {
-          console.log(err);
-        })
+        // _this.$JHttp({
+        //   method: 'get',
+        //   url: window.baseURL + '/home/recommendSubjects',
+        //   headers: {
+        //     defCommunityId: localStorage.getItem('communityId'),
+        //     communityAll: parseFloat(localStorage.getItem('community_all'))
+        //   }
+        // }).then(res => {
+        //   if (loaded) {
+        //     loaded()
+        //   }
+        //   if (res.status === 100) {
+        //     _this.list = res.data.list;
+        //   }
+        // }).catch(err => {
+        //   console.log(err);
+        // })
       },
       getRecommend (loaded) {
         let that = this;
@@ -265,6 +270,7 @@
         this.curPage = 1;
         this.recommendArr = [];
         this.communityInfo = [];
+        this.imgLists = [];
         this.getRecommend(loaded);
         this.getCarousel(loaded);
       },
