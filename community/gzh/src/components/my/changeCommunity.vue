@@ -214,30 +214,30 @@
          *没有选择全部，则定位到默认小区
          */
         if (parseFloat(localStorage.getItem('community_all')) === 0) {
-        if (window.AMap) {
-          setTimeout(function () {
-            window.AMap.service('AMap.CitySearch', function () {
-              let city = new window.AMap.CitySearch({
-                city: '010'
-              });
-              city.getLocalCity((status, result) => {
-                if (status === 'complete' && result.info === 'OK') {
-                  _this.position = result.city;
-                  let offsetTop;
+          if (window.AMap) {
+            setTimeout(function () {
+              window.AMap.service('AMap.CitySearch', function () {
+                let city = new window.AMap.CitySearch({
+                  city: '010'
+                });
+                city.getLocalCity((status, result) => {
+                  if (status === 'complete' && result.info === 'OK') {
+                    _this.position = result.city;
+                    let offsetTop;
 //                  console.log(111, _this.$refs.cityNameBox);
-                  _this.$refs.cityNameBox.forEach((value) => {
-                    if (value.textContent === _this.position) {
-                      offsetTop = value.offsetTop
-                    }
-                  });
-                  _this.$nextTick(() => {
-                    _this.$refs.viewBox.scrollTo(offsetTop - 142)
-                  })
-                }
-              });
-            })
-          }, 500)
-        }
+                    _this.$refs.cityNameBox.forEach((value) => {
+                      if (value.textContent === _this.position) {
+                        offsetTop = value.offsetTop
+                      }
+                    });
+                    _this.$nextTick(() => {
+                      _this.$refs.viewBox.scrollTo(offsetTop - 142)
+                    })
+                  }
+                });
+              })
+            }, 500)
+          }
         }
       },
       rePosition () {

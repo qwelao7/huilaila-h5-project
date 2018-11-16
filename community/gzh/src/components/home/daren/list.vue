@@ -30,8 +30,8 @@
           </div>
         </div>
       </j-pull>
-    <router-link v-if="homePageVisible" class="bottom-btn" :to="`/darenDetail`">我的达人主页</router-link>
-    <a v-if="applyBtnVisible" class="bottom-btn" @click="apply">申请成为达人</a>
+      <router-link v-if="homePageVisible" class="bottom-btn" :to="`/darenDetail`">我的达人主页</router-link>
+      <a v-if="applyBtnVisible" class="bottom-btn" @click="apply">申请成为达人</a>
     </div>
   </div>
 
@@ -129,12 +129,12 @@
           },
           url: window.baseURL + '/index/workroom?' + querystring.stringify(params)
         })
-        .then(res => {
+          .then(res => {
             that.$vux.loading.hide();
             console.log(res.data)
             that.hasMore = res.data.data.pageResult.hasMore;
-          if (loaded) loaded(this.hasMore);
-          if (res.data) {
+            if (loaded) loaded(this.hasMore);
+            if (res.data) {
               that.isServe = res.data.isOpenWorkRoomSubject === true;
               that.isDaren = res.data.isApplyWorkRoom === true; // 是否开通达人
               if (res.data.data.resultList) {
@@ -143,13 +143,13 @@
               that.list.forEach(item => {
                 if (item.groupIcon) {
                   item.groupIcon = window.aliyunImgUrl + item.groupIcon
-            }
+                }
               })
-          }
+            }
           })
           .catch(() => {
             that.$vux.loading.hide();
-        })
+          })
       },
       apply () {
         localStorage.removeItem('daren.apply.params');

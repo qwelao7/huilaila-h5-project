@@ -141,7 +141,7 @@
             _this.groupList.forEach(item => {
               if (item.groupIcon) {
                 item.groupIcon = window.aliyunImgUrl + item.groupIcon
-            }
+              }
             })
           } else {
             _this.$vux.toast.show({
