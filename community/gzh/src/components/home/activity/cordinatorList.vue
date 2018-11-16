@@ -14,10 +14,13 @@
               <img v-if="item.headPic" :src='item.headPic' @click="toPersonPage(item)">
               <img v-if="!item.headPic" src="../../../assets/images/default_avatar.png" @click="toPersonPage(item)">
               <div class="name" @click="toPersonPage(item)">
-                <p class="personInfo">
+                <div class="personInfo">
                   {{item.nickName}}
                   <span>({{item.annotation}})</span>
-                </p>
+                </div>
+                <div class="phone" @click="callApplyer(item.mobile)">
+                  <a style="width: 100%;height: 100%;display: block;float: right"></a>
+                </div>
               </div>
             </div>
             <x-button mini v-if="item.status==='1'" class="setCBtn" text="设为协办人"
@@ -32,10 +35,10 @@
               <img v-if="item.headPic" :src='item.headPic' @click="toPersonPage(item)">
               <img v-if="!item.headPic" src="../../../assets/images/default_avatar.png" @click="toPersonPage(item)">
               <div class="name" @click="toPersonPage(item)">
-                <p class="personInfo">
+                <div class="personInfo" style="position: relative">
                   {{item.nickName}}
                   <span>({{item.annotation}})</span>
-                </p>
+                </div>
               </div>
             </div>
           </div>
@@ -46,7 +49,7 @@
         <x-button v-if="signUpOpt" class="cancelSignUpBtn" @click.native="cancelSignUp" text="取消报名"></x-button>
         <div class="signUpAttention">
           <p>注：</p>
-          <p> • 协办人可查看活动成员详情</p>
+          <p> • 协办人是社群活动的热心参与者，将协助活动发起人共同为大家服务。</p>
           <p> • 帮助活动发起人给活动成员扫码签到</p>
         </div>
       </template>
@@ -208,6 +211,10 @@
         }).catch(err => {
           console.log(err);
         })
+      },
+      callApplyer (val) {
+        event.stopPropagation()
+        window.location.href = `tel:${val}`
       }
     }
   }
@@ -286,5 +293,15 @@
     .cancelSignUpBtn:after {
       border: none !important;
     }
+  }
+
+  .phone {
+    width: 28px;
+    height: 28px;
+    background: url("../../../assets/images/consult_icon_black.png") left center;
+    background-size: cover;
+    position: absolute;
+    right: 0;
+    top: 6px;
   }
 </style>

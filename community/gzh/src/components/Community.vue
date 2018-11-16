@@ -422,6 +422,7 @@
   .messageIcon {
     width: 28px;
     height: 28px;
+    margin-top: -4px;
     background: url("../assets/images/message_icon_black.png") center / cover;
   }
 
