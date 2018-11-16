@@ -12,6 +12,7 @@ function getLocation (success, error) {
     alert('您的浏览器不支持h5的定位功能!');
   }
 }
+
 /**
  * 扩展对象（常用与配置对象的扩展）
  * @param target 目标对象
@@ -58,6 +59,7 @@ function addMinutes (dateTemp, minutes) {
   var rDate = new Date(millSeconds);
   return rDate;
 }
+
 /**
  * 获取指定时间的month-date格式，如03-12
  * @param time 时间
@@ -70,6 +72,7 @@ function getMonthDayStr (time) {
   day = day < 10 ? '0' + day : day;
   return month + '-' + day;
 }
+
 /**
  * 将指定的日期格式化
  * @param date 指定的日期
@@ -178,6 +181,7 @@ function getChineseTime (time) {
   }
   return res;
 }
+
 /**
  * 将中文通俗时间转化为yyyy-MM-dd HH:mm格式字符串
  * @param timeZN 中文通俗时间,eg: 明天 17:35
@@ -222,6 +226,7 @@ function getMinutesInterval (bTime, eTime) {
   let intervalMilliSeconds = eTime - bTime;
   return intervalMilliSeconds / 60000; // 1000 * 60
 }
+
 /**
  * 获取两个时间间隔的小时数
  * @param bTime 开始时间
@@ -233,6 +238,7 @@ function getHoursInterval (bTime, eTime) {
   let intervalMilliSeconds = eTime - bTime;
   return intervalMilliSeconds / 3600000; // 1000 * 60 * 60
 }
+
 /**
  * 获取两个时间间隔的天数
  * @param bTime 开始时间
@@ -244,6 +250,7 @@ function getDaysInterval (bTime, eTime) {
   let intervalMilliSeconds = eTime - bTime;
   return intervalMilliSeconds / 86400000; // 1000 * 60 * 60 * 24
 }
+
 /**
  * 根据七位二进制字符串转化成星期字符串
  * @param binaryStr eg：1001101
@@ -299,6 +306,7 @@ function getSharingRepeatStr (binaryStr) {
   }
   return res;
 }
+
 /**
  * 根据七位二进制字符串转化成星期数组
  * @param binaryStr eg：1001101
@@ -352,6 +360,7 @@ let jlDate = {
   Dateformat: Dateformat,
   Dateformat2: Dateformat2
 }
+
 /*
  * Author: muxi
  * Description: 是否是Android客户端
@@ -362,6 +371,7 @@ function isAndroid () {
   let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; // android终端
   return isAndroid;
 }
+
 /*
  * Author: muxi
  * Description: 是否是IOS客户端
@@ -372,6 +382,7 @@ function isIOS () {
   let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); // ios终端
   return isIOS;
 }
+
 /*
  * Author: muxi
  * Description: 是否是微信浏览器
@@ -386,6 +397,7 @@ function isWeiXin () {
     return false;
   }
 }
+
 /*
  * Author: muxi
  * Description: 是否是qq浏览器
@@ -514,12 +526,14 @@ let JURL = {
   getHashParam: getHashParam,
   getSearchParam: getSearchParam
 };
+
 /**
  * 获取通用头配置
  */
 function gerHeader () {
   let token = localStorage.getItem('token');
   let communityId = localStorage.getItem('communityId');
+  let communityAll = localStorage.getItem('community_all');
   let roomId = localStorage.getItem('roomId') || '';
   let latitude = localStorage.getItem('latitude');
   let longitude = localStorage.getItem('longitude');
@@ -537,6 +551,7 @@ function gerHeader () {
       appVersion: window.commonConfig.appVersion,
       token: token,
       defCommunityId: communityId,
+      communityAll: communityAll,
       // defRoomId: roomId,
       mobileType: mobileType,
       defLatitude: latitude,

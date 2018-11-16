@@ -3,7 +3,7 @@
     <x-header
       slot="header"
       :left-options="{showBack: false}" title="签到详情">
-    <!--:left-options="{backText: ''}" title="签到详情">-->
+      <!--:left-options="{backText: ''}" title="签到详情">-->
     </x-header>
     <div class="signUp" v-show="!showBlankPage">
       <div class="signUp_tit">
@@ -14,7 +14,8 @@
         <div class="tit_name"><!--joinUserSex -->
           <div class="name">
             <span>{{joinUsersInfo.joinUserName}}</span>
-            <i v-show="joinUsersInfo.needUserDetail" :class="{male: joinUsersInfo.joinUserSex === 1, 'female': joinUsersInfo.joinUserSex === 2}"></i>
+            <i v-show="joinUsersInfo.needUserDetail"
+               :class="{male: joinUsersInfo.joinUserSex === 1, 'female': joinUsersInfo.joinUserSex === 2}"></i>
           </div>
           <div class="type">参与人</div>
         </div>
@@ -69,7 +70,8 @@
     </div>
     <div class="sign_bottom" v-show="!showBlankPage">
       <span v-if="joinUsersInfo.activityStatus  <= 3">{{joinUsersInfo.startDate }} 后可签到</span>
-      <span v-if="joinUsersInfo.signStatus === 0 && joinUsersInfo.activityStatus  > 3" style="background-color:  #0DAB60;" @click="goSign">签到</span>
+      <span v-if="joinUsersInfo.signStatus === 0 && joinUsersInfo.activityStatus  > 3"
+            style="background-color:  #0DAB60;" @click="goSign">签到</span>
       <span v-if="joinUsersInfo.signStatus === 1">已签到</span>
     </div>
     <div class="noContent_app" v-show="showBlankPage">
@@ -81,8 +83,9 @@
   </div>
 </template>
 <script>
-  import { XHeader, querystring } from 'vux'
+  import {XHeader, querystring} from 'vux'
   import {JURL} from '../../../common/js/utils';
+
   export default {
     name: 'signUpDetails',
     components: {
@@ -169,8 +172,11 @@
           }
         }).then(res => {
           if (res.status === 100) {
-            let id = localStorage.getItem('userId')
-            if (id === res.data.releaseUserId) {
+            // let id = localStorage.getItem('userId')
+            /**
+             *根据用户身份userRole，判断当前用户是否能为活动参与者签到
+             */
+            if (res.data.userRole === 1 || res.data.userRole === 2 || res.data.userRole === 6) {
               _this.showBlankPage = false
               _this.joinUsersInfo = res.data
               _this.applyUser = res.data.applyUser
@@ -182,7 +188,7 @@
               _this.showBlankPage = true
               _this.$vux.toast.show({
                 type: 'text',
-                text: '您只能签到自己发起的活动'
+                text: '对不起，您无权进行此项操作'
               });
               setTimeout(function () {
                 _this.$wechat.closeWindow()
@@ -231,6 +237,7 @@
       }
     }
   }
+
   /* eslint-disable no-useless-escape */
   function updateUrl (url, key) {
     var keys = (key || 't') + '=';  // 默认是"t"
@@ -257,55 +264,55 @@
   }
 </script>
 <style type="text/less" lang="less" scoped>
-  .signUpDetails{
-    width:100%;
-    height:100%;
+  .signUpDetails {
+    width: 100%;
+    height: 100%;
     background: #f7f7f7;
     .signUp {
-      width:100%;
+      width: 100%;
       margin-top: 10px;
       background: #ffffff;
-      .signUp_tit{
+      .signUp_tit {
         width: 93%;
         margin: 0 auto;
-        height:40px;
+        height: 40px;
         padding: 10px 0;
         line-height: 40px;
         position: relative;
-        .phone{
+        .phone {
           display: inline-block;
           position: absolute;
           right: 0;
-          top:13.5px;
-          width:28px;
-          height:28px;
+          top: 13.5px;
+          width: 28px;
+          height: 28px;
           background: url("../../../assets/images/consult_icon_black.png") left center;
           background-size: cover;
         }
-        .tit_img{
+        .tit_img {
           width: 40px;
           height: 40px;
           border-radius: 100%;
           display: inline-block;
           vertical-align: middle;
-          img{
-            width:100%;
-            height:100%;
+          img {
+            width: 100%;
+            height: 100%;
             border-radius: 100%;
           }
         }
-        .tit_name{
+        .tit_name {
           font-size: 15px;
           color: #333333;
           display: inline-block;
           margin-left: 10px;
           vertical-align: middle;
-          .name{
+          .name {
             line-height: 21px;
-            span{
+            span {
               display: inline-block;
             }
-            i{
+            i {
               display: inline-block;
               width: 16px;
               height: 16px;
@@ -315,31 +322,31 @@
               background-size: cover;
               background-repeat: no-repeat;
             }
-            .male{
+            .male {
               background-image: url("../../../assets/images/male_icon_32.png");
             }
-            .female{
+            .female {
               background-image: url("../../../assets/images/female_icon_32.png");
             }
           }
-          .type{
-            line-height:21px;
+          .type {
+            line-height: 21px;
             color: #aaaaaa;
             font-size: 12px;
           }
         }
       }
-      .segmentation{
-        width:100%;
-        height:10px;
+      .segmentation {
+        width: 100%;
+        height: 10px;
         background: #f7f7f7;
       }
-      .activity_detail{
+      .activity_detail {
         width: 93%;
-        margin:0 auto;
-        .activity_name{
-          width:100%;
-          height:21px;
+        margin: 0 auto;
+        .activity_name {
+          width: 100%;
+          height: 21px;
           line-height: 21px;
           font-size: 18px;
           color: #333333;
@@ -347,90 +354,90 @@
           padding: 15px 0;
           border-bottom: solid 0.5px #d8d8d8;
         }
-        .activity_information{
+        .activity_information {
           width: 100%;
           color: #333333;
           font-size: 15px;
-          padding:20px 0;
-          p{
-            height:21px;
+          padding: 20px 0;
+          p {
+            height: 21px;
             line-height: 21px;
-            padding:5px 0;
+            padding: 5px 0;
             font-weight: 600;
           }
         }
       }
-      .joinPeople_detail{
-        width:93%;
-        margin:0 auto;
-        .join_people{
-          width:100%;
+      .joinPeople_detail {
+        width: 93%;
+        margin: 0 auto;
+        .join_people {
+          width: 100%;
           position: relative;
           border-bottom: solid 1px #d8d8d8;
-          .join_name{
+          .join_name {
             color: #333333;
             font-size: 15px;
             font-weight: 600;
             padding: 17px 0;
-            .joinAddress{
+            .joinAddress {
               display: flex;
               justify-content: flex-start;
               /*align-items: center;*/
-              span{
+              span {
                 color: #333333;
                 font-size: 15px;
                 font-weight: 600;
                 line-height: normal;
               }
-              span:last-child{
+              span:last-child {
                 flex: 1;
               }
             }
           }
-          .phone{
+          .phone {
             display: inline-block;
             position: absolute;
             right: 0;
-            top:13.5px;
-            width:28px;
-            height:28px;
+            top: 13.5px;
+            width: 28px;
+            height: 28px;
             background: url("../../../assets/images/consult_icon_black.png") left center;
             background-size: cover;
           }
         }
       }
-      .sign{
-        width:93%;
-        margin:0 auto;
-        .join_people{
-          width:100%;
-          height:55px;
+      .sign {
+        width: 93%;
+        margin: 0 auto;
+        .join_people {
+          width: 100%;
+          height: 55px;
           line-height: 55px;
           border-bottom: solid 1px #d8d8d8;
-          .join_name{
+          .join_name {
             color: #333333;
             font-size: 15px;
             font-weight: 600;
           }
         }
-        .sign_time{
-          width:100%;
-          height:63px;
+        .sign_time {
+          width: 100%;
+          height: 63px;
           line-height: 63px;
           font-size: 15px;
           font-weight: 600;
           color: #aaaaaa;
           display: flex;
           align-items: center;
-          .sign_img{
+          .sign_img {
             display: inline-block;
-            width:12px;
-            height:63px;
+            width: 12px;
+            height: 63px;
             background: url("../../../assets/images/flow_icon_express.png") center;
             background-size: cover;
             vertical-align: middle;
           }
-          .sign_data{
+          .sign_data {
             /*word-break: keep-all;*/
             flex: 1;
             vertical-align: middle;
@@ -440,38 +447,38 @@
         }
       }
     }
-    .sign_bottom{
-      width:100%;
-      height:50px;
+    .sign_bottom {
+      width: 100%;
+      height: 50px;
       background: #aaaaaa;
       color: #ffffff;
       font-size: 18px;
       position: fixed;
-      bottom:0;
-      left:0;
+      bottom: 0;
+      left: 0;
       text-align: center;
       line-height: 50px;
     }
-    .noContent_app{
+    .noContent_app {
       /*padding-top: 124px;*/
-      width:100%;
-      height:100%;
+      width: 100%;
+      height: 100%;
       background: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
-      div{
+      div {
         margin-top: -113px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
       }
-      img{
+      img {
         width: 150px;
         height: 150px;
       }
-      span{
+      span {
         margin-top: 10px;
         font-size: 15px;
         color: #cccccc;
