@@ -335,7 +335,7 @@ export default new Router({
       path: '/pub_newThings',
       name: '发布新鲜事',
       component: resolve => require(['@/components/publish/pub_newThings'], resolve),
-      props: (route) => ({ tid: route.query.tid, type: route.query.type })
+      props: (route) => ({tid: route.query.tid, type: route.query.type})
     },
     {
       path: '/pub_activity',
@@ -956,13 +956,13 @@ export default new Router({
       path: '/darenApply',
       name: 'darenApply',
       component: resolve => require(['@/components/home/daren/apply'], resolve),
-      props: (route) => ({ id: route.query.id, title: route.query.title })
+      props: (route) => ({id: route.query.id, title: route.query.title})
     },
     {
       path: '/darenDetail',
       name: 'darenDetail',
       component: resolve => require(['@/components/home/daren/detail'], resolve),
-      props: (route) => ({ id: route.query.id })
+      props: (route) => ({id: route.query.id})
     },
     {
       path: '/butler', // 我家-我的管家
