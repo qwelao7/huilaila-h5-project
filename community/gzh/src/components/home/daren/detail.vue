@@ -172,6 +172,8 @@
     computed: {
     },
     created () {
+      let communityName = localStorage.getItem('communityName');
+      this.communityName = communityName;
       this.getCurrentUser();
       this.getDetail();
       this.getList();
@@ -314,6 +316,9 @@
         this.$router.push({path: `/newThingsDetail/${item.id}`});
       },
 
+      chooseAddress () {
+        this.$router.push('/changeCommunity');
+      },
       // 获取当前用户信息
       getCurrentUser () {
         this.$JHttp({
@@ -337,6 +342,35 @@
   }
 </script>
 <style type="text/less" lang="less" scoped>
+  .overwrite-title-demo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    line-height: 100%;
+    justify-content: center;
+    .positionIcon {
+      display: inline-block;
+      /*flex: 1;*/
+      width: 20px;
+      height: 34px;
+      background-image: url("../../../assets/images/address_icon_32black.png");
+      background-position: center center;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    span {
+      display: inline-block;
+      height: 40px;
+      line-height: 40px;
+      max-width: 220px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 18px;
+      color: #333333;
+      margin-left: 3px;
+    }
+  }
   .customer-img{
     position: relative;
     img{

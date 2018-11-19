@@ -39,9 +39,9 @@
                     <span>活动地点：</span>
                     <span>{{detailObj.activityAddress}}</span>
                   </li>
-                  <li v-if="detailObj.joinAmount > 0">
+                  <li v-if="detailObj.limitCount > 0">
                     <span>活动名额：</span>
-                    <span>{{detailObj.joinAmount}}人</span>
+                    <span>{{detailObj.limitCount}}人</span>
                   </li>
                   <li v-if="detailObj.joinMoney > 0">
                     <span>报名费：</span>
