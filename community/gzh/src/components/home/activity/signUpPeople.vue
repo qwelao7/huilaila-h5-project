@@ -24,7 +24,7 @@
 
               <ul
                 v-if="applyUserListInformation.userRole===1||applyUserListInformation.userRole===2||applyUserListInformation.userRole===6">
-                <li v-for="item in applyUserListInformation.applyItemList">
+                <li v-for="(item, index) in applyUserListInformation.applyItemList">
                   <div class="signUpPeople_informaton">
                     <div class="left">
                       <div class="signUpPeople_pic">
@@ -37,6 +37,16 @@
                           <span class="num">({{item.applyUserCount}}人)</span>
                         </p>
                         <div class="note" v-show="item.note" v-text="item.note"></div>
+                        <template v-if="!applyUserListInformation.needUserDetail">
+                          <p>
+                            <x-button style="float: right" mini type="primary" text="签 到"
+                                      @click.native="goSignAll(item.applyId,index)"></x-button>
+                          </p>
+                          <br>
+                          <div class="signCount">
+                            已签到{{item.signCount}}人次
+                          </div>
+                        </template>
                       </div>
                     </div>
                     <div class="phone">
@@ -49,7 +59,8 @@
                       <p>{{column.columnName}}:{{column.columnValue}}</p>
                     </template>
                   </div>
-                  <template v-if="item.joinUserList.length>0 && applyUserListInformation.needUserDetail" v-for="itm in item.joinUserList">
+                  <template v-if="item.joinUserList.length>0 && applyUserListInformation.needUserDetail"
+                            v-for="(itm, idx) in item.joinUserList">
                     <div class="signUpPeople_informaton apply-user">
                       <div class="left">
                         <div class="signUpPeople_pic">
@@ -63,6 +74,14 @@
                                :class="{'sex_male': itm.joinUserSex === '1','sex_female': itm.joinUserSex === '2'}"></i>
                           </p>
                           <p>{{itm.joinUserBirthday}}</p>
+                          <p>
+                            <x-button style="float: right" mini type="primary" text="签 到"
+                                      @click.native="goSign(itm.joinUserId,index,idx)"></x-button>
+                          </p>
+                          <br>
+                          <div class="signCount">
+                            已签到{{itm.signCount}}人次
+                          </div>
                         </div>
                       </div>
                       <div class="phone_joiner">
@@ -118,13 +137,14 @@
   </div>
 </template>
 <script>
-  import {XHeader, ViewBox, querystring} from 'vux'
+  import {XHeader, ViewBox, XButton, querystring} from 'vux'
   import JPull from '../../base/JPull/JPull'
 
   export default {
     name: 'signUpPeople',
     components: {
       XHeader,
+      XButton,
       ViewBox,
       JPull
     },
@@ -233,6 +253,66 @@
           onCancel () {
             //
           }
+        })
+      },
+      goSign (val, index, idx) {
+        this.$vux.loading.show({});
+        let _this = this;
+        let params = {
+          id: this.applyUserListInformation.applyItemList[index].joinUserList[idx].joinUserDetailId,
+          signSource: 1
+        }
+        _this.$JHttp({
+          method: 'post',
+          url: window.baseURL + '/socialactivity/signActivity?' + querystring.stringify(params),
+          headers: {
+            defCommunityId: localStorage.getItem('communityId')
+          }
+        }).then(res => {
+          if (res.status === 100) {
+            console.log(res)
+            this.applyUserListInformation.applyItemList[index].joinUserList[idx].signCount += 1
+            this.$vux.loading.hide();
+          } else {
+            _this.$vux.toast.show({
+              text: res.msg
+            })
+          }
+        }).catch(e => {
+          console.log(e)
+          _this.$vux.toast.show({
+            text: e.msg
+          })
+        })
+      },
+      goSignAll (val, index) {
+        this.$vux.loading.show({});
+        let _this = this;
+        let params = {
+          id: this.applyUserListInformation.applyItemList[index].applyId,
+          signSource: 1
+        }
+        _this.$JHttp({
+          method: 'post',
+          url: window.baseURL + '/socialactivity/signActivityAll?' + querystring.stringify(params),
+          headers: {
+            defCommunityId: localStorage.getItem('communityId')
+          }
+        }).then(res => {
+          if (res.status === 100) {
+            console.log(res)
+            this.applyUserListInformation.applyItemList[index].signCount += parseFloat(this.applyUserListInformation.applyItemList[index].applyUserCount)
+            this.$vux.loading.hide();
+          } else {
+            _this.$vux.toast.show({
+              text: res.msg
+            })
+          }
+        }).catch(e => {
+          console.log(e)
+          _this.$vux.toast.show({
+            text: e.msg
+          })
         })
       }
     }
@@ -494,5 +574,12 @@
         }
       }
     }
+  }
+
+  .signCount {
+    display: block;
+    width: 100%;
+    text-align: right;
+    padding-top: 10px;
   }
 </style>

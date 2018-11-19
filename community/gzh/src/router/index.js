@@ -43,7 +43,7 @@ export default new Router({
           path: '/life/recommend',
           name: 'recommend',
           meta: {
-            keeyAlive: false // 需要被缓存
+            keepAlive: false // 需要被缓存
           },
           component: resolve => require(['@/components/home/recommend/recommend'], resolve)
         },
@@ -51,7 +51,7 @@ export default new Router({
           path: '/life/newThings',
           name: 'newThings',
           meta: {
-            keeyAlive: false // 需要被缓存
+            keepAlive: false // 需要被缓存
           },
           component: resolve => require(['@/components/home/newThings/newThings'], resolve)
         },
@@ -60,7 +60,7 @@ export default new Router({
           name: 'activity',
           meta: {
             title: '活动',
-            keeyAlive: false // 需要被缓存
+            keepAlive: false // 需要被缓存
           },
           component: resolve => require(['@/components/home/activity/activity'], resolve)
         },
@@ -68,7 +68,7 @@ export default new Router({
           path: '/life/group',
           name: 'group',
           meta: {
-            keeyAlive: false // 需要被缓存
+            keepAlive: false // 需要被缓存
           },
           component: resolve => require(['@/components/home/group/group'], resolve)
         },
@@ -76,7 +76,7 @@ export default new Router({
           path: '/life/topic',
           name: 'topic',
           meta: {
-            keeyAlive: false // 需要被缓存
+            keepAlive: false // 需要被缓存
           },
           component: resolve => require(['@/components/home/topic/list'], resolve)
         },
@@ -84,7 +84,7 @@ export default new Router({
           path: '/life/daren',
           name: 'daren',
           meta: {
-            keeyAlive: false // 需要被缓存
+            keepAlive: false // 需要被缓存
           },
           component: resolve => require(['@/components/home/daren/list'], resolve)
         }
@@ -94,7 +94,7 @@ export default new Router({
       path: '/recommend',
       name: '推荐',
       meta: {
-        keeyAlive: false // 需要被缓存
+        keepAlive: false // 需要被缓存
       },
       component: resolve => require(['@/components/home/recommend/recommend'], resolve)
     },
@@ -103,7 +103,7 @@ export default new Router({
       name: 'activity',
       meta: {
         title: '活动',
-        keeyAlive: false // 需要被缓存
+        keepAlive: false // 需要被缓存
       },
       component: resolve => require(['@/components/home/activity/activity'], resolve)
     },
@@ -221,7 +221,7 @@ export default new Router({
       path: '/service',
       name: '服务',
       // meta: {
-      //   keeyAlive: false // 需要被缓存
+      //   keepAlive: false // 需要被缓存
       // },
       redirect: {
         name: 'new'
@@ -232,7 +232,7 @@ export default new Router({
           path: '/service/new',
           name: 'new',
           meta: {
-            keeyAlive: false // 需要被缓存
+            keepAlive: false // 需要被缓存
           },
           component: resolve => require(['@/components/service/hotAndNew/new'], resolve)
         },
@@ -240,7 +240,7 @@ export default new Router({
           path: '/service/hot',
           name: '热门',
           meta: {
-            keeyAlive: false // 需要被缓存
+            keepAlive: false // 需要被缓存
           },
           component: resolve => require(['@/components/service/hotAndNew/hot'], resolve)
         }
@@ -327,7 +327,7 @@ export default new Router({
       path: '/myHouse',
       name: '我家',
       meta: {
-        // keeyAlive: false // 需要被缓存
+        // keepAlive: false // 需要被缓存
       },
       component: resolve => require(['@/components/MyHouse'], resolve)
     },
@@ -335,7 +335,7 @@ export default new Router({
       path: '/pub_newThings',
       name: '发布新鲜事',
       component: resolve => require(['@/components/publish/pub_newThings'], resolve),
-      props: (route) => ({tid: route.query.tid, type: route.query.type})
+      props: (route) => ({ tid: route.query.tid, type: route.query.type })
     },
     {
       path: '/pub_activity',
@@ -497,7 +497,7 @@ export default new Router({
           path: '/myAddress/comAdd',
           name: 'myCommunityAddress',
           meta: {
-            keeyAlive: false
+            keepAlive: false
           },
           component: resolve => require(['@/components/my/myAddress/comAdd'], resolve)
         },
@@ -505,7 +505,7 @@ export default new Router({
           path: '/myAddress/receivingAdd',
           name: 'receivingAdd',
           meta: {
-            keeyAlive: false
+            keepAlive: false
           },
           component: resolve => require(['@/components/my/myAddress/receivingAdd'], resolve)
         }
@@ -566,7 +566,7 @@ export default new Router({
           path: '/myInteractive/mySignUp',
           name: 'mySignUp',
           meta: {
-            keeyAlive: false
+            keepAlive: false
           },
           component: resolve => require(['@/components/my/myInteractive/mySignUp'], resolve)
         },
@@ -574,7 +574,7 @@ export default new Router({
           path: '/myInteractive/myActivity',
           name: 'myActivity',
           meta: {
-            keeyAlive: false
+            keepAlive: false
           },
           component: resolve => require(['@/components/my/myInteractive/myActivity'], resolve)
         },
@@ -582,7 +582,7 @@ export default new Router({
           path: '/myInteractive/myVote',
           name: 'myVote',
           meta: {
-            keeyAlive: false
+            keepAlive: false
           },
           component: resolve => require(['@/components/my/myInteractive/myVote'], resolve)
         }
@@ -592,7 +592,7 @@ export default new Router({
       path: '/mySignUp',
       name: 'mySignUp',
       meta: {
-        keeyAlive: false
+        keepAlive: false
       },
       component: resolve => require(['@/components/my/myInteractive/mySignUp'], resolve)
     },
@@ -600,7 +600,7 @@ export default new Router({
       path: '/myActivity',
       name: 'myActivity',
       meta: {
-        keeyAlive: false
+        keepAlive: false
       },
       component: resolve => require(['@/components/my/myInteractive/myActivity'], resolve)
     },
@@ -654,7 +654,7 @@ export default new Router({
           path: '/message/notice',
           name: 'notice',
           meta: {
-            keeyAlive: false
+            keepAlive: false
           },
           component: resolve => require(['@/components/my/message/notice'], resolve)
         },
@@ -662,7 +662,7 @@ export default new Router({
           path: '/message/comment',
           name: 'comment',
           meta: {
-            keeyAlive: false
+            keepAlive: false
           },
           component: resolve => require(['@/components/my/message/comment'], resolve)
         }
@@ -948,7 +948,7 @@ export default new Router({
       path: '/topicDetail/:topicType',
       name: 'topicDetail',
       meta: {
-        keeyAlive: false // 需要被缓存
+        keepAlive: false // 需要被缓存
       },
       component: resolve => require(['@/components/home/topic/detail'], resolve)
     },
@@ -956,13 +956,13 @@ export default new Router({
       path: '/darenApply',
       name: 'darenApply',
       component: resolve => require(['@/components/home/daren/apply'], resolve),
-      props: (route) => ({id: route.query.id, title: route.query.title})
+      props: (route) => ({ id: route.query.id, title: route.query.title })
     },
     {
       path: '/darenDetail',
       name: 'darenDetail',
       component: resolve => require(['@/components/home/daren/detail'], resolve),
-      props: (route) => ({id: route.query.id})
+      props: (route) => ({ id: route.query.id })
     },
     {
       path: '/butler', // 我家-我的管家
