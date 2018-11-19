@@ -112,38 +112,38 @@
         let _this = this;
         if (parseFloat(localStorage.getItem('community_all')) === 1) {
         } else {
-        _this.$JHttp({
-          method: 'get',
-          url: window.baseURL + '/index/carousel',
-          headers: {
-            defCommunityId: localStorage.getItem('communityId'),
-            communityAll: parseFloat(localStorage.getItem('community_all'))
-          }
-        }).then(res => {
-          if (res.status === 100) {
-            if (loaded) {
-              loaded()
+          _this.$JHttp({
+            method: 'get',
+            url: window.baseURL + '/index/carousel',
+            headers: {
+              defCommunityId: localStorage.getItem('communityId'),
+              communityAll: parseFloat(localStorage.getItem('community_all'))
             }
-            _this.imgLists = [];
-            res.data.forEach(val => {
-              let url;
-              if (val.focusType === '1') { // 跳转自详情
-                url = '/bannerNews/' + val.id
-              } else if (val.focusType === '3') { // 跳转至外部链接
-                url = val.url
+          }).then(res => {
+            if (res.status === 100) {
+              if (loaded) {
+                loaded()
               }
-              let obj = {
-                url: url,
-                img: val.smallPic,
+              _this.imgLists = [];
+              res.data.forEach(val => {
+                let url;
+                if (val.focusType === '1') { // 跳转自详情
+                  url = '/bannerNews/' + val.id
+                } else if (val.focusType === '3') { // 跳转至外部链接
+                  url = val.url
+                }
+                let obj = {
+                  url: url,
+                  img: val.smallPic,
 //                title: val.title,
-                id: val.id
-              };
-              _this.imgLists.push(obj)
-            })
-          }
-        }).catch(e => {
-          console.log(e)
-        });
+                  id: val.id
+                };
+                _this.imgLists.push(obj)
+              })
+            }
+          }).catch(e => {
+            console.log(e)
+          });
         }
         //  获取中间菜单栏
         // _this.$JHttp({
