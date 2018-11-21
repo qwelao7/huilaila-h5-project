@@ -411,7 +411,7 @@
 
       // 跳转动态详情
       goDetail (item) {
-        this.$router.push({path: `/newThingsDetail/${item.id}`});
+        this.$router.push({path: `/newThingsDetail/${item.neighborId}`});
       },
 
       chooseAddress () {
