@@ -10,6 +10,10 @@
       <a slot="right" @click="publish">发布</a>
     </x-header>
     <div class="newThings-banner">
+      <group>
+        <cell title="选择发布小区" :value="communityName" is-link link="/changeCommunity" class="pub_option"
+              style="padding: 15px 0"></cell>
+      </group>
       <group v-if="showSelect">
         <!--<cell title="选择发布到" is-link class="pub_option"></cell>-->
         <popup-picker title="选择发布到" :data="activityList" v-model="activityPicker" show-name ref="picker"
@@ -95,10 +99,19 @@
         showSelect: true
       }
     },
+    beforeRouteEnter (to, from, next) {
+      next(vm => {
+        if (vm.communityId !== localStorage.getItem('communityId')) {
+          vm.communityId = localStorage.getItem('communityId')
+          vm.refresh()
+        }
+      })
+    },
     created () {
       this.isApp = localStorage.getItem('isApp');
       this.uploadData.append('type', 'nei');
       this.communityId = localStorage.getItem('communityId');
+      this.communityName = localStorage.getItem('communityName');
       this.getActivity()
       let tempId = parseInt(this.$route.params.activityId)
       if (tempId >= 0) {
@@ -135,6 +148,10 @@
           }
         }).catch(e => {
           console.log(e)
+          this.$vux.toast.show({
+            type: 'cancel',
+            text: e.msg
+          })
         })
       },
       chooseImages () {

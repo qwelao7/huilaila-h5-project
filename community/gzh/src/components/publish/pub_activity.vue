@@ -9,6 +9,10 @@
         <a slot="right" @click="publish" :class="{readyPublish: isOk}">发布</a><!---->
       </x-header>
       <div class="pubBanner">
+        <group style="margin:0 15px;padding-bottom:15px;border-bottom: 1px solid #d8d8d8">
+          <popup-picker title="选择小区" :data="communityList" v-model="communityPicker" show-name ref="picker"
+                        @on-change="communityChange" class="pub_option"></popup-picker>
+        </group>
         <ul class="choosePoster" v-show="!isApp">
           <li class="poster" v-show="posters">
             <!--<img :src="posters" alt="" @click.prevent="showMenu">-->
@@ -23,7 +27,8 @@
           <div class="add01">
             <!--<img :src="posters" alt="" @click.prevent="showMenu" v-show="posters">-->
             <label for="xFile" class="label-placeholder"></label>
-            <j-img v-show="posters" :osskey="posters" :custom-width="375" :custom-height="214" @click.native.prevent="showMenu"></j-img>
+            <j-img v-show="posters" :osskey="posters" :custom-width="375" :custom-height="214"
+                   @click.native.prevent="showMenu"></j-img>
             <i v-show="!posters"></i>
             <span v-show="!posters">添加活动海报</span>
           </div>
@@ -215,6 +220,7 @@
     XTextarea,
     Actionsheet,
     Popup,
+    PopupPicker,
     TransferDom,
     Group,
     Cell,
@@ -229,6 +235,7 @@
     DatetimePlugin
   } from 'vux'
   import {jlDate} from 'common/js/utils';
+  import {initialAxios} from '../../main';
   import {File} from '../../common/js/Upload'
   import {JNavigator} from '../../common/js/utils'
   import JImg from 'components/common/img/jImg'
@@ -252,6 +259,7 @@
       XSwitch,
       Radio,
       Group,
+      PopupPicker,
       GroupTitle,
       Spinner,
       ConfirmPlugin,
@@ -273,6 +281,9 @@
         delMenu: {
           menu: '删除'
         },
+        pubCommunity: [],
+        communityList: [],
+        communityPicker: [''],
         showDeleteMenu: false,
         currentIndex: 0,
         signStartMin: jlDate.Dateformat(new Date().getTime(), 'YYYY-MM-DD'),
@@ -344,12 +355,23 @@
         pic_Images: []
       }
     },
+    beforeRouteEnter (to, from, next) {
+      next(vm => {
+        if (vm.communityId !== localStorage.getItem('communityId')) {
+          vm.communityId = localStorage.getItem('communityId')
+          vm.refresh()
+        }
+      })
+    },
     created () {
 //      document.title = '发布活动';
       this.isApp = localStorage.getItem('isApp');
 //      this.uploadData1.append('type', 'nei');
       this.communityId = localStorage.getItem('communityId');
+      this.communityName = localStorage.getItem('communityName');
+      this.pubCommunity = JSON.parse(localStorage.getItem('pubCommunity'))
 //      console.log(3333, Number(true))
+      this.setPicker()
       this.validate()
       this.formItem.signStartTime = jlDate.Dateformat(jlDate.addMinutes(new Date(), 0), 'YYYY-MM-DD HH:mm')
     },
@@ -1108,6 +1130,47 @@
             _this.extraInfo.push(msg)
           }
         })
+      },
+      communityChange () {
+        let tempList = this.communityList[0]
+        tempList.forEach(item => {
+          if (item.value === this.communityPicker[0]) {
+            localStorage.setItem('communityName', item.name);
+            localStorage.setItem('communityId', item.value);
+            localStorage.setItem('areaCode', item.areaCode);
+            localStorage.setItem('longitude', item.longitude);
+            localStorage.setItem('latitude', item.latitude);
+            localStorage.setItem('community_all', 0)
+            // 更新头部信息
+            initialAxios();
+          }
+        })
+      },
+      setPicker () {
+        let tempList = []
+        this.pubCommunity = JSON.parse(localStorage.getItem('pubCommunity'))
+        this.pubCommunity.forEach((item, index) => {
+          let tem = {}
+          tem.name = item.communityName
+          tem.value = item.communityId
+          tem.areaCode = item.areaCode
+          tem.latitude = item.latitude
+          tem.longitude = item.longitude
+          tempList.push(tem)
+        })
+        this.communityList.push(tempList)
+        let result = tempList.some(item => {
+          if (item.value === this.communityId) {
+            return true
+          } else {
+            return false
+          }
+        })
+        if (result) {
+          this.communityPicker[0] = this.communityId
+        } else {
+          this.communityPicker[0] = tempList[0].value
+        }
       },
       deleteExtra (index) {
         let _this = this;

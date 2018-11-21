@@ -7,6 +7,10 @@
       <a slot="right" @click="publish">发布</a>
     </x-header>
     <div class="newThings-banner">
+      <group>
+        <cell title="选择发布小区" :value="communityName" is-link link="/changeCommunity" class="pub_option"
+              style="padding: 15px;border-bottom: 1px solid #d8d8d8"></cell>
+      </group>
       <div class="publish-header" @click="showTopicSelector">
         <p class="tips">选择发布到</p>
         <group>
@@ -16,9 +20,9 @@
         </group>
         <div class="border1"></div>
       </div>
-
       <group>
-        <x-textarea :height="130" :max="500" :show-counter="false" :rows="8" :cols="30" placeholder="输入内容..." v-model="content"></x-textarea>
+        <x-textarea :height="130" :max="500" :show-counter="false" :rows="8" :cols="30" placeholder="输入内容..."
+                    v-model="content"></x-textarea>
       </group>
       <ul class="chooseImg">
         <li v-for="(localId, index) in localIds">
@@ -47,11 +51,12 @@
   </div>
 </template>
 <script>
-  import { XHeader, XTextarea, Actionsheet, Group, querystring, TransferDom, XDialog, CellBox, Popup } from 'vux'
+  import {XHeader, XTextarea, Actionsheet, Group, querystring, TransferDom, XDialog, CellBox, Cell, Popup} from 'vux'
   import {File} from '../../common/js/Upload'
   import {JNavigator} from '../../common/js/utils'
-  import { Base64 } from 'js-base64';
+  import {Base64} from 'js-base64';
   import TopicSelector from './topicSelector';
+
   export default {
     name: 'pub_newThings',
     directives: {
@@ -63,6 +68,7 @@
       Actionsheet,
       XDialog,
       Group,
+      Cell,
       CellBox,
       TopicSelector,
       Popup
@@ -92,9 +98,18 @@
         selectorVisible: false
       }
     },
+    beforeRouteEnter (to, from, next) {
+      next(vm => {
+        if (vm.communityId !== localStorage.getItem('communityId')) {
+          vm.communityId = localStorage.getItem('communityId')
+          vm.refresh()
+        }
+      })
+    },
     created () {
       // this.uploadData.append('type', 'nei');
       this.communityId = localStorage.getItem('communityId');
+      this.communityName = localStorage.getItem('communityName');
     },
     methods: {
       chooseImages () {
@@ -239,31 +254,32 @@
 </script>
 <style type="text/less" lang="less" scoped>
   @import "../../assets/css/_mixin";
-  .newThings-banner{
-    .publish-header{
-      padding: 20px 15px 10px 15px;
-      .tips{
+
+  .newThings-banner {
+    .publish-header {
+      padding: 10px 15px;
+      .tips {
         font-size: 15px;
         line-height: 21px;
       }
-      .weui-cell{
+      .weui-cell {
         padding: 0;
         font-size: 21px;
         line-height: 40px;
         font-family: 'pingfang_scmedium pingfang_scregular';
         margin-bottom: 10px;
       }
-      .border1{
+      .border1 {
         .border-1px(#d8d8d8);
       }
     }
-    .chooseImg{
+    .chooseImg {
       display: flex;
       flex-wrap: wrap;
       /*justify-content: space-between;*/
       align-items: center;
       padding: 10px 15px;
-      li{
+      li {
         width: 105px;
         height: 105px;
         margin-left: 15px;
@@ -271,15 +287,15 @@
         /*overflow: hidden;*/
         /*display: flex;*/
         /*align-items: center;*/
-        img{
+        img {
           width: 100%;
           height: 100%;
         }
       }
-      li:nth-child(3n + 1){
+      li:nth-child(3n + 1) {
         margin-left: 0;
       }
-      .add{
+      .add {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -315,6 +331,15 @@
           font-size: 16px;
         }
       }
+    }
+  }
+
+  .pub_option {
+    border-bottom: 0.5px solid #d8d8d8;
+    margin: 0 15px 0 0;
+    padding: 5px 0;
+    .weui-cell {
+      padding: 10px 0;
     }
   }
 </style>

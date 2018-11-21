@@ -2,8 +2,10 @@
   <div>
     <rule v-if="curStep === 0" @finish="finishRule"></rule>
     <step1 v-if="curStep === 1" @finish="finishStep1" :initName="workRoomName" :title="title"></step1>
-    <step2 v-if="curStep === 2" @finish="finishStep2" @on-back="step2Back" :workRoomId="workRoomId" :bg-icon="bgPath" :title="title"></step2>
-    <step3 v-if="curStep === 3" @finish="finishStep3" :init-introduce="introduce" :bg-icon="bgPath" @on-back="step3Back" :title="title"></step3>
+    <step2 v-if="curStep === 2" @finish="finishStep2" @on-back="step2Back" :workRoomId="workRoomId" :bg-icon="bgPath"
+           :title="title"></step2>
+    <step3 v-if="curStep === 3" @finish="finishStep3" :init-introduce="introduce" :bg-icon="bgPath" @on-back="step3Back"
+           :title="title"></step3>
   </div>
 
 </template>
@@ -12,7 +14,8 @@
   import step2 from './applyStep2';
   import step3 from './applyStep3';
   import rule from './rule';
-  import { querystring } from 'vux'
+  import {querystring} from 'vux'
+
   export default {
     name: 'darenApply',
     components: {
@@ -35,12 +38,12 @@
     props: ['id', 'title'],
     created () {
       if (this.id) {
+        this.initData();
         this.curStep = 1;
       } else {
         // 申请要先看规则
         this.curStep = 0;
       }
-      this.initData();
     },
     methods: {
       // 看完规则
@@ -54,15 +57,15 @@
       },
       // 完成第二步
       finishStep2 (data) {
-        const { selectedLabel, bgPath } = data;
+        const {selectedLabel, bgPath} = data;
         this.selectedLabel = selectedLabel;
         this.bgPath = bgPath;
         this.curStep = 3;
       },
       // 完成第三步
       finishStep3 (data) {
-        const { introduce } = data;
-        const { selectedLabel, workRoomName } = this;
+        const {introduce} = data;
+        const {selectedLabel, workRoomName} = this;
         let params = {
           workRoomName,
           groupTag: selectedLabel.map(item => item.label).join(','),
@@ -94,20 +97,37 @@
         this.curStep = 2;
       },
       initData () {
-        let url = `${window.oldBaseURL}/scNeighborGroupActionV36!workRoomDetail.action`;
         let params = {};
         if (this.workRoomId) {
           params.workRoomId = this.workRoomId;
         }
-        this.fetchFormData(url, params, data => {
-          const { shopName, from, headPic, workroomPic, introduce, label, workRoomId } = data;
-          this.introduce = introduce;
-          this.headPic = headPic || '../../../assets/images/default_avatar.png';
-          this.selectedLabel = label.split(',');
-          this.workRoomId = workRoomId;
-          this.workRoomName = shopName;
-          this.bgPath = workroomPic;
-        });
+        // this.fetchFormData(url, params, data => {
+        //   const {shopName, from, headPic, workroomPic, introduce, label, workRoomId} = data;
+        //   this.introduce = introduce;
+        //   this.headPic = headPic || '../../../assets/images/default_avatar.png';
+        //   this.selectedLabel = label.split(',');
+        //   this.workRoomId = workRoomId;
+        //   this.workRoomName = shopName;
+        //   this.bgPath = workroomPic;
+        // });
+        this.$JHttp({
+          method: 'get',
+          headers: {
+            defCommunityId: localStorage.getItem('communityId')
+          },
+          url: window.baseURL + '/workroom/' + this.id
+        })
+          .then(res => {
+            if (res.status === 100) {
+              let data = res.data
+              this.introduce = data.groupIntro;
+              this.headPic = data.ownerAvatar || '../../../assets/images/default_avatar.png';
+              this.selectedLabel = data.groupTag.split(',');
+              this.workRoomId = this.id;
+              this.workRoomName = data.groupTitle;
+              this.bgPath = data.groupIcon;
+            }
+          })
       }
     }
   }

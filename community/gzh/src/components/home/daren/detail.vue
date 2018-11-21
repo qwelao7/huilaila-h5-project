@@ -2,10 +2,25 @@
   <div class="commonHeader daren-detail">
     <view-box ref="viewBox">
       <x-header
+        v-if="!showHeaderChoose"
         slot="header"
         :left-options="{backText: ''}"
         :title="title">
-        <span class="right-btn" slot="right" @click="publish" v-if="userId === ownerId"><x-icon type="ios-plus-empty" size="30"></x-icon></span>
+        <span class="right-btn" slot="right" @click="publish" v-if="userId === ownerId"><x-icon type="ios-plus-empty"
+                                                                                                size="30"></x-icon></span>
+      </x-header>
+      <x-header
+        v-if="showHeaderChoose"
+        slot="header"
+        :left-options="{showBack: false}"
+        title="slot:overwrite-title"
+        style="width:100%;position:absolute;left:0;top:0;z-index:100;">
+      <span class="right-btn" slot="right" @click="publish" v-if="userId === ownerId"><x-icon type="ios-plus-empty"
+                                                                                              size="30"></x-icon></span>
+        <div class="overwrite-title-demo" slot="overwrite-title" @click="chooseAddress">
+          <i class="positionIcon"></i>
+          <span v-text="communityName"></span>
+        </div>
       </x-header>
       <j-pull :refreshFunc="refreshData" :loadMoreFunc="loadMore">
         <div slot="jpull-list">
@@ -55,28 +70,31 @@
                       <ul class="imgs" v-if="item.annexs.length > 1">
                         <li v-for="img in item.annexs">
                           <!--<img v-if="img.name" :src="img.name" alt="">-->
-                          <j-img v-if="img.name" :osskey="img.name" :custom-width="154" :custom-height="154"></j-img>
-                          <img v-if="!img.name" src="../../../assets/images/studio_Illustration_200.png" alt="">
+                          <j-img v-if="img" :osskey="img" :custom-width="154" :custom-height="154"></j-img>
+                          <img v-if="!img" src="../../../assets/images/studio_Illustration_200.png" alt="">
                         </li>
                       </ul>
                       <ul class="imgs-single" v-if="item.annexs.length === 1">
                         <li v-for="img in item.annexs">
                           <!--<img v-if="img.name" :src="img.name" alt="">-->
-                          <j-img v-if="img.name" :osskey="img.name" :custom-width="310" :custom-height="200"></j-img>
-                          <img v-if="!img.name" src="../../../assets/images/studio_Illustration_200.png" alt="">
+                          <j-img v-if="img" :osskey="img" :custom-width="310" :custom-height="200"></j-img>
+                          <img v-if="!img" src="../../../assets/images/studio_Illustration_200.png" alt="">
                         </li>
                       </ul>
                       <div class="operate-part">
                         <div class="time" v-text="item.intime"></div>
                         <div class="operate">
                           <div class="like">
-                            <img v-show="item.isPraised === 0" src="../../../assets/images/like_icon_42gray.png" alt="" @click.stop="like(item)">
-                            <img v-show="item.isPraised === 1" src="../../../assets/images/liked_icon_56red.png" alt="" @click.stop="dislike(item)">
-                            <span class="number" v-text="item.topicPraise"></span>
+                            <img v-show="item.isPraise === 0" src="../../../assets/images/like_icon_42gray.png" alt=""
+                                 @click.stop="like(item)">
+                            <img v-show="item.isPraise === 1" src="../../../assets/images/liked_icon_56red.png" alt=""
+                                 @click.stop="dislike(item)">
+                            <span class="number" v-text="item.topicPraiseNumber"></span>
                           </div>
                           <div class="comment">
-                            <img src="../../../assets/images/comment_icon_42gray.png" alt="" @click.stop="comment(item)">
-                            <span class="number" v-text="item.topicMsgcnt"></span>
+                            <img src="../../../assets/images/comment_icon_42gray.png" alt=""
+                                 @click.stop="comment(item)">
+                            <span class="number" v-text="item.topicCommentNumber"></span>
                           </div>
                         </div>
                       </div>
@@ -99,7 +117,8 @@
             <a slot="right" @click="subComment()">发送</a>
           </x-header>
           <group>
-            <x-textarea :max="500" ref="textArea" v-model="commentText" class="commentField" placeholder="写评论..." :show-counter="false" :height="200" :rows="8" :cols="30"></x-textarea>
+            <x-textarea :max="500" ref="textArea" v-model="commentText" class="commentField" placeholder="写评论..."
+                        :show-counter="false" :height="200" :rows="8" :cols="30"></x-textarea>
           </group>
         </div>
       </popup>
@@ -124,6 +143,7 @@
   import JPull from '../../base/JPull/JPull'
   import JImg from 'components/common/img/jImg'
   import open from '../../../common/js/openApp'
+
   export default {
     name: 'topicList',
     directives: {
@@ -166,40 +186,100 @@
           width: '70%',
           padding: '20px 18px 0 18px',
           borderRadius: '20px'
-        }
+        },
+        showHeaderChoose: false
       }
     },
-    computed: {
-    },
+    computed: {},
     created () {
       let communityName = localStorage.getItem('communityName');
       this.communityName = communityName;
-      this.getCurrentUser();
-      this.getDetail();
-      this.getList();
+      if (this.id) {
+        this.getCurrentUser();
+        this.getDetail();
+        this.getList();
+      } else {
+        this.$JHttp({
+          method: 'get',
+          headers: {
+            defCommunityId: localStorage.getItem('communityId')
+          },
+          url: window.baseURL + '/workroom/opened'
+        })
+          .then(res => {
+            if (res.status === 100) {
+              this.id = res.data
+              this.getCurrentUser();
+              this.getDetail();
+              this.getList();
+            } else if (res.status === 106) {
+              this.$router.push({path: '/darenApply', query: {title: '申请达人'}});
+            } else {
+              this.$vux.toast.show({
+                type: 'cancel',
+                text: res.msg
+              })
+            }
+          })
+          .catch(e => {
+            this.$vux.toast.show({
+              type: 'cancel',
+              text: e.msg
+            })
+          })
+      }
     },
+    // beforeRouteEnter (to, from, next) {
+    //   next(vm => {
+    //     vm.refresh();
+    //   })
+    // },
     methods: {
       // 达人详情
       getDetail () {
-        let url = `${window.oldBaseURL}/scNeighborGroupActionV36!workRoomDetail.action`;
         let params = {};
         if (this.id) {
           params.workRoomId = this.id;
         }
-        this.fetchFormData(url, params, data => {
-          const { shopName, from, headPic, introduce, label, workRoomId, ownerId, ownerName, workroomPic, workroomStatus } = data;
-          this.shopName = shopName;
-          this.from = from;
-          this.introduce = introduce;
-          this.labels = label.split(',');
-          this.workRoomId = workRoomId;
-          this.ownerId = ownerId;
-          this.ownerName = ownerName;
-          this.title = shopName;
-          this.workroomPic = workroomPic; // 工作室背景图
-          this.headPic = headPic;
-          this.isClose = workroomStatus === 0;
-        });
+        // this.fetchFormData(url, params, data => {
+        //   const {shopName, from, headPic, introduce, label, workRoomId, ownerId, ownerName, workroomPic, workroomStatus} = data;
+        //   this.shopName = shopName;
+        //   this.from = from;
+        //   this.introduce = introduce;
+        //   this.labels = label.split(',');
+        //   this.workRoomId = workRoomId;
+        //   this.ownerId = ownerId;
+        //   this.ownerName = ownerName;
+        //   this.title = shopName;
+        //   this.workroomPic = workroomPic; // 工作室背景图
+        //   this.headPic = headPic;
+        //   this.isClose = workroomStatus === 0;
+        // });
+        this.$JHttp({
+          method: 'get',
+          headers: {
+            defCommunityId: localStorage.getItem('communityId')
+          },
+          url: window.baseURL + '/workroom/' + params.workRoomId
+        })
+          .then(res => {
+            let data = res.data
+            this.shopName = data.groupTitle;
+            this.from = data.communityName;
+            this.introduce = data.groupIntro;
+            this.labels = data.groupTag.split(',');
+            this.workRoomId = data.id;
+            this.ownerId = data.groupOwner;
+            this.ownerName = data.ownerName;
+            this.title = data.groupTitle;
+            if (data.workRoomPic) {
+              this.workroomPic = window.aliyunImgUrl + data.workroomPic; // 工作室背景图
+            }
+            this.headPic = data.ownerAvatar;
+            this.isClose = data.workroomStatus === 0;
+          })
+          .catch(() => {
+          })
       },
 
       // 编辑
@@ -215,7 +295,8 @@
       },
       // 达人动态
       getList (loaded) {
-        let url = `${window.oldBaseURL}/scNeighborActionV36!neighborList.action`;
+        let that = this;
+        // let url = `${window.oldBaseURL}/scNeighborActionV36!neighborList.action`;
         let params = {
           topicType: 7, // 话题类型
           curPage: this.curPage
@@ -226,12 +307,29 @@
         this.$vux.loading.show({
           text: '加载中'
         });
-        this.fetchFormData(url, params, data => {
-          const { resultList, curPage, maxPage } = data;
-          this.list = [...this.list, ...resultList];
-          if (loaded) loaded(curPage <= maxPage)
-          this.$vux.loading.hide();
-        });
+        this.$JHttp({
+          method: 'get',
+          headers: {
+            defCommunityId: localStorage.getItem('communityId')
+          },
+          url: window.baseURL + '/workroom/neighbor/' + params.objId
+        })
+          .then(res => {
+            if (res.status === 100) {
+              let data = res.data
+              that.list = [...that.list, ...data]
+              if (loaded) loaded(data.curPage <= data.maxPage)
+              that.$vux.loading.hide();
+            }
+          })
+          .catch(() => {
+          })
+        // this.fetchFormData(url, params, data => {
+        //   const {resultList, curPage, maxPage} = data;
+        //   this.list = [...this.list, ...resultList];
+        //   if (loaded) loaded(curPage <= maxPage)
+        //   this.$vux.loading.hide();
+        // });
       },
 
       refreshData (loaded) {
@@ -240,7 +338,7 @@
         this.getList(loaded);
       },
       loadMore (loaded) {
-        this.curPage ++;
+        this.curPage++;
         this.getList(loaded);
       },
       publish () {
@@ -250,7 +348,7 @@
       },
       like (item) {
         let params = {
-          neighborId: item.id,
+          neighborId: item.neighborId,
           type: 0
         };
         this.$JHttp({
@@ -259,8 +357,8 @@
         }).then(res => {
           if (res.status === 100) {
             // 点赞
-            item.isPraised = 1;
-            item.topicPraise += 1;
+            item.isPraise = 1;
+            item.topicPraiseNumber += 1;
           }
         }).catch(e => {
           console.log(e)
@@ -268,7 +366,7 @@
       },
       dislike (item) {
         let params = {
-          neighborId: item.id
+          neighborId: item.neighborId
         };
         this.$JHttp({
           method: 'put',
@@ -276,8 +374,8 @@
         }).then(res => {
           if (res.status === 100) {
             // 取消点赞
-            item.isPraised = 0;
-            item.topicPraise -= 1;
+            item.isPraise = 0;
+            item.topicPraiseNumber -= 1;
           }
         }).catch(e => {
           console.log(e)
@@ -306,7 +404,7 @@
         if (this.curItem) params.neighbourId = this.curItem.id;
         let url = `${window.oldBaseURL}/scNeighborActionV36!neighbourComments.action`
         this.fetchFormData(url, params, data => {
-          this.curItem.topicMsgcnt ++;
+          this.curItem.topicMsgcnt++;
           this.close();
         });
       },
@@ -329,7 +427,7 @@
           }
         }).then(res => {
           if (res.status === 100) {
-            const { userId } = res.data;
+            const {userId} = res.data;
             // 保存当前用户信息，动态详情有用到
             localStorage.setItem('userId', userId);
             this.userId = userId;
@@ -371,12 +469,13 @@
       margin-left: 3px;
     }
   }
-  .customer-img{
+
+  .customer-img {
     position: relative;
-    img{
+    img {
       width: 100%;
     }
-    .img-wrapper{
+    .img-wrapper {
       height: 250px;
       overflow: hidden;
       img {
@@ -384,33 +483,36 @@
       }
     }
   }
-  .mask{
+
+  .mask {
     width: 100%;
     min-height: 250px;
     position: absolute;
     top: 0;
-    background: linear-gradient(to bottom,rgba(255,255,255,0) 180px,rgba(255,255,255,1) 250px);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 180px, rgba(255, 255, 255, 1) 250px);
     z-index: 1;
   }
-  .right-btn{
+
+  .right-btn {
     margin-top: -7px;
   }
-  .content{
+
+  .content {
     margin-top: -25px;
     padding: 0 15px;
     position: relative;
     z-index: 10;
-    .info{
+    .info {
       display: flex;
       width: 100%;
       align-items: center;
       justify-content: space-between;
-      .title{
+      .title {
         font-size: 18px;
         margin-bottom: 4px;
       }
     }
-    .avatar{
+    .avatar {
       width: 57px;
       height: 57px;
       border-radius: 50%;
@@ -421,7 +523,7 @@
         height: 57px;
       }
     }
-    .edit-btn{
+    .edit-btn {
       width: 60px;
       height: 25px;
       line-height: 25px;
@@ -431,81 +533,81 @@
       color: #0DAB60;
       background-color: transparent;
     }
-    .brief{
+    .brief {
       display: flex;
       width: 100%;
     }
-    .address{
+    .address {
       font-size: 12px;
-      img{
+      img {
         width: 16px;
         height: 16px;
         margin-right: 8px;
       }
     }
-    .tags-part{
+    .tags-part {
       margin-top: 25px;
       display: flex;
-      span{
+      span {
         font-size: 12px;
         margin-right: 5px;
       }
-      .tags{
+      .tags {
         display: flex;
         flex-wrap: wrap;
       }
     }
-    .name{
+    .name {
       font-size: 12px;
       margin-right: 42px;
       white-space: nowrap;
     }
-    .introduce{
+    .introduce {
       font-size: 12px;
       margin-top: 16px;
       width: 100%;
       display: flex;
     }
-    .states{
+    .states {
       margin-top: 16px;
-      .title{
+      .title {
         font-size: 12px;
         margin-bottom: 13px;
       }
     }
-    .states-list{
+    .states-list {
       margin-top: 23px;
-      .text{
+      .text {
         font-size: 15px;
         margin-bottom: 11px;
       }
-      &>li{
+      & > li {
         margin-left: 10px;
         border-left: 1px solid #D3D3D3;
         padding-left: 23px;
-        .list-wrapper{
+        .list-wrapper {
           position: relative;
           top: -10px;
-          .pointer{
+          .pointer {
             width: 9px;
             height: 9px;
             border-radius: 4px;
-            background-color:  #D3D3D3;
+            background-color: #D3D3D3;
             position: absolute;
             margin-left: -28px;
             margin-top: 6px;
           }
           padding-bottom: 34px;
         }
-        &:last-child{
-          .list-wrapper{
+        &:last-child {
+          .list-wrapper {
             padding-bottom: 0;
           }
         }
-        .imgs{
+        .imgs {
           display: flex;
           flex-wrap: wrap;
-          li{
+          li {
             overflow: hidden;
             margin-right: 1.5px;
             margin-top: 1.5px;
@@ -513,46 +615,48 @@
             height: 153px;
           }
         }
-        .imgs-single{
-          li{
+        .imgs-single {
+          li {
           }
-          img{
+          img {
             min-height: 200px;
           }
         }
-        .operate-part{
+        .operate-part {
           margin-top: 8px;
           display: flex;
           justify-content: space-between;
-          .time{
+          .time {
             color: #aaa;
             font-size: 12px;
             line-height: 21px;
           }
-          .operate{
+          .operate {
             display: flex;
-            .like{
+            .like {
               margin-right: 35px;
             }
-            span.number{
+            span.number {
               color: #aaa;
               font-size: 12px;
               display: inline;
             }
-            img{
+            img {
               height: 20px;
             }
           }
         }
       }
     }
-    .states-list-wrapper{
+    .states-list-wrapper {
 
     }
   }
-  .daren-detail{
+
+  .daren-detail {
     height: 100%;
   }
+
   .cancel-order-wrapper {
     .delete-info {
       color: #333;
@@ -577,6 +681,7 @@
       }
     }
   }
+
   .close-mask /deep/ .weui-dialog {
     background-color: transparent;
     color: #fff;

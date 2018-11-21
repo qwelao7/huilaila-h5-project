@@ -129,27 +129,22 @@
           let _this = this;
           _this.$JHttp({
             method: 'get',
-            url: window.baseURL + '/socialactivity/getCanAddActivity',
+            url: window.baseURL + '/socialactivity/getReleaseActivityAuthorizedList',
             headers: {
               defCommunityId: localStorage.getItem('communityId')
             }
           }).then(res => {
+            console.log(res)
             if (res.status === 100) {
-              console.log(res)
-              if (res.data === true) {
-                _this.$router.push('/pub_activity')
-              } else {
-                _this.$vux.confirm.show({
-                  content: '您尚未获得本小区活动创建权限。您可以发起“组局活动”的话题，让邻居们一起来讨论您的活动创意。',
-                  onConfirm () {
-                    _this.$router.push({path: '/pub_newThings', query: {type: 2}});
-                  }
-                })
-              }
+              console.log(res.data)
+              localStorage.setItem('pubCommunity', JSON.stringify(res.data))
+              _this.$router.push('/pub_activity')
             } else {
-              _this.$vux.toast.show({
-                type: 'cancel',
-                text: res.msg
+              _this.$vux.confirm.show({
+                content: '您尚未获得本小区活动创建权限。您可以发起“组局活动”的话题，让邻居们一起来讨论您的活动创意。',
+                onConfirm () {
+                  _this.$router.push({path: '/pub_newThings', query: {type: 2}});
+                }
               })
             }
           }).catch(e => {

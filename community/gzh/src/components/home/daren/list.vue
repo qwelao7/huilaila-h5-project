@@ -31,7 +31,6 @@
         </div>
       </j-pull>
       <router-link v-if="homePageVisible" class="bottom-btn" :to="`/darenDetail`">我的达人主页</router-link>
-      <a v-if="applyBtnVisible" class="bottom-btn" @click="apply">申请成为达人</a>
     </div>
   </div>
 
@@ -64,10 +63,10 @@
     },
     computed: {
       homePageVisible: function () {
-        return this.isServe && this.isDaren && this.hasToken;
+        return this.isServe && this.hasToken;
       },
       applyBtnVisible: function () {
-        return this.isServe && !this.isDaren && this.hasToken;
+        return this.isServe && this.hasToken;
       }
     },
     created () {
@@ -127,7 +126,7 @@
             defCommunityId: localStorage.getItem('communityId'),
             communityAll: localStorage.getItem('community_all')
           },
-          url: window.baseURL + '/index/workroom?' + querystring.stringify(params)
+          url: window.baseURL + '/workroom/recommend/index?' + querystring.stringify(params)
         })
           .then(res => {
             that.$vux.loading.hide();
@@ -136,15 +135,16 @@
             if (loaded) loaded(this.hasMore);
             if (res.data) {
               that.isServe = res.data.isOpenWorkRoomSubject === true;
-              that.isDaren = res.data.isApplyWorkRoom === true; // 是否开通达人
+              let resultList = [];
               if (res.data.data.resultList) {
-                that.list = [...that.list, ...res.data.data.resultList];
+                resultList = res.data.data.resultList
+                resultList.forEach(item => {
+                  if (item.groupIcon) {
+                    item.groupIcon = window.aliyunImgUrl + item.groupIcon
+                  }
+                })
+                that.list = [...that.list, ...resultList];
               }
-              that.list.forEach(item => {
-                if (item.groupIcon) {
-                  item.groupIcon = window.aliyunImgUrl + item.groupIcon
-                }
-              })
             }
           })
           .catch(() => {

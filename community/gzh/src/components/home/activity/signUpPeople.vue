@@ -43,7 +43,7 @@
                                       @click.native="goSignAll(item.applyId,index)"></x-button>
                           </p>
                           <br>
-                          <div class="signCount">
+                          <div class="signCount" v-if="item.signCount>0">
                             已签到{{item.signCount}}人次
                           </div>
                         </template>
@@ -90,28 +90,6 @@
                     </div>
                   </template>
                 </li>
-
-                <!--<li v-for="item in applyUserListInformation.userList" v-show="applyUserListInformation.needDetail">-->
-                <!--<div class="signUpPeople_informaton">-->
-                <!--<div class="left">-->
-                <!--<div class="signUpPeople_pic">-->
-                <!--<img :src="item.joinUserPhoto" alt="" v-if="item.joinUserPhoto">-->
-                <!--<img src="../../../assets/images/default_avatar.png" alt="" v-if="!item.joinUserPhoto">-->
-                <!--</div>-->
-                <!--<div class="sp_name">-->
-                <!--<div class="nameBox">-->
-                <!--<p class="name">{{item.joinUserName}}</p>-->
-                <!--<div :class="{sex_male: item.joinUserSex === '1', 'sex_female': item.joinUserSex === '2'}"></div>-->
-                <!--</div>-->
-                <!--<p class="num" v-if="item.joinUserBirthday">{{item.joinUserBirthday}}</p>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div class="phone_joiner">-->
-                <!--<a style="width: 100%;height: 100%;display: block;" :href="'tel:' + item.joinUserPhone"></a>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</li>-->
-
               </ul>
             </div>
             <div class="noContent" v-if="!applyUserListInformation.applyUserCount">
