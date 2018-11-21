@@ -131,10 +131,10 @@
           .then(res => {
             that.$vux.loading.hide();
             console.log(res.data)
+            that.isServe = res.data.isOpenWorkRoomSubject;
             that.hasMore = res.data.data.pageResult.hasMore;
             if (loaded) loaded(this.hasMore);
             if (res.data) {
-              that.isServe = res.data.isOpenWorkRoomSubject === true;
               let resultList = [];
               if (res.data.data.resultList) {
                 resultList = res.data.data.resultList
