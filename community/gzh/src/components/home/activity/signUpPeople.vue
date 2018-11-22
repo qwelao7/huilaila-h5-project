@@ -79,7 +79,7 @@
                                       @click.native="goSign(itm.joinUserId,index,idx)"></x-button>
                           </p>
                           <br>
-                          <div class="signCount">
+                          <div class="signCount" v-if="itm.signCount>0">
                             已签到{{itm.signCount}}人次
                           </div>
                         </div>

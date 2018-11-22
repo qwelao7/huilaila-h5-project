@@ -92,7 +92,7 @@
           borderRadius: '0.533333rem'
         },
         activityPicker: [''],
-        activityPickerId: 0,
+        activityPickerId: null,
         activityList: [],
         activityInfo: [],
         imgBlobs: [],
@@ -336,6 +336,14 @@
       },
       pubAlbum (params) {
         let _this = this;
+        _this.$vux.loading.hide();
+        if (!params.activityId) {
+          _this.$vux.toast.show({
+            type: 'cancel',
+            text: '请选择发布相册所属活动！'
+          })
+          return
+        }
         _this.$JHttp({
           method: 'post',
           url: window.baseURL + '/socialactivity/album/add?' + querystring.stringify(params),
@@ -344,7 +352,6 @@
           }
         }).then(res => {
           if (res.status === 100) {
-            _this.$vux.loading.hide();
             _this.$vux.toast.show({
               type: 'success',
               text: '发布成功'
@@ -369,7 +376,10 @@
             })
           }
         }).catch(err => {
-          console.log(err)
+          _this.$vux.toast.show({
+            type: 'cancel',
+            text: err.msg
+          })
         })
       },
       activityChange () {

@@ -8,8 +8,7 @@
     </x-header>
     <div class="newThings-banner">
       <group>
-        <cell title="选择发布小区" :value="communityName" is-link link="/changeCommunity" class="pub_option"
-              style="padding: 15px;border-bottom: 1px solid #d8d8d8"></cell>
+        <cell title="选择发布小区" :value="communityName" is-link link="/changeCommunity" class="pub_option" style="padding: 15px;border-bottom: 1px solid #d8d8d8"></cell>
       </group>
       <div class="publish-header" @click="showTopicSelector">
         <p class="tips">选择发布到</p>
@@ -21,8 +20,7 @@
         <div class="border1"></div>
       </div>
       <group>
-        <x-textarea :height="130" :max="500" :show-counter="false" :rows="8" :cols="30" placeholder="输入内容..."
-                    v-model="content"></x-textarea>
+        <x-textarea :height="130" :max="500" :show-counter="false" :rows="8" :cols="30" placeholder="输入内容..." v-model="content"></x-textarea>
       </group>
       <ul class="chooseImg">
         <li v-for="(localId, index) in localIds">
