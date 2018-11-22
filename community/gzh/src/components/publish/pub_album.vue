@@ -311,7 +311,7 @@
             let params = {
               topicContent: content,
               topicType: 11,
-              activityId: _this_.activityPickerId
+              actId: _this_.activityPickerId
             };
             _this_.pubAlbum(params)
           }
@@ -328,7 +328,7 @@
               topicContent: _this.content.trim(),
               topicType: 11, // 活动相册
               imageUrls: JSON.stringify(resList),
-              activityId: _this.activityPickerId
+              actId: _this.activityPickerId
             };
             _this.pubAlbum(params)
           });
@@ -336,8 +336,8 @@
       },
       pubAlbum (params) {
         let _this = this;
+        if (!params.actId) {
         _this.$vux.loading.hide();
-        if (!params.activityId) {
           _this.$vux.toast.show({
             type: 'cancel',
             text: '请选择发布相册所属活动！'
@@ -352,6 +352,7 @@
           }
         }).then(res => {
           if (res.status === 100) {
+            _this.$vux.loading.hide();
             _this.$vux.toast.show({
               type: 'success',
               text: '发布成功'
@@ -370,12 +371,14 @@
             // _this.$router.go(-1)
             // }
           } else {
+            _this.$vux.loading.hide();
             _this.$vux.toast.show({
               type: 'cancel',
               text: res.msg
             })
           }
         }).catch(err => {
+          _this.$vux.loading.hide();
           _this.$vux.toast.show({
             type: 'cancel',
             text: err.msg
