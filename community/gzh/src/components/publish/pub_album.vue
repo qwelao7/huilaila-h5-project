@@ -337,7 +337,7 @@
       pubAlbum (params) {
         let _this = this;
         if (!params.actId) {
-        _this.$vux.loading.hide();
+          _this.$vux.loading.hide();
           _this.$vux.toast.show({
             type: 'cancel',
             text: '请选择发布相册所属活动！'
@@ -397,16 +397,19 @@
       border-bottom: 0.5px solid #d8d8d8;
       margin: 0 15px;
       padding: 5px 0;
+
       .weui-cell {
         padding: 10px 0;
       }
     }
+
     .chooseImg {
       display: flex;
       flex-wrap: wrap;
       /*justify-content: space-between;*/
       align-items: center;
       padding: 10px 15px;
+
       li {
         width: 105px;
         height: 105px;
@@ -415,14 +418,17 @@
         /*overflow: hidden;*/
         /*display: flex;*/
         /*align-items: center;*/
+
         img {
           width: 100%;
           height: 100%;
         }
       }
+
       li:nth-child(3n + 1) {
         margin-left: 0;
       }
+
       .add {
         display: flex;
         align-items: center;
@@ -435,6 +441,7 @@
         background-repeat: no-repeat;
         background-size: contain;
       }
+
       .addInApp {
         display: flex;
         align-items: center;
@@ -442,6 +449,7 @@
         width: 103px;
         height: 103px;
         position: relative;
+
         label {
           width: 103px;
           height: 103px;
@@ -450,6 +458,7 @@
           background-repeat: no-repeat;
           background-size: contain;
         }
+
         .uploadImg {
           position: absolute;
           left: 0;
@@ -460,6 +469,7 @@
         }
       }
     }
+
     .delete-wrapper {
       .delete-info {
         color: #333;
@@ -469,11 +479,13 @@
         width: 100%;
         padding-bottom: 20px;
       }
+
       .operate-wrapper {
         display: flex;
         justify-content: space-between;
         align-items: center;
         height: 50px;
+
         .text {
           display: inline-block;
           width: 50%;
