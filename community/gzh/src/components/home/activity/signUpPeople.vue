@@ -37,6 +37,7 @@
                           <span class="num">({{item.applyUserCount}}人)</span>
                         </p>
                         <div class="note" v-show="item.note" v-text="item.note"></div>
+                        <div style="width: 100%;height: 20px" v-show="!item.note"></div>
                         <template v-if="!applyUserListInformation.needUserDetail">
                           <p>
                             <x-button style="float: right" mini type="primary" text="签 到"
