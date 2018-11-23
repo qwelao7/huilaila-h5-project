@@ -111,6 +111,7 @@
       getCarousel (loaded) {
         let _this = this;
         if (parseFloat(localStorage.getItem('community_all')) === 1) {
+          _this.imgLists = [];
         } else {
           _this.$JHttp({
             method: 'get',
