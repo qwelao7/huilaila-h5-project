@@ -3,7 +3,7 @@
     <j-pull :refreshFunc="refreshData" :loadMoreFunc="loadMore">
       <div slot="jpull-list">
         <div class="swiperBanner" v-if="imgLists.length && parseFloat(communityAll)=== 0">
-          <div class="swiper" v-if="communityAll=== 0">
+          <div class="swiper">
             <swiper :list="imgLists" loop auto height="5.12rem" dots-class="custom-bottom" dots-position="right"
                     :show-desc-mask="false"></swiper>
           </div>
