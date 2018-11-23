@@ -8,7 +8,8 @@
       <!--</x-header>-->
       <x-header
         slot="header"
-        :left-options="{showBack: false}"
+        :left-options="leftOptions"
+        @on-click-back="backMy"
         title="slot:overwrite-title"
         style="width:100%;position:absolute;left:0;top:0;z-index:100;">
         <a slot="right" @click="showMessage" class="right"><i class="messageIcon"></i></a>
@@ -41,7 +42,12 @@
       ViewBox
     },
     data () {
-      return {}
+      return {
+        leftOptions: {
+          preventGoBack: true,
+          backText: ''
+        }
+      }
     },
     created () {
       this.$JHttp({
@@ -68,6 +74,9 @@
     methods: {
       nextStep () {
         this.$emit('finish');
+      },
+      backMy () {
+        this.$router.push('/life/daren');
       },
       chooseAddress () {
         this.$router.push('/changeCommunity');
