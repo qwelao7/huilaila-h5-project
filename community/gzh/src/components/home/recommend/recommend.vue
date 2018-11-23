@@ -2,7 +2,7 @@
   <div class="recommend">
     <j-pull :refreshFunc="refreshData" :loadMoreFunc="loadMore">
       <div slot="jpull-list">
-        <div class="swiperBanner" v-if="imgLists.length">
+        <div class="swiperBanner" v-if="imgLists.length&&communityAll=== 0">
           <div class="swiper" v-if="communityAll=== 0">
             <swiper :list="imgLists" loop auto height="5.12rem" dots-class="custom-bottom" dots-position="right"
                     :show-desc-mask="false"></swiper>
@@ -300,30 +300,38 @@
   .recommend {
     height: 100%;
     background-color: #f7f7fa;
+
     .swiperBanner {
       .list-under-swiper {
         background-color: #ffffff;
+
         .weui-grids {
           padding: 14px 0 20px 0;
+
           .weui-grid {
             padding: 0;
+
             .weui-grid__label {
               font-size: 12px;
             }
           }
+
           .weui-grid:before, .weui-grid:after {
             border: none;
           }
         }
+
         .weui-grids:before, .weui-grids:after {
           border: none;
         }
       }
     }
+
     .activityBanner {
       /*margin-top: 10px;*/
       /*background-color: #ffffff;*/
     }
+
     .noContent {
       display: flex;
       flex-direction: column;
@@ -331,15 +339,18 @@
       justify-content: center;
       margin-top: 124px;
       margin-bottom: 248px;
+
       img {
         width: 150px;
         height: 150px;
       }
+
       p {
         margin-top: 10px;
         color: #aaaaaa;
         font-size: 15px;
       }
+
       span {
         width: 150px;
         height: 35px;
