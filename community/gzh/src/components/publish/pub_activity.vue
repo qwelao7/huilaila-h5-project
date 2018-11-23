@@ -9,7 +9,7 @@
         <a slot="right" @click="publish" :class="{readyPublish: isOk}">发布</a><!---->
       </x-header>
       <div class="pubBanner">
-        <group style="margin:0 15px;padding-bottom:15px;border-bottom: 1px solid #d8d8d8">
+        <group style="margin:0 15px;padding-bottom:15px;border-bottom: 1px solid #d8d8d8" v-if="!isApp">
           <popup-picker title="选择小区" :data="communityList" v-model="communityPicker" show-name ref="picker"
                         @on-change="communityChange" class="pub_option"></popup-picker>
         </group>
