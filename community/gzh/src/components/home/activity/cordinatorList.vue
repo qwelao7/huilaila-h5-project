@@ -13,14 +13,15 @@
             <div>
               <img v-if="item.headPic" :src='item.headPic' @click="toPersonPage(item)">
               <img v-if="!item.headPic" src="../../../assets/images/default_avatar.png" @click="toPersonPage(item)">
-              <div class="name" @click="toPersonPage(item)">
-                <div class="personInfo">
+              <div class="name" @click="toPersonPage(item)" >
+                <div class="personInfo" style="position: relative">
                   {{item.nickName}}
                   <span>({{item.annotation}})</span>
+                  <span class="phone" @click="callApplyer(item.mobile)">
+                    <div style="width: 28px;height: 28px;"></div>
+                  </span>
                 </div>
-                <div class="phone" @click="callApplyer(item.mobile)">
-                  <a style="width: 100%;height: 100%;display: block;float: right"></a>
-                </div>
+
               </div>
             </div>
             <x-button mini v-if="item.status==='1'" class="setCBtn" text="设为协办人"
@@ -296,12 +297,15 @@
   }
 
   .phone {
+    display: inline-block;
+    padding-top: 6px;
+    margin-left: 10px;
     width: 28px;
     height: 28px;
     background: url("../../../assets/images/consult_icon_black.png") left center;
     background-size: cover;
-    position: absolute;
-    right: 0;
-    top: 6px;
+    /*position: absolute;*/
+    /*right: 0;*/
+    /*top: 6px;*/
   }
 </style>
