@@ -94,6 +94,7 @@
     height: 100%;
     line-height: 100%;
     justify-content: center;
+
     .positionIcon {
       display: inline-block;
       /*flex: 1;*/
@@ -104,6 +105,7 @@
       background-size: contain;
       background-repeat: no-repeat;
     }
+
     span {
       display: inline-block;
       height: 40px;

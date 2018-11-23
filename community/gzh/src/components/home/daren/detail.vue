@@ -4,7 +4,8 @@
       <x-header
         v-if="!showHeaderChoose"
         slot="header"
-        :left-options="{backText: ''}"
+        :left-options="leftOptions"
+        @on-click-back="backMy"
         :title="title">
         <span class="right-btn" slot="right" @click="publish" v-if="userId === ownerId"><x-icon type="ios-plus-empty"
                                                                                                 size="30"></x-icon></span>
@@ -164,6 +165,10 @@
     },
     data () {
       return {
+        leftOptions: {
+          preventGoBack: true,
+          backText: ''
+        },
         list: [], // 动态列表
         ownerName: '', // 动态用户名称
         from: '', // 地址
@@ -417,6 +422,9 @@
       chooseAddress () {
         this.$router.push('/changeCommunity');
       },
+      backMy () {
+        this.$router.push('/life/daren');
+      },
       // 获取当前用户信息
       getCurrentUser () {
         this.$JHttp({
@@ -446,6 +454,7 @@
     height: 100%;
     line-height: 100%;
     justify-content: center;
+
     .positionIcon {
       display: inline-block;
       /*flex: 1;*/
@@ -456,6 +465,7 @@
       background-size: contain;
       background-repeat: no-repeat;
     }
+
     span {
       display: inline-block;
       height: 40px;
@@ -472,12 +482,15 @@
 
   .customer-img {
     position: relative;
+
     img {
       width: 100%;
     }
+
     .img-wrapper {
       height: 250px;
       overflow: hidden;
+
       img {
         min-height: 250px;
       }
@@ -502,27 +515,32 @@
     padding: 0 15px;
     position: relative;
     z-index: 10;
+
     .info {
       display: flex;
       width: 100%;
       align-items: center;
       justify-content: space-between;
+
       .title {
         font-size: 18px;
         margin-bottom: 4px;
       }
     }
+
     .avatar {
       width: 57px;
       height: 57px;
       border-radius: 50%;
       overflow: hidden;
       margin-right: 8px;
+
       img {
         width: 57px;
         height: 57px;
       }
     }
+
     .edit-btn {
       width: 60px;
       height: 25px;
@@ -533,61 +551,76 @@
       color: #0DAB60;
       background-color: transparent;
     }
+
     .brief {
       display: flex;
       width: 100%;
     }
+
     .address {
       font-size: 12px;
+
       img {
         width: 16px;
         height: 16px;
         margin-right: 8px;
       }
     }
+
     .tags-part {
       margin-top: 25px;
       display: flex;
+
       span {
         font-size: 12px;
         margin-right: 5px;
       }
+
       .tags {
         display: flex;
         flex-wrap: wrap;
       }
     }
+
     .name {
       font-size: 12px;
       margin-right: 42px;
       white-space: nowrap;
     }
+
     .introduce {
       font-size: 12px;
       margin-top: 16px;
       width: 100%;
       display: flex;
     }
+
     .states {
       margin-top: 16px;
+
       .title {
         font-size: 12px;
         margin-bottom: 13px;
       }
     }
+
     .states-list {
       margin-top: 23px;
+
       .text {
         font-size: 15px;
         margin-bottom: 11px;
       }
+
       & > li {
         margin-left: 10px;
         border-left: 1px solid #D3D3D3;
         padding-left: 23px;
+
         .list-wrapper {
           position: relative;
           top: -10px;
+
           .pointer {
             width: 9px;
             height: 9px;
@@ -597,16 +630,20 @@
             margin-left: -28px;
             margin-top: 6px;
           }
+
           padding-bottom: 34px;
         }
+
         &:last-child {
           .list-wrapper {
             padding-bottom: 0;
           }
         }
+
         .imgs {
           display: flex;
           flex-wrap: wrap;
+
           li {
             overflow: hidden;
             margin-right: 1.5px;
@@ -615,32 +652,40 @@
             height: 153px;
           }
         }
+
         .imgs-single {
           li {
           }
+
           img {
             min-height: 200px;
           }
         }
+
         .operate-part {
           margin-top: 8px;
           display: flex;
           justify-content: space-between;
+
           .time {
             color: #aaa;
             font-size: 12px;
             line-height: 21px;
           }
+
           .operate {
             display: flex;
+
             .like {
               margin-right: 35px;
             }
+
             span.number {
               color: #aaa;
               font-size: 12px;
               display: inline;
             }
+
             img {
               height: 20px;
             }
@@ -648,6 +693,7 @@
         }
       }
     }
+
     .states-list-wrapper {
 
     }
@@ -666,11 +712,13 @@
       width: 100%;
       padding-bottom: 20px;
     }
+
     .operate-wrapper {
       display: flex;
       justify-content: space-between;
       align-items: center;
       height: 50px;
+
       .text {
         display: inline-block;
         width: 50%;
