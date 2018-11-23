@@ -101,8 +101,9 @@
     beforeRouteEnter (to, from, next) {
       next(vm => {
         vm.$emit('changeIndex', 0)
-        if (vm.communityId !== localStorage.getItem('communityId') || parseFloat(localStorage.getItem('community_all')) === 1) {
+        if (vm.communityId !== localStorage.getItem('communityId') || vm.communityAll !== localStorage.getItem('community_all')) {
           vm.communityId = localStorage.getItem('communityId')
+          vm.communityAll = localStorage.getItem('community_all')
           vm.refreshData()
         }
       })
@@ -140,6 +141,7 @@
                   id: val.id
                 };
                 _this.imgLists.push(obj)
+                console.log(_this.imgLists)
               })
             }
           }).catch(e => {
