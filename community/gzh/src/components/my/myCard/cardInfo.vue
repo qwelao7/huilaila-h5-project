@@ -9,10 +9,11 @@
       <div class="list">
         <div class="item">
           <img :src=cardPic alt="">
-          <div class="card-info" v-if="money>0">
-            <em>卡内余额：</em>
-            <span>￥{{money}}</span>
+          <div class="card-info">
+            <em v-if="money>0" style="margin-right: 15px">友元余额：{{money}}</em>
+            <em v-if="validDate">有效期：{{validDate}}</em>
           </div>
+          <!--<div class="card-share">享</div>-->
         </div>
       </div>
       <!--<div class="btn-group">-->
@@ -156,14 +157,14 @@
         display: block;
         padding: 10px 15px;
         position: relative;
+
         .card-info {
           position: absolute;
           color: #fff;
           vertical-align: middle;
-          left: 50%;
-          top: 50%;
-          transform: translate(-55%, -40%);
-          -webkit-transform: translate(-55%, -40%);
+          left: 10%;
+          bottom: 12%;
+
           em {
             display: inline;
           }
@@ -175,10 +176,12 @@
         }
       }
     }
+
     .btn-group {
       background: #fff;
       display: flex;
       justify-content: center;
+
       .btn {
         width: 88px;
         height: 30px;
@@ -231,6 +234,20 @@
         font-size: 13px;
         display: inline;
       }
+    }
+
+    .card-share {
+      width: 30px;
+      height: 30px;
+      background-color: #0DAB60;
+      color: #fff;
+      position: absolute;
+      bottom: 22px;
+      right: 24px;
+      line-height: 30px;
+      text-align: center;
+      border-top-left-radius: 50%;
+      border-bottom-right-radius: 12px;
     }
   }
 </style>

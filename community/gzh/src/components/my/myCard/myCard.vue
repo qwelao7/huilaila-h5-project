@@ -9,10 +9,11 @@
       <div class="list">
         <div class="item" v-for="item in cardList" @click="toCardInfo(item.cardId)">
           <img :src=item.cardPic>
-          <div class="card-info" v-if="item.money>0">
-            <em>卡内余额：</em>
-            <span>￥{{item.money}}</span>
+          <div class="card-info">
+            <em v-if="item.money>0" style="margin-right: 15px">友元余额：{{item.money}}</em>
+            <em v-if="item.validDate">有效期：{{item.validDate}}</em>
           </div>
+          <!--<div class="card-share">享</div>-->
         </div>
       </div>
       <div class="add-item" @click="addCard">
@@ -94,14 +95,14 @@
         background: #FFFFFF;
         padding: 10px 15px;
         position: relative;
+
         .card-info {
           position: absolute;
           color: #fff;
           vertical-align: middle;
-          left: 50%;
-          top: 50%;
-          transform: translate(-55%, -40%);
-          -webkit-transform: translate(-55%, -40%);
+          left: 10%;
+          bottom: 12%;
+
           em {
             display: inline;
           }
@@ -138,6 +139,20 @@
         background: #FF6648;
         border-radius: 67px;
       }
+    }
+
+    .card-share {
+      width: 30px;
+      height: 30px;
+      background-color: #0DAB60;
+      color: #fff;
+      position: absolute;
+      bottom: 22px;
+      right: 24px;
+      line-height: 30px;
+      text-align: center;
+      border-top-left-radius: 50%;
+      border-bottom-right-radius: 12px;
     }
   }
 </style>

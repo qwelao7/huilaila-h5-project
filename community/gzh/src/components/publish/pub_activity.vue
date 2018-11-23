@@ -1170,6 +1170,14 @@
           this.communityPicker[0] = this.communityId
         } else {
           this.communityPicker[0] = tempList[0].value
+          localStorage.setItem('communityName', tempList[0].name);
+          localStorage.setItem('communityId', tempList[0].value);
+          localStorage.setItem('areaCode', tempList[0].areaCode);
+          localStorage.setItem('longitude', tempList[0].longitude);
+          localStorage.setItem('latitude', tempList[0].latitude);
+          localStorage.setItem('community_all', 0)
+          // 更新头部信息
+          initialAxios();
         }
       },
       deleteExtra (index) {
@@ -1197,10 +1205,12 @@
   .publishActivity {
     position: relative;
     height: 100%;
+
     .pubBanner {
       height: 100%;
       width: 100%;
       position: relative;
+
       .choosePoster {
         li {
           width: 100%;
@@ -1208,16 +1218,19 @@
           overflow: hidden;
           display: flex;
           align-items: center;
+
           img {
             width: 100%;
             height: 100%;
           }
         }
+
         .add {
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
+
           i {
             width: 35px;
             height: 35px;
@@ -1227,6 +1240,7 @@
             background-size: contain;
             /*<!--background: url("../../assets/images/plus_70.png") center no-repeat / contain;-->*/
           }
+
           span {
             margin-top: 15px;
             font-size: 15px;
@@ -1234,6 +1248,7 @@
           }
         }
       }
+
       .choosePosterForApp {
         width: 100%;
         height: 214px;
@@ -1241,6 +1256,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+
         .add01 {
           width: 100%;
           height: 100%;
@@ -1248,6 +1264,7 @@
           flex-direction: column;
           align-items: center;
           justify-content: center;
+
           .label-placeholder {
             position: absolute;
             left: 0;
@@ -1255,6 +1272,7 @@
             width: 100%;
             height: 214px;
           }
+
           i {
             width: 35px;
             height: 35px;
@@ -1264,16 +1282,19 @@
             background-size: contain;
             /*<!--background: url("../../assets/images/plus_70.png") center no-repeat / contain;-->*/
           }
+
           span {
             margin-top: 15px;
             font-size: 15px;
             color: #aaaaaa;
           }
+
           img {
             width: 100%;
             height: 100%;
           }
         }
+
         .uploadPoster {
           position: absolute;
           left: 0;
@@ -1283,16 +1304,19 @@
           height: 5.706667rem;
         }
       }
+
       .options {
         .beforeFee, .afterFee {
           padding: 0 15px;
         }
+
         .ps {
           padding: 15px 15px 25px 15px;
           background-color: #f5f5f5;
           font-size: 12px;
           color: #aaaaaa;
         }
+
         .optionItem {
           background-color: #ffffff;
           height: 55px;
@@ -1301,45 +1325,56 @@
           border-bottom: 0.5px solid #D8D8D8;
           font-size: 21px;
         }
+
         .fee {
           border-bottom: none;
         }
+
         .theme {
           border-top: 0.5px solid #D8D8D8;
         }
+
         .description {
           border-bottom: none;
         }
+
         .specialItem {
           width: 100%;
           display: flex;
           align-items: center;
           /*padding: 18px 0*/
         }
+
         .needDetail {
           border-bottom: none;
         }
+
         .spacing-container {
           width: 100%;
           height: 10px;
           background-color: #f5f5f5;
         }
+
         .extraOptions, .extraOptionsAdd {
           text-align: center;
           padding: 15px 0;
+
           .extraText, .extraAdd {
             font-size: 21px;
             padding: 0;
             line-height: 36px;
           }
+
           .arrow-down, .arrow-up {
             fill: #aaa;
           }
         }
+
         .extraOptionsAdd {
           padding-bottom: 0;
         }
       }
+
       .chooseImg {
         display: flex;
         flex-wrap: wrap;
@@ -1347,6 +1382,7 @@
         align-items: center;
         padding: 10px 0;
         padding-bottom: 30px;
+
         li {
           width: 105px;
           height: 105px;
@@ -1355,14 +1391,17 @@
           overflow: hidden;
           display: flex;
           align-items: center;
+
           img {
             width: 100%;
             height: 100%;
           }
         }
+
         li:nth-child(3n + 1) {
           margin-left: 0;
         }
+
         .add {
           display: flex;
           align-items: center;
@@ -1375,6 +1414,7 @@
           background-size: contain;
           /*background: url("../../assets/images/addpic-210.png") center no-repeat / contain;*/
         }
+
         .addInApp {
           display: flex;
           align-items: center;
@@ -1382,6 +1422,7 @@
           width: 103px;
           height: 103px;
           position: relative;
+
           label {
             width: 103px;
             height: 103px;
@@ -1390,6 +1431,7 @@
             background-repeat: no-repeat;
             background-size: contain;
           }
+
           .uploadImg {
             position: absolute;
             left: 0;
@@ -1401,13 +1443,17 @@
         }
       }
     }
+
     .hasTop {
       margin-top: 26px;
     }
+
     .noTop {
       margin-top: 0;
+
       .noTop {
         margin-top: 0;
+
         .vux-label {
           color: #333333 !important;
         }
@@ -1431,11 +1477,13 @@
       width: 100%;
       padding-bottom: 20px;
     }
+
     .operate-wrapper {
       display: flex;
       justify-content: space-between;
       align-items: center;
       height: 50px;
+
       .text {
         display: inline-block;
         width: 50%;
