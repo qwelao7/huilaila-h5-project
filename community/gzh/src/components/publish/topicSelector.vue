@@ -2,21 +2,27 @@
   <div class="publish commonHeader no-margin-top">
     <x-header
       slot="header"
-      :left-options="{backText: ''}"
+      :left-options="leftOptions"
+      @on-click-back="backMy"
       title="选择发布到">
     </x-header>
     <h3 class="title">话题</h3>
     <div class="button-wrapper">
-      <button class="select-button" :class="{active: topic.name === topicType.name}" v-for="topicType in topicTypes" @click="setTopic(topicType)">{{topicType.name}}</button>
+      <button class="select-button" :class="{active: topic.name === topicType.name}" v-for="topicType in topicTypes"
+              @click="setTopic(topicType)">{{topicType.name}}
+      </button>
     </div>
     <h3 class="title" v-show="darenTopics.length > 0">达人</h3>
     <div class="button-wrapper">
-      <button class="select-button" :class="{active: topic.name === topicType.name}" v-for="topicType in darenTopics" @click="setTopic(topicType)">{{topicType.name}}</button>
+      <button class="select-button" :class="{active: topic.name === topicType.name}" v-for="topicType in darenTopics"
+              @click="setTopic(topicType)">{{topicType.name}}
+      </button>
     </div>
   </div>
 </template>
 <script>
-  import { XHeader, TransferDom } from 'vux'
+  import {XHeader, TransferDom} from 'vux'
+
   export default {
     name: 'topic-selector',
     directives: {
@@ -27,6 +33,10 @@
     },
     data () {
       return {
+        leftOptions: {
+          preventGoBack: true,
+          backText: ''
+        },
         topic: {},
         topicTypes: [],
         darenTopics: []
@@ -41,6 +51,9 @@
         this.topic = topic;
         this.$emit('selected', topic);
       },
+      backMy () {
+        this.$emit('closePopup', false);
+      },
       getTopicTypes () {
         let _this_ = this;
         this.$JHttp({
@@ -50,8 +63,17 @@
             defCommunityId: localStorage.getItem('communityId')
           }
         }).then(res => {
-          _this_.topicTypes = res.data.topics.map(item => ({value: item.topicType, name: item.topicTitle, status: item.status})); // 普通话题
-          _this_.darenTopics = res.data.workrooms.map(item => ({value: item.topicType, name: item.topicTitle, topicId: item.topicId, status: item.status})); // 达人话题
+          _this_.topicTypes = res.data.topics.map(item => ({
+            value: item.topicType,
+            name: item.topicTitle,
+            status: item.status
+          })); // 普通话题
+          _this_.darenTopics = res.data.workrooms.map(item => ({
+            value: item.topicType,
+            name: item.topicTitle,
+            topicId: item.topicId,
+            status: item.status
+          })); // 达人话题
           // 初始化默认话题 没有默认类型6
           let defaultTopic = _this_.defaultTopic || '6';
           defaultTopic = String(defaultTopic);
