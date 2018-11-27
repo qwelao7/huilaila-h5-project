@@ -323,8 +323,8 @@
             let params = {
               assetProfileCategoryId: _this.propertyPickerId1,
               appShow: 1,
-              communityRoomNumIdList: JSON.stringify(roomList),
-              profileFList: JSON.stringify(resList)
+              communityRoomNumIdList: roomList,
+              profileFList: resList
             };
             _this.pubAlbum(params)
           });
