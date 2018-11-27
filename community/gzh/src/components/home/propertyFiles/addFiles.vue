@@ -191,7 +191,7 @@
             _this.propertyList1.push(tempList)
             if (_this.level === 3) {
               let result = tempList.some(item => {
-                if (item.id === this.$route.query.assetProfileCategoryId) {
+                if (parseFloat(item.id) === parseFloat(this.$route.query.assetProfileCategoryId)) {
                   return true
                 } else {
                   return false
