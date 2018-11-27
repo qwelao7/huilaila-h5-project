@@ -348,7 +348,7 @@
               text: '发布成功'
             })
             setTimeout(function () {
-              _this.$router.push('/myHouse');
+              _this.$router.push('/propertyFiles');
             }, 2000)
           } else {
             _this.$vux.loading.hide();

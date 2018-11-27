@@ -3,7 +3,8 @@
     <view-box body-padding-top="1.253333rem" body-padding-bottom="0">
       <x-header
         slot="header"
-        :left-options="{backText: ''}"
+        :left-options="leftOptions"
+        @on-click-back="backMy"
         :title="customTitle"
         style="width:100%;position:absolute;left:0;top:0;z-index:100;">
         <x-icon slot="right" type="ios-plus-empty" size="30" style="margin-top: -6px" @click="addFiles"></x-icon>
@@ -53,6 +54,10 @@
     },
     data () {
       return {
+        leftOptions: {
+          preventGoBack: true,
+          backText: ''
+        },
         isLoading: true,
         curPage: 1,
         pageSize: 20,
@@ -151,6 +156,13 @@
               superId: this.$route.params.fileId
             }
           });
+        }
+      },
+      backMy () {
+        if (this.level === 1) {
+          this.$router.push('/myHouse')
+        } else {
+          this.$router.go(-1)
         }
       }
     }
