@@ -309,7 +309,7 @@
             //   text: '请选择上传文件'
             // });
             let roomList = []
-            roomList.push(String(localStorage.getItem('roomId')))
+            roomList.push(parseFloat(localStorage.getItem('roomId')))
             let params = {
               assetProfileCategoryId: _this_.propertyPickerId1,
               appShow: 1,
