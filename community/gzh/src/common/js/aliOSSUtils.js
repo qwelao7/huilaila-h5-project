@@ -178,7 +178,8 @@ AliOSSUtil.uploadBlobProfile = function (blobs, path, cb, progressCB, finishCB) 
           var singleRes1 = {
             profilePath: aliPath,
             profileName: file.fileName,
-            profileSize: result.size
+            result: result,
+            profileSize: 0
           }
           if (cb) cb(singleRes);
           resultList.push(singleRes1);
