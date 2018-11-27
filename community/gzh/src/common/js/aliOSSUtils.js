@@ -136,6 +136,58 @@ AliOSSUtil.uploadBlob = function (blobs, path, cb, progressCB, finishCB) {
   });
 }
 
+AliOSSUtil.uploadBlobProfile = function (blobs, path, cb, progressCB, finishCB) {
+  if (!blobs || !blobs.length) {
+    console.error('blobs数组不能为空');
+    return;
+  }
+  let count = blobs.length;
+  getClient(function (clientConfig) {
+    let client = new OSS(clientConfig);
+    // 定义上传方法
+    async function multipartUpload (blobs) {
+      // 循环上传
+      let resultList = [];
+      for (let i = 0; i < count; i++) {
+        let file = blobs[i];
+        try {
+          let objectKey = generateKey(path, file.fileName);
+          let result = await client.put(objectKey, file.blob, {
+            progress: async function (progress) {
+              if (progressCB) {
+                progressCB({
+                  progress: progress,
+                  index: i
+                });
+              }
+            }
+            // meta: file.type
+          });
+          var aliPath = result.name;
+          var singleRes = {
+            path: aliPath,
+            fileName: file.fileName,
+            index: i
+          }
+          var singleRes1 = {
+            profilePath: aliPath,
+            profileName: file.fileName,
+            profileSize: file.size
+          }
+          if (cb) cb(singleRes);
+          resultList.push(singleRes1);
+        } catch (e) {
+          console.log(e);
+        }
+      }
+      if (finishCB) {
+        finishCB(resultList);
+      }
+    }
+    multipartUpload(blobs);
+  });
+}
+
 AliOSSUtil.download = function (objectKey, filename, cb) {
   // 兼容老版本,返回绝对路径的情况
   if (objectKey.indexOf('.com/') !== -1) {
