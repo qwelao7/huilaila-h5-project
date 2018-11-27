@@ -176,31 +176,30 @@
             defCommunityId: localStorage.getItem('communityId')
           }
         }).then(res => {
-            if (res.status === 100) {
-              console.log(res)
-              let tempList = []
-              _this.propertyList1 = []
-              _this.propertyInfo1 = res.data.resultList
-              console.log(this.propertyInfo)
-              res.data.resultList.forEach(val => {
-                let tem = {}
-                tem.name = val.categoryName
-                tem.value = String(val.id)
-                tempList.push(tem)
-              })
-              _this.propertyList1.push(tempList)
-              if (_this.level === 3) {
-                _this.propertyPicker1[0] = _this.$route.query.assetProfileCategoryId
-                _this.propertyPickerId1 = parseInt(_this.propertyPicker1)
-              }
-            } else {
-              this.$vux.toast.show({
-                type: 'cancel',
-                text: res.msg
-              })
+          if (res.status === 100) {
+            console.log(res)
+            let tempList = []
+            _this.propertyList1 = []
+            _this.propertyInfo1 = res.data.resultList
+            console.log(this.propertyInfo)
+            res.data.resultList.forEach(val => {
+              let tem = {}
+              tem.name = val.categoryName
+              tem.value = String(val.id)
+              tempList.push(tem)
+            })
+            _this.propertyList1.push(tempList)
+            if (_this.level === 3) {
+              _this.propertyPicker1[0] = _this.$route.query.assetProfileCategoryId
+              _this.propertyPickerId1 = parseInt(_this.propertyPicker1)
             }
+          } else {
+            this.$vux.toast.show({
+              type: 'cancel',
+              text: res.msg
+            })
           }
-        ).catch(e => {
+        }).catch(e => {
           console.log(e)
           this.$vux.toast.show({
             type: 'cancel',
