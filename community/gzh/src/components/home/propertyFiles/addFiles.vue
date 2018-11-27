@@ -335,7 +335,7 @@
         _this.$JHttp({
           method: 'post',
           url: window.baseURL + '/assetProfile/assetHouseProfile',
-          params: params,
+          data: params,
           headers: {
             defCommunityId: _this.communityId
           }
