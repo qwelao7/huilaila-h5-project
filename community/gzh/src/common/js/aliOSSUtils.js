@@ -1,6 +1,7 @@
 import OSS from 'ali-oss';
 import Cookie from './cookie'
 import {jlDate, JString} from './utils'
+
 const AliOSSUtil = {}
 
 function generateKey (path, fileName) {
@@ -54,6 +55,7 @@ AliOSSUtil.uploadFile = function (files, path, cb, progressCB) {
   let count = files.length;
   getClient(function (clientConfig) {
     let client = new OSS(clientConfig);
+
     // 定义上传方法
     async function multipartUpload (files) {
       // 循环上传
@@ -85,6 +87,7 @@ AliOSSUtil.uploadFile = function (files, path, cb, progressCB) {
         }
       }
     }
+
     multipartUpload(files);
   });
 }
@@ -97,6 +100,7 @@ AliOSSUtil.uploadBlob = function (blobs, path, cb, progressCB, finishCB) {
   let count = blobs.length;
   getClient(function (clientConfig) {
     let client = new OSS(clientConfig);
+
     // 定义上传方法
     async function multipartUpload (blobs) {
       // 循环上传
@@ -132,6 +136,7 @@ AliOSSUtil.uploadBlob = function (blobs, path, cb, progressCB, finishCB) {
         finishCB(resultList);
       }
     }
+
     multipartUpload(blobs);
   });
 }
@@ -144,6 +149,7 @@ AliOSSUtil.uploadBlobProfile = function (blobs, path, cb, progressCB, finishCB) 
   let count = blobs.length;
   getClient(function (clientConfig) {
     let client = new OSS(clientConfig);
+
     // 定义上传方法
     async function multipartUpload (blobs) {
       // 循环上传
@@ -172,7 +178,7 @@ AliOSSUtil.uploadBlobProfile = function (blobs, path, cb, progressCB, finishCB) 
           var singleRes1 = {
             profilePath: aliPath,
             profileName: file.fileName,
-            profileSize: 0
+            profileSize: result.size
           }
           if (cb) cb(singleRes);
           resultList.push(singleRes1);
@@ -184,6 +190,7 @@ AliOSSUtil.uploadBlobProfile = function (blobs, path, cb, progressCB, finishCB) 
         finishCB(resultList);
       }
     }
+
     multipartUpload(blobs);
   });
 }

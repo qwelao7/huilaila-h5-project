@@ -196,14 +196,14 @@
                 } else {
                   return false
                 }
-                if (result) {
-                  _this.propertyPicker1[0] = _this.$route.query.assetProfileCategoryId
-                  _this.propertyPickerId1 = parseInt(_this.propertyPicker1)
-                } else {
-                  _this.propertyPicker1 = []
-                  _this.propertyPickerId1 = null
-                }
               })
+              if (result) {
+                _this.propertyPicker1[0] = _this.$route.query.assetProfileCategoryId
+                _this.propertyPickerId1 = parseInt(_this.propertyPicker1)
+              } else {
+                _this.propertyPicker1 = []
+                _this.propertyPickerId1 = null
+              }
             }
           } else {
             this.$vux.toast.show({
