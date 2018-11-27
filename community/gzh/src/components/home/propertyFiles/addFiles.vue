@@ -304,19 +304,10 @@
               }
             })
           } else {
-            // this.$vux.toast.show({
-            //   type: 'cancel',
-            //   text: '请选择上传文件'
-            // });
-            let roomList = []
-            roomList.push(parseFloat(localStorage.getItem('roomId')))
-            let params = {
-              assetProfileCategoryId: _this_.propertyPickerId1,
-              appShow: 1,
-              communityRoomNumIdList: JSON.stringify(roomList)
-              // profileFList: JSON.stringify(resList)
-            };
-            _this_.pubAlbum(params)
+            this.$vux.toast.show({
+              type: 'cancel',
+              text: '请选择上传文件'
+            });
           }
         }
       },
@@ -328,7 +319,7 @@
         if (key === length - 1) {
           _this.uploadBlobProfile(_this.imgBlobs, 'propertyFile', undefined, undefined, function (resList) {
             let roomList = []
-            roomList[0] = localStorage.getItem('roomId')
+            roomList[0] = parseFloat(localStorage.getItem('roomId'))
             let params = {
               assetProfileCategoryId: _this.propertyPickerId1,
               appShow: 1,
