@@ -370,6 +370,10 @@
         this.propertyPicker1 = []
         this.propertyPickerId1 = null
         this.getPropertyFileList2(this.propertyPicker[0])
+        if (this.level === 3) {
+          this.propertyPicker1 = []
+          this.propertyPickerId1 = null
+        }
       },
       propertyChange1 () {
         this.propertyPickerId1 = parseInt(this.propertyPicker1)
