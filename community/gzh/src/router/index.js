@@ -910,6 +910,11 @@ export default new Router({
       component: resolve => require(['@/components/home/propertyFiles/propertyLevelOne'], resolve)
     },
     {
+      path: '/propertyFiles/addFiles',
+      name: 'addPropertyFiles',
+      component: resolve => require(['@/components/home/propertyFiles/addFiles'], resolve)
+    },
+    {
       path: '/propertyFileTwo/:fileId',
       name: '/propertyFileLevelTwo',
       component: resolve => require(['@/components/home/propertyFiles/propertyLevelTwo'], resolve)

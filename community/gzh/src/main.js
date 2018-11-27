@@ -353,6 +353,9 @@ Vue.mixin({
     uploadBlob (blobs, path, cb, progressCB, finishCB) {
       aliOSSUtils.uploadBlob(blobs, path, cb, progressCB, finishCB);
     },
+    uploadBlobProfile (blobs, path, cb, progressCB, finishCB) {
+      aliOSSUtils.uploadBlobProfile(blobs, path, cb, progressCB, finishCB);
+    },
     downloadStaticSource (key, fileName, cb) {
       aliOSSUtils.download(key, fileName, function (result) {
         cb(result);
