@@ -190,7 +190,20 @@
             })
             _this.propertyList1.push(tempList)
             if (_this.level === 3) {
-              _this.propertyPicker1[0] = this.$route.query.assetProfileCategoryId
+              let result = tempList.some(item => {
+                if (item.id === this.$route.query.assetProfileCategoryId) {
+                  return true
+                } else {
+                  return false
+                }
+                if (result) {
+                  _this.propertyPicker1[0] = _this.$route.query.assetProfileCategoryId
+                  _this.propertyPickerId1 = parseInt(_this.propertyPicker1)
+                } else {
+                  _this.propertyPicker1 = []
+                  _this.propertyPickerId1 = null
+                }
+              })
             }
           } else {
             this.$vux.toast.show({
@@ -370,10 +383,6 @@
         this.propertyPicker1 = []
         this.propertyPickerId1 = null
         this.getPropertyFileList2(this.propertyPicker[0])
-        if (this.level === 3) {
-          this.propertyPicker1 = []
-          this.propertyPickerId1 = null
-        }
       },
       propertyChange1 () {
         this.propertyPickerId1 = parseInt(this.propertyPicker1)
