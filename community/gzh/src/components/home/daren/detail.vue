@@ -27,7 +27,7 @@
         <div slot="jpull-list">
           <div class="customer-img">
             <div class="img-wrapper">
-              <img v-if="!workroomPic" src="../../../assets/images/banner_personalhomepage.jpg" alt="">
+              <img v-if="!workroomPic" src="../../../assets/images/openstudio_Illustration_750.png" alt="">
               <!--<img v-if="workroomPic" :src="workroomPic" alt="">-->
               <j-img v-if="workroomPic" :osskey="workroomPic" :custom-width="375" :custom-height="250"></j-img>
             </div>
