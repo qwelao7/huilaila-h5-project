@@ -61,26 +61,24 @@
           borderRadius: '0.533333rem'
         },
         isApp: '',
-        communityId: ''
+        communityId: '',
+        communityAll: ''
       }
     },
     created () {
       this.getData();
       this.isApp = localStorage.getItem('isApp')
       this.communityId = localStorage.getItem('communityId')
-      this.community_all = localStorage.getItem('community_all')
+      this.communityAll = localStorage.getItem('community_all')
     },
     beforeRouteEnter (to, from, next) {
       next(vm => {
         if (!vm.isApp) {
           vm.$emit('changeIndex', 2)
-          if (vm.communityId !== localStorage.getItem('communityId')) {
+          if (vm.communityId !== localStorage.getItem('communityId') || vm.communityAll !== localStorage.getItem('community_all')) {
             vm.communityId = localStorage.getItem('communityId')
+            vm.communityAll = localStorage.getItem('community_all')
             vm.refreshData()
-          }
-          if (vm.community_all !== localStorage.getItem('community_all')) {
-            vm.community_all = localStorage.getItem('community_all')
-            vm.refresh()
           }
         }
       })
