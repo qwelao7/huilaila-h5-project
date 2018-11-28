@@ -10,7 +10,7 @@
       <a slot="right" @click="publish">发布</a>
     </x-header>
     <div class="newThings-banner">
-      <group>
+      <group v-if="showSelect">
         <cell title="选择发布小区" :value="communityName" is-link link="/changeCommunity" class="pub_option"
               style="padding: 15px 0"></cell>
       </group>
