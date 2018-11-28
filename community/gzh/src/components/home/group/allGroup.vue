@@ -137,12 +137,16 @@
           _this.$vux.loading.hide();
           if (res.status === 100) {
             _this.hasMore = res.data.pageResult.hasMore
-            _this.groupList.forEach(item => {
-              if (item.groupIcon) {
-                item.groupIcon = window.aliyunImgUrl + item.groupIcon
-              }
-            })
-            _this.groupList = _this.groupList.concat(res.data.resultList)
+            let resultList = [];
+            if (res.data.resultList) {
+              resultList = res.data.resultList
+              resultList.forEach(item => {
+                if (item.groupIcon) {
+                  item.groupIcon = window.aliyunImgUrl + item.groupIcon
+                }
+              })
+            }
+            _this.groupList = _this.groupList.concat(resultList)
           } else {
             _this.$vux.toast.show({
               type: 'cancel',
@@ -201,6 +205,7 @@
 <style type="text/less" lang="less" scoped>
   .group-popup {
     height: 100%;
+
     .noContent {
       display: flex;
       flex-direction: column;
@@ -208,10 +213,12 @@
       justify-content: center;
       margin-top: 142.5px;
       margin-bottom: 284.5px;
+
       img {
         width: 150px;
         height: 150px;
       }
+
       p {
         margin-top: 10px;
         color: #aaaaaa;
@@ -222,12 +229,14 @@
 
   .group-banner {
     padding: 0 15px;
+
     li {
       width: 100%;
       display: flex;
       margin-top: 20px;
       justify-content: space-between;
       align-items: flex-start;
+
       .avatar {
         width: 100px;
         height: 100px;
@@ -235,16 +244,20 @@
         display: flex;
         align-items: center;
       }
+
       .introduce {
         margin-left: 10px;
         margin-top: 15px;
         flex: 1;
+
         .namePart {
           display: flex;
           justify-content: space-between;
+
           span {
             display: block;
           }
+
           .name {
             font-size: 18px;
             color: #333333;
@@ -254,6 +267,7 @@
             text-overflow: ellipsis;
             white-space: nowrap;
           }
+
           .join {
             width: 78px;
             text-align: center;
@@ -265,8 +279,10 @@
             border-radius: 50px;
           }
         }
+
         .content {
           margin-top: 16px;
+
           span {
             display: block;
             font-size: 12px;
