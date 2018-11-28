@@ -137,12 +137,12 @@
           _this.$vux.loading.hide();
           if (res.status === 100) {
             _this.hasMore = res.data.pageResult.hasMore
-            _this.groupList = _this.groupList.concat(res.data.resultList)
             _this.groupList.forEach(item => {
               if (item.groupIcon) {
                 item.groupIcon = window.aliyunImgUrl + item.groupIcon
               }
             })
+            _this.groupList = _this.groupList.concat(res.data.resultList)
           } else {
             _this.$vux.toast.show({
               type: 'cancel',
