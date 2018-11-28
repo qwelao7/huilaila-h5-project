@@ -277,7 +277,7 @@
             this.ownerId = data.groupOwner;
             this.ownerName = data.ownerName;
             this.title = data.groupTitle;
-            if (data.workRoomPic) {
+            if (data.groupIcon) {
               this.workroomPic = window.aliyunImgUrl + data.groupIcon; // 工作室背景图
             }
             this.headPic = data.ownerAvatar;
