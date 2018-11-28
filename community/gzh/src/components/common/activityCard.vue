@@ -38,7 +38,7 @@
       <div class="imgList" @click="toDetail(information)">
         <!--<img :src="information.activityPicture" alt="">-->
         <j-img v-if="information.activityPicture" :osskey="information.activityPicture" :custom-width="345" :custom-height="200"></j-img>
-        <j-img v-if="!information.activityPicture" osskey="../../../assets/images/openstudio_Illustration_750.png" :custom-width="345" :custom-height="200"></j-img>
+        <j-img v-if="!information.activityPicture" osskey="../../assets/images/openstudio_Illustration_750.png" :custom-width="345" :custom-height="200"></j-img>
       </div>
       <div class="attentionList">
         <ul>
