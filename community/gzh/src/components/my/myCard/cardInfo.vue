@@ -96,9 +96,9 @@
     },
     methods: {
       getCardInfo () {
-        let _this_ = this
+        let that = this
         let cardId = this.$route.params.cardId;
-        _this_.$JHttp({
+        that.$JHttp({
           method: 'GET',
           url: window.baseURL + '/order/memberCard/' + cardId,
           headers: {
@@ -108,20 +108,20 @@
           this.$vux.loading.hide()
           if (res.status === 100) {
             console.log(res.data)
-            _this_.storeList = res.data.cardInfo.storeList;
-            _this_.cardPic = window.aliyunHome + res.data.cardInfo.cardPic;
-            _this_.rightsDesc = res.data.cardInfo.rightsDesc;
-            _this_.getTypeDesc = res.data.cardInfo.getTypeDesc;
-            _this_.publicPlatform = res.data.cardInfo.publicPlatform;
-            _this_.serviceHotline = res.data.cardInfo.serviceHotline;
+            that.storeList = res.data.cardInfo.storeList;
+            that.cardPic = window.aliyunHome + res.data.cardInfo.cardPic;
+            that.rightsDesc = res.data.cardInfo.rightsDesc;
+            that.getTypeDesc = res.data.cardInfo.getTypeDesc;
+            that.publicPlatform = res.data.cardInfo.publicPlatform;
+            that.serviceHotline = res.data.cardInfo.serviceHotline;
             if (res.data.userCardInfo) {
-              _this_.money = res.data.userCardInfo.money;
-              _this_.validDate = res.data.userCardInfo.validDate ? jlDate.Dateformat(res.data.userCardInfo.validDate, 'YYYY-MM-DD') : '长期有效'
+              that.money = res.data.userCardInfo.money;
+              that.validDate = res.data.userCardInfo.validDate ? jlDate.Dateformat(res.data.userCardInfo.validDate, 'YYYY-MM-DD') : '长期有效'
             } else {
-              _this_.validDate = res.data.cardInfo.validYears === 0 ? '长期有效' : res.data.cardInfo.validYears + '年'
+              that.validDate = res.data.cardInfo.expiredTime
             }
           } else {
-            _this_.$vux.toast.show({
+            that.$vux.toast.show({
               type: 'cancel',
               text: res.msg
             });
